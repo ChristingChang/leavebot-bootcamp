@@ -36,6 +36,7 @@
 **1. 建虛擬環境並安裝**（Python 3.11 以上）：
 
 ```bash
+python3 --version                  # 先確認 ≥ 3.11。太舊的話 pip 可能卡住不報錯，看起來像當機
 python3 -m venv .venv
 source .venv/bin/activate          # Windows：.venv\Scripts\activate
 pip install -e ".[dev]"
