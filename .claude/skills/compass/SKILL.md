@@ -20,6 +20,8 @@ This repo ships six skills, one per step of the bootcamp. Tell the user which on
 | 4. Build one ticket, test first | **`/tdd`** | a red test, then the code that turns it green | Day 3 / self-study |
 | 5. Review the change before it lands | **`/code-review`** | a review report a human then accepts or rejects line by line | Day 3 |
 
+`/compass`, `/to-architecture` and `/to-tickets` are **user-triggered**: the user types them, and they are deliberately absent from your own list of skills. Do not warn that they are missing — check `.claude/skills/<name>/SKILL.md` if in doubt.
+
 Skip a step only when its file already exists and nobody disputes it. An open question at any step goes back to **`/grilling`**, never to a guessed default.
 
 ## Context hygiene
