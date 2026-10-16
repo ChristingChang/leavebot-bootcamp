@@ -27,7 +27,7 @@
 | `/code-review` | `$code-review` | 審查改動是否守規範、是否做到票要求的事 | Day 3 |
 
 就這 6 個。課程結束後想要完整的工具鏈（38 個技能），見
-[SDD-agent-coding-beginner 的 `progressive-sdd`](https://github.com/Zenobia000/SDD-agent-coding-beginner/tree/progressive-sdd)。
+模板 repo [`agent-skills-starter`](https://github.com/Zenobia000/agent-skills-starter)，按 Use this template 就能開一個新專案。
 
 ## 開始
 
