@@ -27,7 +27,7 @@ uvicorn app.main:create_app --factory --reload
 |---|---|
 | `app/main.py` | FastAPI 進入點，路由加在 `create_app` 裡或拆模組 include |
 | `app/schema.sql` | 資料表定義，每張表用 `CREATE TABLE IF NOT EXISTS` |
-| `app/llm.py` | LLM 介面。業務程式只透過 `request.app.state.llm.complete(...)` 呼叫模型 |
+| `app/llm.py` | LLM 介面。業務程式只透過 `request.app.state.llm.complete(...)` 呼叫模型。`FakeLLM`／`ClaudeCliLLM`（訂閱）／`AnthropicLLM`（API key） |
 | `app/config.py` | 設定與環境變數 |
 | `tests/` | 測試。`conftest.py` 已提供 `client`、`fake_llm`、`settings` |
 | `fixtures/leave-sentences.jsonl` | eval 起始集，Day 4 用 |

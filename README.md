@@ -56,20 +56,25 @@ uvicorn app.main:create_app --factory --reload
 
 **還沒動任何東西之前，測試就要是綠的。** 不是綠的，先找講師。
 
-## 接上真的 Claude
+## 接上真的模型
 
-預設 `LLM_PROVIDER=fake`，不花錢也不用 key。要呼叫真的模型時，改 `.env`：
+預設 `LLM_PROVIDER=fake`，不呼叫任何模型，結果固定。單元測試**永遠用假的**，不受下面的設定影響。
 
-```bash
-LLM_PROVIDER=anthropic
-ANTHROPIC_API_KEY=<你的 key>
-LLM_MODEL=                         # 留空用預設模型；想省成本可以換成較便宜的模型
-```
+要讓 LeaveBot 真的解析句子（Day 4 的 eval 需要），改 `.env`：
 
-- 單元測試**永遠用假的**，不受這個設定影響。
-- 模型拒答時，伺服器端會自動改由備援模型回答（`fallbacks="default"`），見 `app/llm.py`。
+| 你有的是 | 設定 | 說明 |
+|---|---|---|
+| **Claude 訂閱**（Pro / Max），或已登入的 Claude Code | `LLM_PROVIDER=claude-cli` | 借用本機的 `claude` 指令，**不用 API key**。工具全部關閉，只做文字轉文字 |
+| Claude API key | `LLM_PROVIDER=anthropic`＋`ANTHROPIC_API_KEY=...` | 走 API 計費 |
+| 只有 Codex / ChatGPT 訂閱 | 維持 `fake`，Day 4 跟講師的示範機一起跑 eval | 見下方說明 |
 
-用 OpenAI 或其他供應商：在 `app/llm.py` 照 `LLMClient` 介面寫一個類別，加進 `build_llm`。可以直接請 agent 做 —— 先寫測試，這本身就是 Day 3 的練習。
+`LLM_MODEL` 留空用預設模型；想省額度可以換成較便宜的模型。
+
+**訂閱管的是兩件不同的事**：你用 Claude Code / Codex 寫程式，用的是訂閱；LeaveBot 程式執行時要解析一句話，也需要一個模型。`claude-cli` 讓後者也能用同一個訂閱。
+
+**為什麼沒有 `codex-cli`**：`codex exec` 找不到關掉 shell 工具的選項（⚠️ 以 codex-cli 0.162.1 查過）。拿它當程式裡的模型，一句被注入的請假句子就可能讓它去讀你電腦上的檔案。這門課在教怎麼擋 prompt injection，不會自己開這個洞。
+
+用其他供應商（例如 OpenAI API）：在 `app/llm.py` 照 `LLMClient` 介面寫一個類別，加進 `build_llm`。可以直接請 agent 做 —— 先寫測試，這本身就是 Day 3 的練習。
 
 ## 專案大腦
 

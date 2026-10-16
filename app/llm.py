@@ -1,10 +1,15 @@
 """LLM 介面。業務程式只依賴 LLMClient，測試時換成 FakeLLM，不花錢、結果固定。
 
-要接其他供應商（例如 OpenAI），寫一個有 complete(system=..., user=...) 方法的類別，
-再加進 build_llm 即可。
+三種真的模型：
+- ClaudeCliLLM：借用本機已登入的 Claude Code（訂閱制即可，不用 API key）
+- AnthropicLLM：呼叫 Claude API（要 API key）
+- 其他供應商：寫一個有 complete(system=..., user=...) 方法的類別，加進 build_llm
 """
 
-from collections.abc import Sequence
+import json
+import subprocess
+import tempfile
+from collections.abc import Callable, Sequence
 from typing import Any, Protocol
 
 import anthropic
@@ -13,6 +18,7 @@ from app.config import Settings
 
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 DEFAULT_MAX_TOKENS = 16000
+CLI_TIMEOUT_SECONDS = 120
 
 
 class LLMError(RuntimeError):
@@ -77,7 +83,76 @@ class AnthropicLLM:
         return text
 
 
+class ClaudeCliLLM:
+    """透過 `claude -p` 呼叫模型，用的是本機 Claude Code 的登入（訂閱或 API key 皆可）。
+
+    三個刻意的設定：
+    - 工具全關（--tools ""）：它只負責把文字變成文字，讀不到檔案、跑不了指令。
+      被注入的請假句子最多讓輸出變怪，不能讓它去碰你的電腦。
+    - 在空的暫存目錄執行：不會讀到這個專案的 AGENTS.md / CLAUDE.md 與技能。
+    - 使用者的句子走 stdin，不放在指令參數裡：以 - 開頭的句子不會被當成旗標。
+    """
+
+    def __init__(
+        self,
+        model: str = "",
+        run: Callable[..., subprocess.CompletedProcess] = subprocess.run,
+        timeout: int = CLI_TIMEOUT_SECONDS,
+    ) -> None:
+        self._model = model
+        self._run = run
+        self._timeout = timeout
+
+    def _command(self, system: str) -> list[str]:
+        command = [
+            "claude", "-p",
+            "--output-format", "json",
+            "--tools", "",
+            "--no-session-persistence",
+            "--setting-sources", "",
+            "--strict-mcp-config",
+            "--system-prompt", system,
+        ]
+        if self._model:
+            command += ["--model", self._model]
+        return command
+
+    def complete(self, *, system: str, user: str) -> str:
+        with tempfile.TemporaryDirectory(prefix="leavebot-llm-") as workdir:
+            try:
+                completed = self._run(
+                    self._command(system),
+                    input=user,
+                    capture_output=True,
+                    text=True,
+                    timeout=self._timeout,
+                    cwd=workdir,
+                )
+            except FileNotFoundError as exc:
+                raise LLMError("找不到 claude 指令：先安裝 Claude Code 並登入（打 claude 能進去就對了）") from exc
+            except subprocess.TimeoutExpired as exc:
+                raise LLMError(f"claude 超過 {self._timeout} 秒沒有回應（逾時）") from exc
+
+        if completed.returncode != 0:
+            detail = (completed.stderr or completed.stdout).strip()
+            raise LLMError(f"claude 執行失敗（exit {completed.returncode}）：{detail}")
+
+        try:
+            payload = json.loads(completed.stdout)
+        except json.JSONDecodeError as exc:
+            raise LLMError(f"看不懂 claude 的輸出：{completed.stdout[:200]}") from exc
+
+        text = str(payload.get("result", ""))
+        if payload.get("is_error"):
+            raise LLMError(f"claude 回報錯誤：{text}")
+        if not text.strip():
+            raise LLMError("模型回應裡沒有文字內容")
+        return text
+
+
 def build_llm(settings: Settings) -> LLMClient:
     if settings.llm_provider == "anthropic":
         return AnthropicLLM(model=settings.llm_model)
+    if settings.llm_provider == "claude-cli":
+        return ClaudeCliLLM(model=settings.llm_model)
     return FakeLLM(default="{}")

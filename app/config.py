@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 DEFAULT_ANTHROPIC_MODEL = "claude-opus-5-5"
-SUPPORTED_PROVIDERS = ("fake", "anthropic")
+SUPPORTED_PROVIDERS = ("fake", "claude-cli", "anthropic")
 _PLACEHOLDER_VALUES = ("", "changeme")
 
 
