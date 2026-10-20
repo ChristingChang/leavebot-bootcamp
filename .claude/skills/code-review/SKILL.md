@@ -41,11 +41,11 @@ A documented repo standard overrides any of these. Consistency beats a rule from
 
 ## 3. Spec axis
 
-Read the originating ticket (`issues/NNN-*.md`) and the documents it points at (`docs/02-prd.md` … `docs/06-test-plan.md`). Run `.venv/bin/python scripts/trace.py` and use its gaps. Check the diff against them:
+Read the originating ticket (`issues/NNN-*.md`) and the documents it points at (`docs/02-prd.md` … `docs/06-test-plan.md`). Read the traceability matrix at the end of `docs/06-test-plan.md`. Check the diff against them:
 
 - Every *Done when* condition, literally — met, or not
-- Every test case the ticket lists has a test marked `@pytest.mark.req` with that TC
-- The diff stays inside `STACK.md` (no new dependency, framework, or CORS) and calls the LLM only through `kit/`
+- Every test case the ticket lists has a test marked `@pytest.mark.req` with that TC — grep for it; a ✅ in the matrix is a claim, not evidence
+- The diff stays inside `course/STACK.md` (no new dependency, framework, or CORS), calls the model only through the Anthropic API — never an agent CLI like `claude -p` — and never from a test
 - **Scope creep** — shipped things the spec did not ask for
 - **Silent gaps** — spec items with no code
 - **Reinterpretation** — built something adjacent to what was asked

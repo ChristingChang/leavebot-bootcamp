@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # guard-git.sh 的回歸規格。每列：預期判決 <TAB> 指令。
 # 行為變更必須先改這張表 — 沒有檢查的規則不是規則，是願望。
-# 執行：bash hooks/test-guard-git.sh（scripts/check.sh 會跑）
+# 執行：bash hooks/test-guard-git.sh（.maintain/check.sh 會跑）
 set -u
 cd "$(dirname "$0")"
 

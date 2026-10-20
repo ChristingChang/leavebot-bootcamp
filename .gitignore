@@ -7,3 +7,5 @@ __pycache__/
 backend/data/
 frontend/node_modules/
 frontend/.next/
+.playwright-mcp/
+dev.log

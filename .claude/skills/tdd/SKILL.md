@@ -48,13 +48,19 @@ Every test names the test case it implements and the requirement it verifies:
 def test_second_request_on_a_full_day_reminds_the_manager(client): ...
 ```
 
-After each cycle, `.venv/bin/python scripts/trace.py` should show one fewer gap. A test without a marker is invisible to the traceability report.
+A test without a marker cannot be traced back to a requirement.
+
+## Before you say the ticket is done
+
+1. Run the full `.venv/bin/pytest` and paste the result.
+2. Update the traceability matrix at the end of `docs/06-test-plan.md`: for each of this ticket's TCs, the test file and ✅. Only mark ✅ a TC whose marker you can show with `grep -rn 'mark.req("TC-xx"' backend/tests/`.
+3. Add anything that drifted from the spec, any sentence of the spec you misread, and any environment trap to `docs/LESSONS.md`.
 
 ## Mocking
 
 Default to **not** mocking. A test with four mocks is testing the mocks.
 
-Mock only what you do not own and cannot make fast or deterministic: third-party network calls, the clock, randomness, the filesystem when it is genuinely slow. In this repo the LLM is already behind a seam: build the app with `kit.llm.FakeLLM` injected in tests, never the real model. Your own modules are not on that list — if they are hard to use in a test, that is a design finding, not a mocking problem.
+Mock only what you do not own and cannot make fast or deterministic: third-party network calls, the clock, randomness, the filesystem when it is genuinely slow. In this repo the LLM sits behind a seam you build: business code depends on a `complete(system, user) -> str` interface, and tests inject a fake implementation — never the real model (`course/STACK.md`). Your own modules are not on that list — if they are hard to use in a test, that is a design finding, not a mocking problem.
 
 In-memory fakes beat mocks. A fake repository backed by a map exercises real logic; a mocked one asserts you called a method.
 
