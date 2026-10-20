@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from app.config import ConfigError, Settings, load_settings
-from app.llm import ClaudeCliLLM, LLMError, build_llm
+from kit.config import ConfigError, LLMSettings, load_llm_settings
+from kit.llm import ClaudeCliLLM, LLMError, build_llm
 
 
 class _FakeRun:
@@ -131,18 +131,18 @@ def test_empty_result_raises():
 # --- 設定 ---------------------------------------------------------------------------
 
 def test_claude_cli_needs_no_api_key():
-    settings = load_settings({"LLM_PROVIDER": "claude-cli"})
+    settings = load_llm_settings({"LLM_PROVIDER": "claude-cli"})
 
-    assert settings.llm_provider == "claude-cli"
-    assert settings.llm_model == ""
+    assert settings.provider == "claude-cli"
+    assert settings.model == ""
 
 
 def test_build_llm_picks_claude_cli(tmp_path):
-    settings = Settings(database_path=str(tmp_path / "x.db"), llm_provider="claude-cli", llm_model="")
+    settings = LLMSettings(provider="claude-cli", model="")
 
     assert isinstance(build_llm(settings), ClaudeCliLLM)
 
 
 def test_unknown_provider_lists_claude_cli():
     with pytest.raises(ConfigError, match="claude-cli"):
-        load_settings({"LLM_PROVIDER": "codex-cli"})
+        load_llm_settings({"LLM_PROVIDER": "codex-cli"})

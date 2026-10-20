@@ -5,7 +5,7 @@
 commit `1434be8ff814b51f0e7fa166bc2e767075e71d83`（2026-08-12），依 MIT License 使用。
 
 本專案已對其做出修改：只保留上課用的 6 個技能；`ask-luca` 更名為 `compass` 並改寫成只在這 6 個之間導航；
-`to-architecture`、`to-tickets`、`tdd` 改寫成本課程的檔案慣例（`2_architecture.md`、`issues/`、`FakeLLM`）；
+`to-architecture`、`to-tickets`、`tdd`、`code-review` 改寫成本課程的檔案慣例（`docs/0N-*.md`、I0–I4 疊代票、`@pytest.mark.req`、`kit/`）；
 guard hooks 的回歸規格從 `setup-skills/hooks/` 移到 `.claude/hooks/`。
 本 repo 的技能精簡自 [agent-skills-starter](https://github.com/Zenobia000/agent-skills-starter)，那裡有完整修改清單（`.claude/skills/README.md`）。
 

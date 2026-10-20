@@ -4,3 +4,6 @@ data/
 __pycache__/
 *.egg-info/
 .pytest_cache/
+backend/data/
+frontend/node_modules/
+frontend/.next/

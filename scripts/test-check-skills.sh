@@ -31,4 +31,14 @@ check FAIL "frontmatter 前有空行"
 ROOT=$(mktemp -d); skill a a 'Path like docs/x/y and `/compact` are fine.'
 check PASS "非反引號開頭的路徑不算引用"
 
+ROOT=$(mktemp -d); skill a a 'Call `/api/health` and keep everything under `/api/`.'
+check PASS "API 路徑不算技能引用"
+
+ROOT=$(mktemp -d); skill a a 'Then `/compact next we build ticket 002`.'
+check PASS "內建指令後面帶參數"
+
+ROOT=$(mktemp -d); skill a a 'Then `/ghost now`.'
+check FAIL "不存在的技能後面帶參數仍然擋"
+
+
 exit $fail

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-FIXTURE = Path(__file__).parent.parent / "fixtures" / "leave-sentences.jsonl"
+FIXTURE = Path(__file__).parents[2] / "fixtures" / "leave-sentences.jsonl"
 PERIODS = {"full", "am", "pm"}
 LEAVE_TYPES = {"annual", "personal", "sick", "menstrual", "marriage", "bereavement", None}
 

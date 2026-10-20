@@ -1,6 +1,6 @@
 # Eval 起始集：`leave-sentences.jsonl`
 
-30 句請假句子與人工標註的預期假單，Day 4 單元 13 用來量 AI 解析的準確率。
+30 句請假句子與人工標註的預期假單。D2 的 I4 用 `.venv/bin/python scripts/run_eval.py` 打你們的 `POST /api/parse`，量 AI 解析的準確率。
 **這是起始集**，請加上你們公司真的會出現的說法。
 
 ## 格式

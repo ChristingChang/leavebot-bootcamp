@@ -1,47 +1,42 @@
 ---
 name: to-tickets
-description: 把需求與架構切成一張張垂直切片票，寫進 issues/，每張都標明驗收指令與被誰擋住。
+description: 把六份規格切成 D2 的五個疊代票（I0–I4），寫進 issues/，每張都引用它要讓哪些 TC 變綠。
 disable-model-invocation: true
 ---
 
 # To Tickets
 
-Split the work into tickets an agent can pick up cold, one per session. Material: `1_requirements.md`, `2_architecture.md`, and the conversation.
+Split the build into the course's five iterations, one ticket each, that an agent can pick up cold in a fresh session. Material: `docs/01-brief.md` … `docs/06-test-plan.md`, `STACK.md`, `LEAVEBOT.md`.
 
-## Vertical slices, not layers
+## The five iterations
 
-Every ticket is a **vertical slice**: something observably works when it is done. Never "add the database schema", "add the API layer", "add the UI" — three tickets, and nothing works until all three land, so nothing can be reviewed or reverted independently.
+| Ticket | Iteration | Scope |
+| --- | --- | --- |
+| `issues/000-i0-skeleton.md` | I0 skeleton | `backend/` and `frontend/` exactly as `STACK.md` describes; `GET /api/health`; `bash scripts/dev.sh` serves both. No business logic |
+| `issues/001-i1-first-slice.md` | I1 vertical slice | one sentence → `POST /api/parse` → preview → submit → "my requests" list. The thinnest path that runs end to end |
+| `issues/002-i2-rules.md` | I2 rules | the rule checks the SRS assigns to code (annual-leave balance, same-day headcount reminder) |
+| `issues/003-i3-approval.md` | I3 approval | the manager screen and the status transitions |
+| `issues/004-i4-ai-acceptance.md` | I4 verify the AI | `scripts/run_eval.py` at the test plan's threshold; the prompt-injection test cases |
 
-The first ticket is the **thinnest path that runs end to end**. It is allowed to be embarrassing — one hardcoded sentence, no error handling. Its job is to prove the seams line up. Everything after it widens that path.
+Every ticket after I0 is a **vertical slice**: something observably works when it is done, front to back. Never "the database layer" or "the API layer".
 
-## Sizing
-
-One ticket = one fresh context window, about two hours for one person. If it needs more, split it. If three of them are one-liners, merge them.
-
-The test for a good ticket: **could an agent that has never seen this conversation do it from the ticket alone?** If it needs the conversation, the ticket is underspecified.
-
-## Blocking edges
-
-Each ticket names what must be done before it. Real dependencies only — "B needs the table A creates" is an edge; "B feels like it comes after A" is not. Invented edges serialise work that could have run in parallel.
-
-## Where they go
-
-One file per ticket: `issues/NNN-<slug>.md`, numbered from `001`. Ticket shape:
+## Ticket shape
 
 ```markdown
-# <verb the outcome: "Parse one hardcoded sentence into a leave request">
+# <I1: verb the outcome>
+
+## Test cases this ticket turns green
+TC-01, TC-04 — copied from docs/06-test-plan.md with the requirement each verifies.
 
 ## Done when
-Observable conditions, at least one of them a command someone can run in a
-terminal (a pytest selection, a curl). Someone else must be able to check
-these without reading the implementation.
+- those test cases pass, each test marked @pytest.mark.req("TC-xx", ...)
+- a command someone else can run (pytest selection, curl, or a click path on the dev server)
 
 ## Context
-The one paragraph of background needed to start. Point at the section of
-2_architecture.md, do not restate it.
+The sections of docs/05-sds.md this touches (API IDs, screens, modules). Point, do not restate.
 
 ## Blocked by
-001 — or "nothing".
+000 — or "nothing".
 
 ## Notes
 Traps, decided-against alternatives, the seam to test at.
@@ -49,9 +44,10 @@ Traps, decided-against alternatives, the seam to test at.
 
 ## Rules
 
-- **Show the full set before writing files** — the sizing and the edges are much easier to judge as a list than one at a time.
-- **No ticket decides what the spec left open.** Put the open question in the ticket's Notes and flag it to the user.
+- **Every TC in the test plan lands in exactly one ticket.** List any that land nowhere — they are either missing scope or belong in "不測什麼".
+- **No ticket decides what the spec left open.** Put the question in Notes and flag it to the user.
+- **Show the full set before writing files.** Sizing is easier to judge as a list.
 
 ## Finish
 
-Report the paths and the blocking order, and say: build each ticket with `/tdd`, **`/clear`ing context between tickets** — each ticket is self-contained, so the last one's context is disposable.
+Report the paths and say: build each ticket with `/tdd`, **`/clear`ing context between tickets**, and run `.venv/bin/python scripts/trace.py` after each one.

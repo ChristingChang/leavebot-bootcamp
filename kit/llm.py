@@ -14,7 +14,7 @@ from typing import Any, Protocol
 
 import anthropic
 
-from app.config import Settings
+from kit.config import LLMSettings
 
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 DEFAULT_MAX_TOKENS = 16000
@@ -150,9 +150,10 @@ class ClaudeCliLLM:
         return text
 
 
-def build_llm(settings: Settings) -> LLMClient:
-    if settings.llm_provider == "anthropic":
-        return AnthropicLLM(model=settings.llm_model)
-    if settings.llm_provider == "claude-cli":
-        return ClaudeCliLLM(model=settings.llm_model)
+def build_llm(settings: LLMSettings) -> LLMClient:
+    """依設定挑實作。backend 啟動時呼叫一次：build_llm(load_llm_settings())。"""
+    if settings.provider == "anthropic":
+        return AnthropicLLM(model=settings.model)
+    if settings.provider == "claude-cli":
+        return ClaudeCliLLM(model=settings.model)
     return FakeLLM(default="{}")

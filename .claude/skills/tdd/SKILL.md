@@ -7,6 +7,8 @@ description: 測試驅動開發，紅—綠—重構。當要以測試先行的�
 
 Red → green → repeat, one behaviour at a time.
 
+In this repo the behaviours are already named: each ticket lists the test cases (`TC-xx`) it turns green, and `docs/06-test-plan.md` says which layer each belongs to. Start from those.
+
 ## The loop
 
 1. **Red** — write one failing test for the next behaviour. Run it. See it fail, and see it fail *for the reason you expect*. A test that passes before the code exists is testing nothing.
@@ -35,13 +37,24 @@ Pick the seam before the first test. Too deep and every refactor breaks the suit
 
 The loop does not change at a module boundary. A test at the seam between two modules — real collaborators on both sides — is an integration test, written red-first like any other; the layer is a property of where the seam sits, not a different ritual.
 
-Which seams deserve tests is a project decision, not a per-test guess. Take them from the ticket's Notes and from `2_architecture.md` (its API section is usually the right seam); failing both, the heuristic above.
+Which seams deserve tests is a project decision, not a per-test guess. Take the layer from `docs/06-test-plan.md` and put the test under `backend/tests/<layer>/` (acceptance, system, integration, unit). The API section of `docs/05-sds.md` is usually the right seam for acceptance tests.
+
+## Marking tests
+
+Every test names the test case it implements and the requirement it verifies:
+
+```python
+@pytest.mark.req("TC-04", "AC-02.1")
+def test_second_request_on_a_full_day_reminds_the_manager(client): ...
+```
+
+After each cycle, `.venv/bin/python scripts/trace.py` should show one fewer gap. A test without a marker is invisible to the traceability report.
 
 ## Mocking
 
 Default to **not** mocking. A test with four mocks is testing the mocks.
 
-Mock only what you do not own and cannot make fast or deterministic: third-party network calls, the clock, randomness, the filesystem when it is genuinely slow. In this repo the LLM is already behind a seam: use `FakeLLM` from `app/llm.py` (the `fake_llm` fixture in `tests/conftest.py`), never the real model. Your own modules are not on that list — if they are hard to use in a test, that is a design finding, not a mocking problem.
+Mock only what you do not own and cannot make fast or deterministic: third-party network calls, the clock, randomness, the filesystem when it is genuinely slow. In this repo the LLM is already behind a seam: build the app with `kit.llm.FakeLLM` injected in tests, never the real model. Your own modules are not on that list — if they are hard to use in a test, that is a design finding, not a mocking problem.
 
 In-memory fakes beat mocks. A fake repository backed by a map exercises real logic; a mocked one asserts you called a method.
 

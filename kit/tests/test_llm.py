@@ -2,8 +2,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.llm import AnthropicLLM, FakeLLM, LLMError, build_llm
-from app.config import Settings
+from kit.llm import AnthropicLLM, FakeLLM, LLMError, build_llm
+from kit.config import LLMSettings
 
 
 # --- FakeLLM：單元測試用的假模型 ----------------------------------------------
@@ -105,7 +105,7 @@ def test_anthropic_truncated_output_raises():
 # --- build_llm：依設定挑實作 ---------------------------------------------------
 
 def test_build_llm_fake_by_default(tmp_path):
-    settings = Settings(database_path=str(tmp_path / "x.db"), llm_provider="fake", llm_model="")
+    settings = LLMSettings(provider="fake", model="")
 
     assert isinstance(build_llm(settings), FakeLLM)
 
@@ -118,7 +118,7 @@ def test_fake_uses_default_after_responses_run_out():
 
 
 def test_build_llm_fake_never_runs_out(tmp_path):
-    settings = Settings(database_path=str(tmp_path / "x.db"), llm_provider="fake", llm_model="")
+    settings = LLMSettings(provider="fake", model="")
     llm = build_llm(settings)
 
     for _ in range(3):

@@ -1,4 +1,7 @@
-"""設定：從環境變數讀取，啟動時就檢查，缺東西立刻報錯。"""
+"""LLM 設定：從環境變數或 .env 讀取，啟動時就檢查，缺東西立刻報錯。
+
+只管「用哪個模型」。資料庫路徑等 app 自己的設定，由你在 backend/ 裡自己寫。
+"""
 
 import os
 from collections.abc import Mapping
@@ -15,10 +18,9 @@ class ConfigError(ValueError):
 
 
 @dataclass(frozen=True)
-class Settings:
-    database_path: str
-    llm_provider: str
-    llm_model: str
+class LLMSettings:
+    provider: str
+    model: str
 
 
 def load_env_file(path: Path, env: Mapping[str, str]) -> dict[str, str]:
@@ -36,7 +38,7 @@ def load_env_file(path: Path, env: Mapping[str, str]) -> dict[str, str]:
     return merged
 
 
-def load_settings(env: Mapping[str, str] | None = None) -> Settings:
+def load_llm_settings(env: Mapping[str, str] | None = None) -> LLMSettings:
     source = env if env is not None else load_env_file(Path(".env"), os.environ)
 
     provider = source.get("LLM_PROVIDER", "fake").strip() or "fake"
@@ -51,8 +53,4 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
             raise ConfigError("LLM_PROVIDER=anthropic 需要在 .env 或環境變數設定 ANTHROPIC_API_KEY")
         model = model or DEFAULT_ANTHROPIC_MODEL
 
-    return Settings(
-        database_path=source.get("DATABASE_PATH", "").strip() or "data/leavebot.db",
-        llm_provider=provider,
-        llm_model=model,
-    )
+    return LLMSettings(provider=provider, model=model)

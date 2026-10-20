@@ -6,7 +6,7 @@
 
 ## 規格在哪
 
-- 需求以 `1_requirements.md` 為準，架構以 `2_architecture.md` 為準。
+- 需求以 `docs/02-prd.md` 與 `docs/03-srs.md` 為準，設計以 `docs/04-sad.md` 與 `docs/05-sds.md` 為準，測試以 `docs/06-test-plan.md` 為準。
 - 兩份文件衝突時，**停下來問我**，不要自己選一個。
 - 規格沒寫的行為，不要自己決定。列出來問我。
 

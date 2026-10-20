@@ -26,7 +26,8 @@ for skill in "$SKILLS_DIR"/*/SKILL.md; do
   name=$(sed -n '2,/^---$/{s/^name:[[:space:]]*//p}' "$skill" | head -1)
   [ "$name" = "$dir" ] || { echo "名字不符  $skill：name=$name，資料夾=$dir"; found=1; }
 
-  for ref in $(grep -oE '`/[a-z][a-z0-9-]*' "$skill" | sed 's/^`\///' | sort -u); do
+  # `/名字` 後面接反引號或空白才算技能；接 / 的是路徑（例：`/api/health`）
+  for ref in $(grep -oE '`/[a-z][a-z0-9-]*[` ]' "$skill" | sed 's/^`\///; s/[` ]$//' | sort -u); do
     [ -f "$SKILLS_DIR/$ref/SKILL.md" ] && continue
     case "$BUILTINS" in *" $ref "*) continue ;; esac
     echo "懸空引用  $skill → /$ref（沒有這個技能，也不是內建指令）"

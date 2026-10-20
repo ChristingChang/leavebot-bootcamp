@@ -1,40 +1,45 @@
 ---
 name: to-architecture
-description: 從 1_requirements.md 產出 2_architecture.md：系統邊界、AI 與程式碼的分工、資料模型、API、技術決策。拆票之前做。
+description: 從 PRD 與 SRS 產出 docs/04-sad.md（C4、資訊流、誰負責什麼、ADR）與 docs/05-sds.md（ER、API、畫面、模組）。寫測試計畫與拆票之前做。
 disable-model-invocation: true
 ---
 
 # To Architecture
 
-Turn `1_requirements.md` into the technical decisions the tickets will depend on. Runs after the requirement is settled, before `/to-tickets` — architecture decisions change how work should be split, so settle them first.
+Turn `docs/02-prd.md` and `docs/03-srs.md` into the two design documents the tickets and tests will depend on: `docs/04-sad.md` (how it fits together) and `docs/05-sds.md` (how each piece works). Runs after the SRS, before the test plan.
 
-## Shape
+Read first: `STACK.md` (the stack is fixed — you design **inside** it), `LEAVEBOT.md` (scope and the fixed `POST /api/parse` contract), `templates/04-sad.md`, `templates/05-sds.md`, `templates/TRACEABILITY.md`. The templates' `💡` hints are rules for you and must not appear in the output. `examples/it-asset/` shows finished documents for a different problem — use it for depth, never copy its content.
 
-Write `2_architecture.md` at the repo root, following the section order of `templates/2_architecture_template.md`. Read that template first; its `💡` hints are rules for you and must not appear in the output.
+## SAD — what must be in it
 
-The sections that matter most in this project:
+- **C4 L1 and L2** as Mermaid `flowchart`s. L2 is browser → Next.js → (rewrites for `/api/*`) → FastAPI → SQLite / `kit/llm.py`.
+- **Information flow** as a Mermaid `sequenceDiagram` for the main path: sentence → parse → **validation of the LLM output** → rules → database → screen. The validation step must be visible.
+- **Who does what**: for every decision, the LLM, the code or a human. Remaining leave balance, date clashes and approval are never the LLM's.
+- **ADR rows** for choices made inside `STACK.md` that had a real alternative — chosen, rejected, why, reversible or not, which requirement. A choice with no alternative considered gets no row.
 
-- **誰負責什麼** — for every decision in the flow, say whether the LLM, the code, or a human makes it. Remaining leave balance, date clashes and approval are never the LLM's.
-- **資料模型** — a Mermaid `erDiagram`, using the words `1_requirements.md` uses.
-- **API** — only the endpoints and payloads the tickets will build against, not a full catalogue.
-- **技術決策** — one entry per choice that had a real alternative: what was chosen, what was rejected, why. A choice with no alternative considered gets no entry.
+## SDS — what must be in it
+
+- **ER** as a Mermaid `erDiagram`, using the words the PRD uses. Store the employee's original sentence.
+- **API** — every endpoint under the `/api/` prefix, each with its requirement IDs and **error cases**. `API-01` is `POST /api/parse`, copied exactly from `STACK.md`.
+- **Screens** — each mapped to a step of the PRD user flow and to the API it calls.
+- **Modules** — the LLM-facing module and the rules module are separate, with the signatures other modules call.
 
 ## Rules
 
-- **Do not invent.** The material is `1_requirements.md`, `LEAVEBOT.md`, `AGENTS.md` and the conversation. An open choice goes back to `/grilling` — it does not get a plausible default.
-- **Stay inside the starter's stack** (FastAPI + SQLite + pytest, see `AGENTS.md`). Adding a dependency is a decision the user makes, not you.
-- **Decisions, not ceremony.** No C4 levels, no NFR boilerplate. A section with nothing settled in it says so in one line.
-- **Every acceptance criterion must land somewhere.** Before finishing, list each criterion from `1_requirements.md` and the part of the architecture that serves it. One that lands nowhere is a gap — report it.
-- **Show the draft before writing.** Let the user edit, then write the file.
+- **Do not invent.** An open choice goes back to `/grilling` — it does not get a plausible default.
+- **Do not leave the stack.** A new dependency, framework or service is the user's decision, raised as a question, not written into an ADR.
+- **Every FR and NFR must land somewhere** in the SAD or SDS. Before finishing, list any that land nowhere and report them.
+- **Mermaid names** in `erDiagram` use only letters, digits and underscores. Edge labels and node text containing `(`, `)`, `:` or `/` must be wrapped in double quotes (`-->|"build_llm()"|`) — unquoted, the whole diagram fails to render.
+- **Show both drafts before writing.** Let the user edit, then write the files.
 
 ## Finish
 
-Report the file path, the acceptance criteria that landed nowhere (if any), and the next step: `/to-tickets`.
+Report the two paths, any FR / NFR that landed nowhere, and the next step: write `docs/06-test-plan.md`, then `.venv/bin/python scripts/trace.py`.
 
 ## Rationalization table
 
 | Excuse | Reality |
 | --- | --- |
-| "The requirement didn't say, Postgres is a safe default" | A guessed default is a decision nobody made. Unsettled choices go back upstream. |
-| "The LLM can just return the remaining balance too" | Then the balance is whatever the model says. Numbers and statuses come from code. |
-| "A big diagram makes it look complete" | Diagrams earn their place by answering a question a ticket will ask. |
+| "React Query / an ORM would be cleaner" | `STACK.md` fixed the stack so that two days go to specs and tests. Ask; don't decide. |
+| "The LLM can return the remaining balance too" | Then the balance is whatever the model says. Numbers and statuses come from code. |
+| "Validation is an implementation detail" | It is the only thing between a prompt injection and the database. It goes in the information flow. |
