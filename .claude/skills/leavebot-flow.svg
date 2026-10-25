@@ -115,7 +115,7 @@
   <text x="323" y="1442" class="name">/writing-hooks</text><text x="323" y="1473" class="small">硬限制要由工具擋下時，設計 hook</text>
   <rect x="602" y="1408" width="514" height="88" rx="9" class="manual"/>
   <text x="859" y="1442" class="name">/handoff</text><text x="859" y="1473" class="small">換人或換 session 時交接</text>
-  <text x="68" y="1529" class="sub">已安裝技能共 15 支，全部列在圖上；點線的 feasibility 是可選風險檢查。</text>
+  <text x="68" y="1529" class="sub">通用方法共 15 支；另附 Archify 畫圖工具，依專案需要使用。</text>
   <rect x="44" y="1588" width="1098" height="104" rx="12" fill="#eaf0f8"/>
   <text x="68" y="1629" class="panelTitle">通用主幹只放共通能力</text>
   <text x="68" y="1663" class="sub">非決定性元件的評測門檻依專案需要訂定；技能不規定固定階段或票數。</text>
