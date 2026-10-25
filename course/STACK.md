@@ -25,7 +25,7 @@
 macOS / Linux：
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pip install -c course/constraints.txt -e ".[dev]"
 .venv/bin/python -m uvicorn app.main:app --app-dir backend --reload
 .venv/bin/python -m pytest
 ```
@@ -33,7 +33,7 @@ python3 -m venv .venv
 Windows PowerShell（啟動與測試分別在兩個終端機）：
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.venv\Scripts\python.exe -m pip install -c course/constraints.txt -e ".[dev]"
 .venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --reload
 .venv\Scripts\python.exe -m pytest
 ```
@@ -53,3 +53,7 @@ py -3.12 -m venv .venv
 
 先建立挑戰票與更新規格，再加入 Anthropic SDK 選用依賴及必要的環境載入方式。金鑰只存在環境或未追蹤 `.env`，模型名稱明確設定並記錄實測版本；不把 Agent CLI 當後端。
 模型輸出是草稿，經 schema 與程式規則驗證，使用者確認後才送出。一般測試使用 deterministic fake，真正模型 eval 分開執行。解析合約與 fixture 的 `today`、六種假別、比對規則見 [fixtures/README.md](fixtures/README.md)；規劃寫入 06 的選用區。
+
+## 已驗證的套件組合
+
+`course/constraints.txt`記錄2026-10-25在Windows／Python3.12.9實際通過20項參考測試的版本。安裝時以 `-c` 套用；它不是新的套件白名單。其他平台與Agent仍須課前試跑。

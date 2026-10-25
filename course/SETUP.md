@@ -41,14 +41,14 @@ Windows 的 `.agents/skills` 需要符號連結權限。使用 Codex 前確認�
 macOS/Linux：
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install fastapi uvicorn httpx pytest
+.venv/bin/python -m pip install -c course/constraints.txt fastapi uvicorn httpx pytest
 .venv/bin/python -c "import fastapi, uvicorn, httpx, pytest; print('ok')"
 ```
 
 Windows PowerShell：
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\python.exe -m pip install fastapi uvicorn httpx pytest
+.venv\Scripts\python.exe -m pip install -c course/constraints.txt fastapi uvicorn httpx pytest
 .venv\Scripts\python.exe -c "import fastapi, uvicorn, httpx, pytest; print('ok')"
 ```
 
