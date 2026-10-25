@@ -29,7 +29,7 @@
 
   <rect x="47" y="120" width="20" height="20" rx="3" class="manual"/><text x="77" y="136" class="sub">已安裝・你指定</text>
   <rect x="248" y="120" width="20" height="20" rx="3" class="auto"/><text x="278" y="136" class="sub">已安裝・agent 也可接</text>
-  <rect x="513" y="120" width="20" height="20" rx="3" class="manual optional"/><text x="543" y="136" class="sub">可選・未安裝</text>
+  <rect x="513" y="120" width="20" height="20" rx="3" class="auto optional"/><text x="543" y="136" class="sub">已安裝・可選岔路</text>
 
   <!-- Main route. The phase column echoes the reference without implying a gate. -->
   <rect x="44" y="187" width="112" height="64" rx="8" class="phase"/><text x="100" y="226" class="phaseText">定位</text>
@@ -73,7 +73,7 @@
 
   <!-- Optional risk check is a detour, not a required stage. -->
   <path d="M632 427H673V400H687" class="lightEdge"/>
-  <rect x="690" y="364" width="452" height="74" rx="10" class="manual optional"/>
+  <rect x="690" y="364" width="452" height="74" rx="10" class="auto optional"/>
   <text x="916" y="396" class="name">/feasibility</text><text x="916" y="422" class="small">可選：遇到真實技術／成本風險才評估</text>
   <path d="M916 438V472H674V739H632" class="lightEdge"/>
 
@@ -115,7 +115,7 @@
   <text x="323" y="1442" class="name">/writing-hooks</text><text x="323" y="1473" class="small">硬限制要由工具擋下時，設計 hook</text>
   <rect x="602" y="1408" width="514" height="88" rx="9" class="manual"/>
   <text x="859" y="1442" class="name">/handoff</text><text x="859" y="1473" class="small">換人或換 session 時交接</text>
-  <text x="68" y="1529" class="sub">已安裝技能共 14 支，全部列在圖上；點線的 feasibility 是上游參考，尚未加入 skills/。</text>
+  <text x="68" y="1529" class="sub">已安裝技能共 15 支，全部列在圖上；點線的 feasibility 是可選風險檢查。</text>
   <rect x="44" y="1588" width="1098" height="104" rx="12" fill="#eaf0f8"/>
   <text x="68" y="1629" class="panelTitle">通用主幹只放共通能力</text>
   <text x="68" y="1663" class="sub">LeaveBot 的 I4 AI eval 是專案評測條件，寫在它的測試計畫與工作票，不是每個專案必經節點。</text>

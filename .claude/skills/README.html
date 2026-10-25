@@ -3,535 +3,159 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Skills — 遇到問題時怎麼選</title>
+  <title>LeaveBot Skills · 流程與技能</title>
   <style>
-    :root {
-      --paper: #f3efe6;
-      --sheet: #fbf9f4;
-      --ink: #1c1915;
-      --muted: #5e584e;
-      --line: #d8d0c2;
-      --rule: #8a8172;
-      --skill: #1f4e45;
-      --skill-soft: #e5f0ec;
-      --hook: #7c2d12;
-      --hook-soft: #f8ebe4;
-      --d1: #1e4d3a;
-      --d1-soft: #e7f2eb;
-      --d2: #7a3419;
-      --d2-soft: #f8ece6;
-      --user: #1e3a5f;
-      --user-soft: #e8eef6;
-      --any: #3f4a22;
-      --any-soft: #eef1e4;
-      --outside: #4a4458;
-      --outside-soft: #eeecf2;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        linear-gradient(90deg, #e7e1d4 0 12px, transparent 12px),
-        var(--paper);
-      font-family: "Segoe UI", "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
-      line-height: 1.65;
-    }
-
-    a { color: var(--skill); }
-    a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--skill);
-      outline-offset: 3px;
-    }
-
-    code, .cmd {
-      font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
-      font-size: 0.92em;
-    }
-
-    code {
-      background: #efeae0;
-      padding: 0.05em 0.35em;
-      border-radius: 3px;
-    }
-
-    .wrap {
-      width: min(980px, calc(100% - 2.5rem));
-      margin: 0 auto;
-      padding: 2.5rem 0 4rem;
-    }
-
-    header.page {
-      margin-bottom: 1.5rem;
-    }
-
-    .eyebrow {
-      margin: 0 0 0.35rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      font-size: 0.85rem;
-    }
-
-    h1 {
-      margin: 0 0 0.6rem;
-      font-size: 2.4rem;
-      line-height: 1.15;
-      font-weight: 650;
-    }
-
-    .lede {
-      margin: 0;
-      max-width: 42rem;
-      font-size: 1.05rem;
-    }
-
-    nav.toc {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1.25rem 0 0;
-    }
-
-    nav.toc a {
-      text-decoration: none;
-      border: 1px solid var(--line);
-      background: var(--sheet);
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 0.2rem 0.75rem;
-      font-size: 0.9rem;
-    }
-
-    nav.toc a:hover { border-color: var(--skill); }
-
-    .layer {
-      background: var(--sheet);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 1.25rem 1.35rem 1.4rem;
-      margin-top: 1rem;
-    }
-
-    .layer h2 {
-      margin: 0 0 0.85rem;
-      font-size: 1.25rem;
-      line-height: 1.3;
-    }
-
-    .depth {
-      display: inline-block;
-      margin-right: 0.45rem;
-      padding: 0.05rem 0.45rem;
-      border-radius: 999px;
-      background: var(--ink);
-      color: var(--paper);
-      font-size: 0.75rem;
-      font-weight: 650;
-      vertical-align: 0.15em;
-    }
-
-    .hint {
-      margin: -0.35rem 0 1rem;
-      color: var(--muted);
-    }
-
-    /* 第 1 層：三件套由外到內 */
-    .stack {
-      display: grid;
-      gap: 0.55rem;
-    }
-
-    .band {
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-    }
-
-    .band h3 {
-      margin: 0 0 0.2rem;
-      font-size: 1rem;
-    }
-
-    .band p { margin: 0; }
-
-    .band.rule {
-      background: #f3f1ec;
-      border: 1px dashed var(--rule);
-    }
-
-    .band.skill {
-      background: var(--skill-soft);
-      border: 2px solid var(--skill);
-      margin-inline: 1.25rem;
-    }
-
-    .band.hook {
-      background: var(--hook-soft);
-      border: 1px solid #e7c3b2;
-    }
-
-    /* 第 2 層 */
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-
-    .card {
-      border-radius: 10px;
-      padding: 0.9rem 1rem;
-    }
-
-    .card h3 {
-      margin: 0 0 0.45rem;
-      font-size: 1rem;
-    }
-
-    .card ul {
-      margin: 0;
-      padding-left: 1.1rem;
-    }
-
-    .card.user { background: var(--user-soft); }
-    .card.any { background: var(--any-soft); }
-
-    .note {
-      margin: 0.85rem 0 0;
-      color: var(--muted);
-    }
-
-    /* 問題導向地圖 */
-    .repo-map {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
-      gap: 1rem;
-      align-items: start;
-    }
-
-    .repo-tree {
-      margin: 0;
-      padding: 1rem;
-      border-radius: 10px;
-      background: #25231f;
-      color: #f6f1e7;
-      white-space: pre-wrap;
-      font: 0.9rem/1.75 Consolas, "Cascadia Mono", monospace;
-    }
-
-    .repo-tree strong { color: #a9d5c6; }
-    .repo-notes { margin: 0; display: grid; gap: 0.65rem; }
-    .repo-notes div { padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); }
-    .repo-notes dt { font-weight: 700; }
-    .repo-notes dd { margin: 0.1rem 0 0; color: var(--muted); }
-    .skill-inventory { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.4rem; margin: 0.65rem 0 0; padding: 0; list-style: none; }
-    .skill-inventory a { display: block; padding: 0.35rem 0.45rem; border: 1px solid var(--line); border-radius: 6px; background: #fff; font: 0.83rem Consolas, monospace; text-decoration: none; overflow-wrap: anywhere; }
-
-    .route-intro {
-      padding: 1rem 1.1rem;
-      border-radius: 10px;
-      background: var(--ink);
-      color: var(--sheet);
-      margin-bottom: 1rem;
-    }
-    .route-intro strong { display: block; font-size: 1.13rem; }
-    .route-intro p { margin: 0.2rem 0 0; }
-    .route-intro code { color: var(--ink); }
-
-    .route-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.7rem;
-    }
-    .route {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #fff;
-      padding: 0.85rem 1rem;
-    }
-    .route h3 { margin: 0 0 0.45rem; font-size: 1.02rem; }
-    .route p { margin: 0.35rem 0 0; }
-    .route a { font-weight: 700; text-underline-offset: 0.2em; }
-    .route .trigger { display: inline-block; font-size: 0.78rem; font-weight: 700; border-radius: 4px; padding: 0.05rem 0.35rem; }
-    .trigger.manual { background: var(--user-soft); color: var(--user); }
-    .trigger.both { background: var(--any-soft); color: var(--any); }
-    .route .result { color: var(--muted); font-size: 0.91rem; }
-
-    .branch-title { margin: 1.15rem 0 0.55rem; font-size: 1rem; }
-    .route-note { margin: 0.9rem 0 0; padding: 0.75rem 0.9rem; border-radius: 8px; background: var(--d1-soft); }
-    .route-note p { margin: 0.2rem 0; }
-
-    .manual-auto {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
-    .manual-auto article { padding: 0.85rem 1rem; border-radius: 10px; }
-    .manual-auto article:first-child { background: var(--user-soft); }
-    .manual-auto article:last-child { background: var(--any-soft); }
-    .manual-auto h3 { margin: 0 0 0.4rem; font-size: 1rem; }
-    .manual-auto p { margin: 0.35rem 0; }
-    .manual-auto ul { margin: 0.5rem 0 0; padding-left: 1.15rem; }
-
-    .flow-figure { margin: 0 0 1.25rem; }
-    .flow-scroll { overflow-x: auto; border: 1px solid #cbd5e3; border-radius: 12px; background: #fbfcfe; }
-    .flow-scroll img { display: block; width: 100%; min-width: 1000px; height: auto; }
-    .flow-figure figcaption { margin-top: 0.45rem; color: var(--muted); font-size: 0.9rem; }
-    .decision-table td:first-child { white-space: nowrap; font-weight: 700; }
-    .decision-table code { white-space: nowrap; }
-    .decision-table a { text-underline-offset: 0.2em; }
-
-    .where {
-      margin: 0 0 0.35rem;
-      color: var(--skill);
-      font-size: 0.88rem;
-    }
-
-    .layer > h3 {
-      margin: 1.15rem 0 0.55rem;
-      font-size: 0.95rem;
-    }
-
-    /* 第 5 層 */
-    .group { margin-top: 1.1rem; }
-    .group:first-of-type { margin-top: 0; }
-
-    .group > h3 {
-      margin: 0 0 0.55rem;
-      font-size: 0.95rem;
-      letter-spacing: 0.03em;
-    }
-
-    .skill-list {
-      display: grid;
-      gap: 0.65rem;
-    }
-
-    article.skill {
-      border: 1px solid var(--line);
-      border-left-width: 4px;
-      border-radius: 10px;
-      padding: 0.85rem 1rem 0.95rem;
-      background: #fff;
-    }
-
-    article.skill.d1 { border-left-color: var(--d1); }
-    article.skill.d2 { border-left-color: var(--d2); }
-    article.skill.any { border-left-color: var(--any); }
-    article.skill.user-only { background: #fcfdff; }
-    article.skill.outside {
-      border-left-color: var(--outside);
-      background: var(--outside-soft);
-    }
-
-    article.skill h4 {
-      margin: 0.15rem 0 0.4rem;
-      font-size: 1.05rem;
-    }
-
-    article.skill p { margin: 0.35rem 0; }
-
-    .tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      padding: 0.05rem 0.45rem;
-      border-radius: 999px;
-      background: #efeae0;
-      color: var(--muted);
-    }
-
-    .cmd {
-      margin: 0.65rem 0 0;
-      padding: 0.55rem 0.7rem;
-      background: #1c1915;
-      color: #f6f1e7;
-      border-radius: 8px;
-    }
-
-    .cmd span {
-      display: block;
-      color: #b7b0a4;
-      font-family: "Segoe UI", "Microsoft JhengHei UI", sans-serif;
-      font-size: 0.8rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .table-wrap { overflow-x: auto; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0.55rem 0;
-      font-size: 0.92rem;
-    }
-
-    th, td {
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid var(--line);
-      padding: 0.4rem 0.45rem;
-    }
-
-    th { color: var(--muted); font-weight: 650; }
-
-    ul.tight { margin: 0.35rem 0; padding-left: 1.15rem; }
-
-    @media (max-width: 800px) {
-      .split, .repo-map, .route-grid, .manual-auto { grid-template-columns: 1fr; }
-      .skill-inventory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .band.skill { margin-inline: 0; }
-      h1 { font-size: 1.9rem; }
-    }
+    :root { --paper:#f3efe6; --sheet:#fbf9f4; --ink:#1c1915; --muted:#5e584e; --line:#d8d0c2; --blue:#1e3a5f; --blue-soft:#e8eef6; --green:#1f4e45; --green-soft:#e5f0ec; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"Segoe UI","Microsoft JhengHei UI","Microsoft JhengHei",sans-serif; line-height:1.55; }
+    button { font:inherit; cursor:pointer; }
+    button:focus-visible, a:focus-visible, summary:focus-visible { outline:3px solid var(--green); outline-offset:3px; }
+    code,.mono { font-family:Consolas,"Cascadia Mono",monospace; font-size:.91em; }
+    code { background:#efeae0; border-radius:3px; padding:.05em .28em; }
+    a { color:var(--green); text-underline-offset:.2em; }
+    .wrap { width:min(1320px,calc(100% - 3rem)); margin:auto; padding:2.25rem 0 3.5rem; }
+    .page-head { display:flex; justify-content:space-between; gap:2rem; align-items:end; padding-bottom:1.4rem; border-bottom:1px solid var(--line); }
+    h1 { font-size:clamp(2rem,4vw,3.15rem); line-height:1.1; margin:0 0 .6rem; letter-spacing:-.025em; }
+    .page-head p { margin:0; max-width:60ch; color:var(--muted); }
+    .head-meta { flex:none; text-align:right; font-size:.9rem; }
+    .head-meta strong { display:block; color:var(--ink); font-size:1.2rem; }
+    .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin:1.7rem 0 .7rem; }
+    h2 { font-size:1.3rem; line-height:1.3; margin:0; }
+    .section-head p { margin:0; color:var(--muted); font-size:.9rem; }
+    .legend { display:flex; flex-wrap:wrap; gap:1rem; color:var(--muted); font-size:.84rem; margin:0 0 .8rem; }
+    .legend b { color:var(--ink); }
+    .overview { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(330px,.88fr); gap:1rem; align-items:stretch; }
+    .pane { background:var(--sheet); border:1px solid var(--line); border-radius:12px; min-width:0; overflow:hidden; }
+    .pane-head { padding:.8rem 1rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; border-bottom:1px solid var(--line); }
+    .pane-head h3 { font-size:1rem; margin:0; }
+    .pane-head a { white-space:nowrap; font-size:.82rem; }
+    .map-viewport { height:min(68vh,700px); min-height:440px; overflow:auto; background:#fbfcfe; }
+    .map-viewport img { display:block; width:900px; height:auto; max-width:none; }
+    .pane-foot { padding:.6rem 1rem; border-top:1px solid var(--line); color:var(--muted); font-size:.84rem; }
+    .problem-list { height:min(68vh,700px); min-height:440px; overflow:auto; padding:.45rem; }
+    .problem-card { width:100%; text-align:left; display:grid; grid-template-columns:4rem minmax(0,1fr) auto; align-items:center; gap:.8rem; border:0; border-bottom:1px solid var(--line); border-radius:5px; background:transparent; padding:.8rem .7rem; color:var(--ink); }
+    .problem-card:last-child { border-bottom:0; }
+    .problem-card:hover,.problem-card:focus-visible { background:var(--blue-soft); }
+    .problem-card .stage { color:var(--muted); font-size:.77rem; }
+    .problem-card strong { display:block; font-size:.96rem; line-height:1.3; }
+    .problem-card .skill-name { color:var(--blue); font-family:Consolas,"Cascadia Mono",monospace; font-size:.85rem; white-space:nowrap; }
+    .problem-card.auto .skill-name { color:var(--green); }
+    .problem-card .skill-name::before { content:""; display:inline-block; width:.42rem; height:.42rem; border-radius:50%; margin-right:.45rem; vertical-align:.12em; background:var(--blue); }
+    .problem-card.auto .skill-name::before { background:var(--green); }
+    .explain { display:flex; flex-wrap:wrap; gap:.6rem 1.25rem; margin:1rem 0 0; padding:.8rem 1rem; background:var(--blue-soft); border-radius:9px; font-size:.91rem; }
+    .explain p { margin:0; }
+    .repo-details { margin-top:1rem; border:1px solid var(--line); border-radius:10px; background:var(--sheet); }
+    .repo-details summary { cursor:pointer; padding:.75rem 1rem; font-weight:650; }
+    .repo-details[open] summary { border-bottom:1px solid var(--line); }
+    .repo-content { display:grid; grid-template-columns:1fr 1.5fr; gap:1rem; padding:1rem; }
+    .repo-tree { margin:0; padding:1rem; background:#25231f; color:#f6f1e7; border-radius:7px; white-space:pre-wrap; font: .88rem/1.7 Consolas,monospace; }
+    .repo-tree strong { color:#a9d5c6; }
+    .repo-content p { margin:.2rem 0 .65rem; }
+    .repo-content p:last-child { margin-bottom:0; }
+    .repo-content .muted { color:var(--muted); }
+    dialog.skill-dialog { width:min(1040px,calc(100% - 2rem)); height:min(780px,calc(100dvh - 2rem)); max-height:none; margin:auto; padding:0; border:1px solid #b9c9d2; border-radius:14px; background:var(--sheet); color:var(--ink); box-shadow:0 24px 70px rgba(28,25,21,.25); overflow:hidden; }
+    dialog::backdrop { background:rgba(18,33,42,.6); }
+    .dialog-top { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem 1.25rem; border-bottom:1px solid var(--line); }
+    .dialog-top p { margin:0; color:var(--muted); font-size:.83rem; }
+    .dialog-top h2 { font-size:1.22rem; margin:.1rem 0 0; }
+    .close-button { flex:none; border:1px solid var(--line); border-radius:7px; background:#fff; padding:.4rem .7rem; color:var(--ink); }
+    .close-button:hover { border-color:var(--green); }
+    .dialog-layout { height:calc(100% - 79px); display:grid; grid-template-columns:218px minmax(0,1fr); min-height:0; }
+    .dialog-nav { display:grid; align-content:start; gap:.25rem; padding:.7rem; overflow:auto; border-right:1px solid var(--line); }
+    .dialog-nav button { text-align:left; border:0; border-radius:5px; background:transparent; color:var(--muted); padding:.45rem .5rem; font-family:Consolas,"Cascadia Mono",monospace; font-size:.83rem; }
+    .dialog-nav button:hover { background:var(--blue-soft); color:var(--ink); }
+    .dialog-nav button[aria-current="true"] { background:var(--blue); color:#fff; }
+    .dialog-content { overflow:auto; padding:1.4rem clamp(1rem,3vw,2rem) 2rem; }
+    .skill-detail[hidden] { display:none !important; }
+    .skill-detail h4 { font-size:1.45rem; line-height:1.25; margin:0 0 1rem; }
+    .skill-detail p { max-width:75ch; margin:.75rem 0; }
+    .skill-detail .tag { display:inline-block; border-radius:4px; padding:.1rem .45rem; font-size:.77rem; margin-bottom:.55rem; background:var(--blue-soft); color:var(--blue); }
+    .skill-detail:not(.user-only) .tag { background:var(--green-soft); color:var(--green); }
+    .skill-detail .where { color:var(--green); font-size:.87rem; }
+    .skill-detail .cmd { padding:.65rem .8rem; border-radius:7px; background:#25231f; color:#fff; font-family:Consolas,"Cascadia Mono",monospace; }
+    .skill-detail .cmd span { display:block; font-family:inherit; color:#c7beb2; font-size:.8rem; }
+    .skill-detail ul { padding-left:1.2rem; }
+    .table-wrap { overflow-x:auto; }
+    table { border-collapse:collapse; width:100%; font-size:.86rem; }
+    th,td { text-align:left; vertical-align:top; padding:.4rem; border-bottom:1px solid var(--line); }
+    @media(max-width:900px) { .overview { grid-template-columns:1fr; } .overview .pane:last-child { order:-1; } .map-viewport { height:430px; min-height:0; } .problem-list { height:420px; min-height:0; } .page-head { align-items:start; } }
+    @media(max-width:640px) { .wrap { width:min(100% - 1.25rem,1320px); padding-top:1.25rem; } .page-head { display:block; } .head-meta { text-align:left; margin-top:1rem; } .section-head { display:block; } .section-head p { margin-top:.2rem; } .problem-card { grid-template-columns:3rem minmax(0,1fr); } .problem-card .skill-name { grid-column:2; } .repo-content { grid-template-columns:1fr; } dialog.skill-dialog { width:calc(100% - .5rem); height:calc(100dvh - .5rem); } .dialog-layout { grid-template-columns:1fr; grid-template-rows:auto minmax(0,1fr); height:calc(100% - 79px); } .dialog-nav { display:flex; white-space:nowrap; overflow-x:auto; border-right:0; border-bottom:1px solid var(--line); } .dialog-content { padding:1rem; } }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="page">
-      <p class="eyebrow">.claude/skills · 對照 course/HARNESS.md</p>
-      <h1>Skills</h1>
-      <p class="lede">先看眼前卡住的問題，再選工具。技能可由你指定；其中一部分也會在 agent 辨認出適用情境時使用。這頁依本專案現有檔案說明。</p>
-      <nav class="toc" aria-label="頁內分層">
-        <a href="#layer-1">1 專案最小架構</a>
-        <a href="#layer-2">2 誰能啟動</a>
-        <a href="#layer-3">3 常用流程圖</a>
-        <a href="#layer-4">4 觸發方式</a>
-        <a href="#layer-5">5 每一支</a>
-      </nav>
+    <header class="page-head">
+      <div>
+        <h1>LeaveBot Skills</h1>
+        <p>看目前的問題，對照開發流程選技能；點選即可查看用法。</p>
+      </div>
+      <div class="head-meta"><strong>15 支技能</strong>位於 <code>.claude/skills/</code></div>
     </header>
 
     <main>
-      <section class="layer" id="layer-1" aria-labelledby="h-layer-1">
-        <h2 id="h-layer-1"><span class="depth">1</span>這個專案的最小架構</h2>
-        <p class="hint">參考 .claude 目錄的概念圖，但只列出這個 repo 真正有的控制檔。規則寫在根目錄 <code>AGENTS.md</code>；<code>CLAUDE.md</code> 轉讀它。</p>
-        <div class="repo-map">
-          <div class="repo-tree" aria-label="本專案 .claude 目錄結構"><strong>.claude/</strong>
-├─ <strong>settings.json</strong>     註冊 hook
-├─ <strong>hooks/</strong>            工具執行前的守門腳本
-└─ <strong>skills/</strong>           按問題選用的 SKILL.md</div>
-          <dl class="repo-notes">
-            <div><dt><code>settings.json</code> 決定何時執行</dt><dd>目前在 Bash 工具執行前呼叫 <code>guard-git.sh</code> 和 <code>guard-secrets.sh</code>。</dd></div>
-            <div><dt><code>hooks/</code> 自動守住硬限制</dt><dd>它是工具層檢查，與使用者有沒有叫 skill 無關。</dd></div>
-            <div><dt><code>skills/</code> 提供處理問題的方法</dt><dd>每支以 <code>SKILL.md</code> 說明適用情境和做法；觸發方式見下一區。</dd></div>
-          </dl>
-        </div>
-        <h3 class="branch-title"><code>skills/</code> 已安裝 14 支</h3>
-        <ul class="skill-inventory">
-          <li><a href="#compass">compass</a></li><li><a href="#grilling">grilling</a></li><li><a href="#grill-with-docs">grill-with-docs</a></li><li><a href="#to-spec">to-spec</a></li><li><a href="#to-architecture">to-architecture</a></li>
-          <li><a href="#to-test-plan">to-test-plan</a></li><li><a href="#to-tickets">to-tickets</a></li><li><a href="#implement">implement</a></li><li><a href="#tdd">tdd</a></li><li><a href="#code-review">code-review</a></li>
-          <li><a href="#diagnosing-bugs">diagnosing-bugs</a></li><li><a href="#writing-for-agents">writing-for-agents</a></li><li><a href="#writing-hooks">writing-hooks</a></li><li><a href="#handoff">handoff</a></li>
-        </ul>
-      </section>
-
-      <section class="layer" id="layer-2" aria-labelledby="h-layer-2">
-        <h2 id="h-layer-2"><span class="depth">2</span>誰能啟動</h2>
-        <div class="split">
-          <div class="card user">
-            <h3>只有你打才跑</h3>
-            <ul>
-              <li><code>compass</code></li>
-              <li><code>grill-with-docs</code></li>
-              <li><code>to-spec</code></li>
-              <li><code>to-architecture</code></li>
-              <li><code>to-test-plan</code></li>
-              <li><code>to-tickets</code></li>
-              <li><code>implement</code></li>
-              <li><code>handoff</code></li>
-            </ul>
+      <section aria-labelledby="flow-title">
+        <div class="section-head"><h2 id="flow-title">流程與技能</h2><p>左邊看常見路徑，右邊從問題找到已安裝技能</p></div>
+        <div class="legend"><span><b>藍點</b>：由你明確呼叫</span><span><b>綠點</b>：你可以呼叫，agent 也可能依情境使用</span><span>Claude Code 用 <code>/名稱</code>；Codex 用 <code>$名稱</code></span></div>
+        <div class="overview">
+          <div class="pane">
+            <div class="pane-head"><h3>通用開發流程</h3><a href="leavebot-flow.svg" target="_blank" rel="noopener">開啟完整流程圖</a></div>
+            <div class="map-viewport" aria-label="可捲動的通用開發流程圖"><img src="leavebot-flow.svg" alt="需求釐清、規格、架構、測試計畫、拆票、建置、審查與案例驗證的通用流程；遇到問題可返回相關節點。"></div>
+            <div class="pane-foot">拖動捲軸閱讀整張圖；也可開啟 <a href="leavebot-flow.png" target="_blank" rel="noopener">PNG 版本</a>。</div>
           </div>
-          <div class="card any">
-            <h3>你打，或 agent 自己接</h3>
-            <ul>
-              <li><code>grilling</code></li>
-              <li><code>writing-for-agents</code></li>
-              <li><code>tdd</code></li>
-              <li><code>diagnosing-bugs</code></li>
-              <li><code>code-review</code></li>
-              <li><code>writing-hooks</code></li>
-            </ul>
+          <div class="pane">
+            <div class="pane-head"><h3>你現在需要做什麼？</h3><span class="mono">問題 → 技能 → 用法</span></div>
+            <div class="problem-list">
+              <button class="problem-card manual" type="button" data-open-skill="compass"><span class="stage">定位</span><strong>不確定下一步</strong><span class="skill-name">/compass</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="grilling"><span class="stage">釐清</span><strong>需求或決定還模糊</strong><span class="skill-name">/grilling</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="grill-with-docs"><span class="stage">釐清</span><strong>已有文件，想接著討論</strong><span class="skill-name">/grill-with-docs</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="to-spec"><span class="stage">規格</span><strong>共識已定，要寫需求規格</strong><span class="skill-name">/to-spec</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="feasibility"><span class="stage">可選</span><strong>想評估方案是否可行</strong><span class="skill-name">/feasibility</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="to-architecture"><span class="stage">設計</span><strong>要定架構、資料與 API</strong><span class="skill-name">/to-architecture</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="to-test-plan"><span class="stage">測試</span><strong>要定案例與通過門檻</strong><span class="skill-name">/to-test-plan</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="to-tickets"><span class="stage">拆票</span><strong>要切成可交付的工作</strong><span class="skill-name">/to-tickets</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="implement"><span class="stage">建置</span><strong>要完成一張票</strong><span class="skill-name">/implement</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="tdd"><span class="stage">建置</span><strong>要先寫測試再實作</strong><span class="skill-name">/tdd</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="code-review"><span class="stage">檢查</span><strong>要審查這段變更</strong><span class="skill-name">/code-review</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="diagnosing-bugs"><span class="stage">隨時</span><strong>壞了，原因卻不明</strong><span class="skill-name">/diagnosing-bugs</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="writing-for-agents"><span class="stage">隨時</span><strong>要整理 agent 讀的規則</strong><span class="skill-name">/writing-for-agents</span></button>
+              <button class="problem-card auto" type="button" data-open-skill="writing-hooks"><span class="stage">隨時</span><strong>要讓工具擋下硬限制</strong><span class="skill-name">/writing-hooks</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="handoff"><span class="stage">隨時</span><strong>要換人或換對話接手</strong><span class="skill-name">/handoff</span></button>
+            </div>
+            <div class="pane-foot">最後的「按案例驗證」是檢查點：依測試計畫核對結果，並非另一支指令。</div>
           </div>
         </div>
-        <p class="note">課程原有 10 支，現在加上 4 支本專案適配技能。<code>feasibility</code> 仍是未安裝的可選提案；<code>archify</code> 也不在這份已安裝清單內。</p>
       </section>
 
-      <section class="layer" id="layer-3" aria-labelledby="h-layer-3">
-        <h2 id="h-layer-3"><span class="depth">3</span>通用開發流程圖</h2>
-        <p class="hint">左側是多數專案都可沿用的技能與驗證工作；右側標出文件在哪一個節點產生或更新。LeaveBot 特有的檔名和 I4 AI eval 放在圖外說明。圖上的 14 支實線技能都已安裝；點線 <code>feasibility</code> 尚未安裝。</p>
-        <figure class="flow-figure">
-          <div class="flow-scroll"><img src="leavebot-flow.svg" alt="通用技能流程圖：先產生需求、架構與測試計畫，測試計畫定案例編號；拆票後建置與測試，審查後按案例驗證並回填結果。LeaveBot 的 I4 AI eval 不在通用主幹。"></div>
-          <figcaption><a href="leavebot-flow.svg">開啟完整 SVG</a> · <a href="leavebot-flow.png">開啟同步 PNG</a>。下方問題卡可跳到每支技能的用法。</figcaption>
-        </figure>
-        <h3 class="branch-title">參考原作者後，本專案如何取捨六個節點</h3>
-        <div class="table-wrap">
-          <table class="decision-table">
-            <thead><tr><th>技能</th><th>取捨</th><th>原因與本專案落點</th></tr></thead>
-            <tbody>
-              <tr><td><code>grill-with-docs</code></td><td>已安裝適配版</td><td>沿用 <code>grilling</code> 訪談；決策落在既有 brief、PRD、SAD／ADR，偏差才記 LESSONS。<a href="https://github.com/Zenobia000/luca-skills/blob/main/skills/core/grill-with-docs/SKILL.md">原始定義</a></td></tr>
-              <tr><td><code>to-spec</code></td><td>已安裝適配版</td><td>依課程範本收斂 <code>docs/01–03</code>，沿用既有 FR／NFR／AC 編號和本地文件。<a href="https://github.com/Zenobia000/luca-skills/blob/main/skills/core/to-spec/SKILL.md">原始定義</a></td></tr>
-              <tr><td><code>to-test-plan</code></td><td>已安裝適配版</td><td>結合原作者 <a href="https://github.com/Zenobia000/luca-skills/blob/main/skills/core/test-blueprint/SKILL.md">test-blueprint</a> 的測試層級、接縫、追溯，以及 <a href="https://github.com/Zenobia000/luca-skills/blob/main/skills/core/uat-cases/SKILL.md">uat-cases</a> 的 TC 案例與編號，輸出唯一的 <code>docs/06-test-plan.md</code>。</td></tr>
-              <tr><td><code>feasibility</code></td><td>可選，暫不安裝</td><td>原作者把它標為 draft，且明定只在真實技術、外部依賴或成本不確定時使用；本課程技術棧已固定，常態流程不需要每次過這關。<a href="https://github.com/Zenobia000/luca-skills/blob/main/skills/draft/feasibility/SKILL.md">原始定義</a></td></tr>
-              <tr><td><code>to-tickets</code></td><td>必留，已安裝</td><td>本專案版本已依六份規格切 I0–I4，並把 TC 放進票裡；直接使用 <a href="#to-tickets">現有技能</a>。</td></tr>
-              <tr><td><code>implement</code></td><td>已安裝適配版</td><td>一次處理一票，協調 <code>tdd</code>、<code>code-review</code>、pytest、追溯矩陣與 LESSONS；不自動提交。<a href="https://github.com/Zenobia000/luca-skills/blob/main/skills/core/implement/SKILL.md">原始定義</a></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="branch-title">測試規劃、案例與 AI 評測的分工</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>概念</th><th>回答的問題</th><th>本課程落點</th></tr></thead>
-            <tbody>
-              <tr><td>原作者 <code>test-blueprint</code></td><td>測試分哪些層、在哪些接縫驗、何時在 CI 執行？</td><td>其中的分層、接縫與追溯判斷融入 <code>docs/06-test-plan.md</code>；不照搬它另建的藍圖、CI 與狀態檔。</td></tr>
-              <tr><td>原作者 <code>uat-cases</code></td><td>使用者要用哪些案例驗收？每個案例的編號與期望結果是什麼？</td><td>案例設計與凍結編號原則融入 06；課程的 <code>TC-xx</code> 同時涵蓋驗收、系統、整合、單元案例，範圍比原作者的 UAT 清單廣。</td></tr>
-              <tr><td><code>TC-xx</code></td><td>這一則案例在驗哪條 AC／FR／NFR？</td><td>寫在 06 的測試案例與追溯矩陣；D2 的 pytest 用 <code>@pytest.mark.req</code> 指回它，模型依規則注入假實作。</td></tr>
-              <tr><td><code>I4 AI eval</code></td><td>整批口語請假句子的解析準確率有沒有達門檻？</td><td>這是 LeaveBot 專案特有的驗證。I4 依 06 的規則生成腳本，逐句用 fixture 呼叫 <code>POST /api/parse</code>，比較欄位並報準確率；不放在通用主幹，也不是另一套 TC 編號。</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="route-note">
-          <p><strong>TC 要另外一支技能嗎？</strong>目前不用。<a href="#to-test-plan"><code>/to-test-plan</code></a> 定案例與編號；<a href="#implement"><code>/implement</code></a> 配合 <a href="#tdd"><code>/tdd</code></a> 寫並跑測試；最後按案例核對結果、更新追溯。這最後一格是工作與檢查點，不是新的 slash 指令。若專案需要獨立的人工作業驗收清單，才考慮另用原作者的 <code>uat-cases</code>。</p>
-          <p><strong>文件何時出現？</strong>規格、架構、測試計畫分別在對應技能執行時寫出，拆票前已有測試案例。右欄是通用文件角色，實際路徑由專案決定；本課程映射到 <code>docs/01–06</code>。目前這個工作樹尚未建立 <code>docs/</code>；<code>skills/</code> 存的是做法，並非已完成的文件。</p>
-          <p><strong>LESSONS.md 是什麼？</strong>它是這個 repo 的經驗紀錄，存偏差、誤解、踩坑，不是每個專案都必備的主規格，也不取代測試計畫。</p>
-        </div>
-        <h3 class="branch-title">依眼前的問題切入</h3>
-        <div class="route-intro">
-          <strong>從問題進入，不必照編號走。</strong>
-          <p>看見問題 → 選一支技能 → 產出或修正文件／程式 → 再看新問題。D1、D2 是課程時間安排，不是產品開發的固定路線。</p>
-        </div>
-        <div class="route-grid">
-          <article class="route"><h3>不知道下一步，想先定位</h3><span class="trigger manual">你指定</span><p><a href="#compass"><code>/compass</code></a> 讀目前檔案，指出缺口和可走的下一步。</p><p class="result">不替你寫規格或程式。</p></article>
-          <article class="route"><h3>需求或決定還模糊</h3><span class="trigger both">你指定／agent 可接</span><p><a href="#grilling"><code>/grilling</code></a> 逐題釐清；跨對話要保留術語與決策時，指定 <a href="#grill-with-docs"><code>/grill-with-docs</code></a>。</p><p class="result">定案後用 <a href="#to-spec"><code>/to-spec</code></a> 收斂 brief、PRD、SRS。</p></article>
-          <article class="route"><h3>需求已明確，要設計系統</h3><span class="trigger manual">你指定</span><p><a href="#to-architecture"><code>/to-architecture</code></a> 根據 PRD、SRS 與固定技術棧形成 SAD、SDS。</p><p class="result">設計圖放在 SAD／SDS；本 repo 未安裝 <code>archify</code> 技能。</p></article>
-          <article class="route"><h3>要規劃測試與追溯</h3><span class="trigger manual">你指定</span><p><a href="#to-test-plan"><code>/to-test-plan</code></a> 把 AC、FR、NFR 展成 TC、eval 與追溯矩陣。</p><p class="result">輸出 <code>docs/06-test-plan.md</code>，再交給拆票。</p></article>
-          <article class="route"><h3>規格齊了，要拆可交付工作</h3><span class="trigger manual">你指定</span><p><a href="#to-tickets"><code>/to-tickets</code></a> 把六份規格切成票。</p><p class="result">每票引用要驗的 TC。</p></article>
-          <article class="route"><h3>要實作一張票</h3><span class="trigger manual">你指定</span><p><a href="#implement"><code>/implement</code></a> 一次處理一票，依行為使用 <a href="#tdd"><code>/tdd</code></a>，收尾檢查與更新追溯。</p><p class="result">I0 骨架遵守 <code>course/STACK.md</code>。</p></article>
-          <article class="route"><h3>壞了，而且原因不明</h3><span class="trigger both">你指定／agent 可接</span><p><a href="#diagnosing-bugs"><code>/diagnosing-bugs</code></a> 重現、縮小範圍、驗證原因。</p><p class="result">若問題來自規格缺口，回到需求或設計。</p></article>
-          <article class="route"><h3>想檢查這段變更</h3><span class="trigger both">你指定／agent 可接</span><p><a href="#code-review"><code>/code-review</code></a> 用定點比較 diff，檢查規範與票的要求。</p><p class="result">發現問題可回到實作、測試或規格。</p></article>
-          <article class="route"><h3>協作規則需要落地</h3><span class="trigger both">你指定／agent 可接</span><p><a href="#writing-for-agents"><code>/writing-for-agents</code></a> 寫清楚 agent 規則；<a href="#writing-hooks"><code>/writing-hooks</code></a> 處理必須由工具擋下的動作。</p><p class="result">規則放 <code>AGENTS.md</code>；hook 登記在 <code>settings.json</code>。</p></article>
-          <article class="route"><h3>要換人、工具或全新對話</h3><span class="trigger manual">你指定</span><p><a href="#handoff"><code>/handoff</code></a> 留進度、決定、下一步與檔案路徑。</p><p class="result">在新對話接續；同一對話縮短可用 <code>/compact</code>。</p></article>
-          <article class="route"><h3>正在驗證結果</h3><span class="trigger both">照測試計畫執行</span><p>依案例編號核對測試結果與需求，回填追溯關係；使用專案適用的測試工具。</p><p class="result">發現失敗時回到除錯、實作或需求。LeaveBot 另有 I4 AI eval 門檻。</p></article>
-        </div>
-        <div class="route-note">
-          <p><strong>例：</strong>驗收發現假別判斷不清 → <a href="#grilling">釐清需求</a> → 更新規格 → <a href="#to-architecture">修設計</a> → <a href="#tdd">補測試與實作</a> → 再驗收。</p>
-          <p>規格與產出衝突時，以 <code>docs/</code>、<code>course/STACK.md</code> 為準；偏差記到 <code>docs/LESSONS.md</code>。</p>
-        </div>
-      </section>
+      <div class="explain" aria-label="測試與文件如何銜接">
+        <p><strong>測試案例：</strong><code>/to-test-plan</code> 定編號；<code>/implement</code> 與 <code>/tdd</code> 寫、跑測試；審查後對照案例回填結果。</p>
+        <p><strong>文件：</strong>規格、架構與測試計畫在對應節點寫出，拆票前就有測試案例。</p>
+      </div>
 
-      <section class="layer" id="layer-4" aria-labelledby="h-layer-4">
-        <h2 id="h-layer-4"><span class="depth">4</span>誰把技能接進來？</h2>
-        <p class="hint">第 3 區每張問題卡都有觸發標籤；這裡說明標籤的意思。</p>
-        <div class="manual-auto">
-          <article><h3>你明確指定</h3><p>輸入 <code>/技能名</code>；在 Codex 用 <code>$技能名</code>。這八支只在你指定時啟動：</p><ul><li><code>compass</code>：定位</li><li><code>grill-with-docs</code>：帶文件訪談</li><li><code>to-spec</code>：寫 01–03</li><li><code>to-architecture</code>：寫 04–05</li><li><code>to-test-plan</code>：寫 06</li><li><code>to-tickets</code>：拆票</li><li><code>implement</code>：單票建置</li><li><code>handoff</code>：交接</li></ul></article>
-          <article><h3>你指定，或 agent 依情境選用</h3><p>你可以直接叫；任務符合技能說明時，agent 也可能主動套用：</p><ul><li><code>grilling</code>：釐清決定</li><li><code>tdd</code>、<code>diagnosing-bugs</code>、<code>code-review</code>：建置與檢查</li><li><code>writing-for-agents</code>、<code>writing-hooks</code>：協作規則</li></ul></article>
+      <details class="repo-details">
+        <summary>這個 repo 的設定與文件放在哪裡</summary>
+        <div class="repo-content">
+          <div class="repo-tree"><strong>.claude/</strong>
+├─ <strong>settings.json</strong>   註冊 hook
+├─ <strong>hooks/</strong>          工具層檢查
+└─ <strong>skills/</strong>         15 支技能</div>
+          <div>
+            <p><strong>規則：</strong><code>AGENTS.md</code> 是專案規則；<code>CLAUDE.md</code> 轉讀它。</p>
+            <p><strong>規格：</strong><code>course/templates/</code> 提供格式。執行需求、架構與測試計畫技能時，才逐份建立 <code>docs/01–06</code>。</p>
+            <p><strong>經驗：</strong><code>docs/LESSONS.md</code> 記錄本專案遇到的偏差、誤解與踩坑，不取代規格。</p>
+            <p class="muted">目前這個工作樹尚未建立 <code>docs/</code>；<code>skills/</code> 存的是工作方法。</p>
+          </div>
         </div>
-        <p class="note">hook 另由 <code>.claude/settings.json</code> 在符合的工具事件自動觸發，不需要叫 skill。技能描述的是工作方法，hook 執行的是檢查。想看每支的具體用法，往下跳到第 5 區。</p>
-      </section>
+      </details>
+    </main>
+  </div>
 
-      <section class="layer" id="layer-5" aria-labelledby="h-layer-5">
-        <h2 id="h-layer-5"><span class="depth">5</span>每一支怎麼用</h2>
-
-        <div class="group">
-          <h3>隨時</h3>
-          <div class="skill-list">
-            <article class="skill any user-only" id="compass">
+  <dialog class="skill-dialog" id="skill-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-top"><div><p>技能說明</p><h2 id="dialog-title"></h2></div><button type="button" class="close-button" id="close-dialog">返回總覽</button></div>
+    <div class="dialog-layout">
+      <nav class="dialog-nav" aria-label="切換技能" id="dialog-nav"></nav>
+      <div class="dialog-content" id="dialog-content">
+<article class="skill-detail skill any user-only" id="compass" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/compass</code> — 路由器</h4>
               <p class="where">通用流程：不綁階段。不知道下一步時用。</p>
@@ -539,7 +163,7 @@
               <p class="cmd"><span>你打</span>/compass</p>
             </article>
 
-            <article class="skill any" id="writing-hooks">
+<article class="skill-detail skill any" id="writing-hooks" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/writing-hooks</code> — 把紅線變成做不到</h4>
               <p class="where">通用流程：不綁階段。規則必須做成做不到時用。</p>
@@ -547,36 +171,39 @@
               <p>這個 repo 已經有 <code>guard-git.sh</code> 和 <code>guard-secrets.sh</code>，登記在 <code>.claude/settings.json</code>。課用的「結束前測試要綠」範本在 <code>course/templates/hooks/</code>。</p>
               <p class="cmd"><span>你打</span>/writing-hooks<br>並講哪條規則要擋、在工具執行前還是結束前。</p>
             </article>
-          </div>
-        </div>
 
-        <div class="group">
-          <h3>D1 · 規格</h3>
-          <div class="skill-list">
-            <article class="skill d1" id="grilling">
+<article class="skill-detail skill d1" id="grilling" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/grilling</code> — 把決定問清楚</h4>
               <p class="where">通用流程：探索與決策。需求留白時也回到這裡。</p>
               <p>一輪問一層。每一題附它建議的答案，等你回，再問下一層。能自己查的事實它去查，決定留給你。樹問完就停，你確認共識之前不動手。</p>
-              <p>這門課拿它寫 <code>docs/01-brief.md</code> 和 <code>docs/02-prd.md</code>（範本在 <code>course/templates/</code>）。後面任何規格留白，也回到這裡。</p>
+              <p>本專案用它整理 <code>docs/01-brief.md</code> 和 <code>docs/02-prd.md</code>（範本在 <code>course/templates/</code>）。後面任何規格留白，也回到這裡。</p>
               <p class="cmd"><span>你打</span>/grilling<br>照問題回。定案後才請它依範本落檔。</p>
             </article>
 
-            <article class="skill d1 user-only" id="grill-with-docs">
+<article class="skill-detail skill d1 user-only" id="grill-with-docs" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/grill-with-docs</code> — 帶著既有文件訪談</h4>
               <p>讀已定規格，避免跨對話重問。確認共識後把決定寫回相應的 01–05 文件；偏差才進 LESSONS，不另建術語或 ADR 總帳。</p>
               <p class="cmd"><span>你打</span>/grill-with-docs</p>
             </article>
 
-            <article class="skill d1 user-only" id="to-spec">
+<article class="skill-detail skill d1 user-only" id="to-spec" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/to-spec</code> — 收斂需求規格</h4>
-              <p>把已定案的討論依課程範本寫進 <code>docs/01-brief.md</code>、<code>docs/02-prd.md</code>、<code>docs/03-srs.md</code>，沿用既有追溯編號。</p>
+              <p>把已定案的討論依本專案範本寫進 <code>docs/01-brief.md</code>、<code>docs/02-prd.md</code>、<code>docs/03-srs.md</code>，沿用既有追溯編號。</p>
               <p class="cmd"><span>你打</span>/to-spec</p>
             </article>
 
-            <article class="skill d1 user-only" id="to-architecture">
+<article class="skill-detail skill d1" id="feasibility" hidden>
+              <span class="tag">你打，或它自己接</span>
+              <h4><code>/feasibility</code> — 可行性分析</h4>
+              <p class="where">可選岔路：評估想法、方案或其中的關鍵風險。</p>
+              <p>核對目標、限制、證據與未知；必要時做低成本驗證，提出有條件的判斷與最小下一步。</p>
+              <p class="cmd"><span>你打</span>/feasibility<br>並說明想評估的方案與限制。</p>
+            </article>
+
+<article class="skill-detail skill d1 user-only" id="to-architecture" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/to-architecture</code> — 兩份設計</h4>
               <p class="where">通用流程：架構與細部設計。</p>
@@ -589,23 +216,23 @@
               <p class="cmd"><span>你打</span>/to-architecture<br>SRS 已經在的時候。</p>
             </article>
 
-            <article class="skill d1 user-only" id="to-test-plan">
+<article class="skill-detail skill d1 user-only" id="to-test-plan" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/to-test-plan</code> — 六號測試計畫</h4>
-              <p>依 PRD、SRS、SAD、SDS 和 <code>course/templates/06-test-plan.md</code> 建立 TC、AI eval 門檻、退出條件與追溯矩陣。整合原作者 test-blueprint 與 uat-cases 的核心判斷，維持一份文件。</p>
+              <p>依 PRD、SRS、SAD、SDS 和 <code>course/templates/06-test-plan.md</code> 建立 TC、AI eval 門檻、退出條件與追溯矩陣。測試計畫集中記錄案例、門檻與追溯關係。</p>
               <p class="cmd"><span>你打</span>/to-test-plan</p>
             </article>
 
-            <article class="skill d1" id="writing-for-agents">
+<article class="skill-detail skill d1" id="writing-for-agents" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/writing-for-agents</code> — 寫給 agent 讀的文件</h4>
               <p class="where">通用流程：協作規範。規格寫完、開工前。</p>
               <p>本文是寫作標準：步驟和完成條件要能判斷做完沒有、能查到的不要複寫一份、用模型本來就懂的詞當錨點。技能的包裝細節在同目錄 <code>SKILL-MECHANICS.md</code>。</p>
-              <p>這門課拿它寫 <code>AGENTS.md</code> 下半「本專案」，以及 <code>docs/LESSONS.md</code>。上半原廠規則不要改。</p>
+              <p>本專案用它整理 <code>AGENTS.md</code> 下半「本專案」，以及 <code>docs/LESSONS.md</code>。上半原廠規則不要改。</p>
               <p class="cmd"><span>你打</span>/writing-for-agents<br>並指明要改的是 AGENTS.md 下半。</p>
             </article>
 
-            <article class="skill d1 user-only" id="to-tickets">
+<article class="skill-detail skill d1 user-only" id="to-tickets" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/to-tickets</code> — 切成五張票</h4>
               <p class="where">通用流程：工作分解。</p>
@@ -641,20 +268,15 @@
               </div>
               <p class="cmd"><span>你打</span>/to-tickets</p>
             </article>
-          </div>
-        </div>
 
-        <div class="group">
-          <h3>D2 · 實作</h3>
-          <div class="skill-list">
-            <article class="skill d2 user-only" id="implement">
+<article class="skill-detail skill d2 user-only" id="implement" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/implement</code> — 完成一張票</h4>
               <p>讀票與規格，用 <code>/tdd</code> 實作可測行為，跑完整 pytest、更新 06 追溯矩陣與 LESSONS，再以 <code>/code-review</code> 檢查。一次只做一票，不自動 commit。</p>
               <p class="cmd"><span>你打</span>/implement issues/001-i1-first-slice.md</p>
             </article>
 
-            <article class="skill d2" id="tdd">
+<article class="skill-detail skill d2" id="tdd" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/tdd</code> — 一張票的紅綠循環</h4>
               <p class="where">通用流程：實作。</p>
@@ -664,7 +286,7 @@
               <p class="cmd"><span>你打</span>/clear<br>然後 /tdd，並指那張票，例如 issues/001-i1-first-slice.md</p>
             </article>
 
-            <article class="skill d2" id="diagnosing-bugs">
+<article class="skill-detail skill d2" id="diagnosing-bugs" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/diagnosing-bugs</code> — 紅燈原因不明</h4>
               <p class="where">通用流程：除錯。</p>
@@ -673,7 +295,7 @@
               <p class="cmd"><span>你打</span>/diagnosing-bugs<br>附上失敗的指令和輸出。</p>
             </article>
 
-            <article class="skill d2" id="code-review">
+<article class="skill-detail skill d2" id="code-review" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/code-review</code> — 合併前看 diff</h4>
               <p class="where">通用流程：審查。</p>
@@ -682,7 +304,7 @@
               <p class="cmd"><span>你打</span>/code-review main</p>
             </article>
 
-            <article class="skill d2 user-only" id="handoff">
+<article class="skill-detail skill d2 user-only" id="handoff" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/handoff</code> — 換人、換工具、換目錄</h4>
               <p class="where">通用流程：交接。</p>
@@ -690,22 +312,43 @@
               <p>它結束這一輪。你開新對話，貼它給的那一行。同一個對話要變短，用 <code>/compact</code>。</p>
               <p class="cmd"><span>你打</span>/handoff 下一輪做 I2 的規則票</p>
             </article>
-          </div>
-        </div>
-
-        <div class="group">
-          <h3>課表外</h3>
-          <div class="skill-list">
-            <article class="skill outside" id="archify">
-              <span class="tag">compass 不路由</span>
-              <h4><code>archify</code> — 畫圖工具</h4>
-              <p class="where">通用流程：設計階段的圖。不取代架構文件。</p>
-              <p>這個 repo 的 <code>.claude/skills/</code> 沒有 <code>archify/SKILL.md</code>，因此它不是目前可呼叫的專案技能。架構文件及課程指定的 Mermaid 圖仍走 <code>/to-architecture</code>。</p>
-            </article>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+      </div>
+    </div>
+  </dialog>
+  <script>
+    (() => {
+      const dialog = document.getElementById('skill-dialog');
+      const content = document.getElementById('dialog-content');
+      const title = document.getElementById('dialog-title');
+      const nav = document.getElementById('dialog-nav');
+      const cards = [...content.querySelectorAll('article.skill-detail')];
+      const cardById = new Map(cards.map(card => [card.id, card]));
+      const skillButtons = [...document.querySelectorAll('.problem-list [data-open-skill]')];
+      const buttons = new Map();
+      for (const source of skillButtons) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = source.dataset.openSkill;
+        button.addEventListener('click', () => showSkill(source.dataset.openSkill));
+        nav.append(button);
+        buttons.set(source.dataset.openSkill, button);
+      }
+      function showSkill(id) {
+        const active = cardById.get(id);
+        if (!active) return;
+        for (const card of cards) card.hidden = card !== active;
+        for (const [name, button] of buttons) button.setAttribute('aria-current', name === id ? 'true' : 'false');
+        title.textContent = active.querySelector('h4')?.textContent ?? id;
+        if (!dialog.open) dialog.showModal();
+        content.scrollTop = 0;
+        buttons.get(id)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+      for (const button of document.querySelectorAll('[data-open-skill]')) {
+        button.addEventListener('click', () => showSkill(button.dataset.openSkill));
+      }
+      document.getElementById('close-dialog').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+    })();
+  </script>
 </body>
 </html>

@@ -7,12 +7,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$(git rev-parse --show-toplevel)/.claude/hooks/guard-git.sh\"",
+            "command": "bash -c \"bash \\\"$(git rev-parse --show-toplevel)/.claude/hooks/guard-git.sh\\\"\"",
             "statusMessage": "Checking git command"
           },
           {
             "type": "command",
-            "command": "bash \"$(git rev-parse --show-toplevel)/.claude/hooks/guard-secrets.sh\"",
+            "command": "bash -c \"bash \\\"$(git rev-parse --show-toplevel)/.claude/hooks/guard-secrets.sh\\\"\"",
             "statusMessage": "Checking staged secrets"
           }
         ]

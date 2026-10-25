@@ -9,9 +9,9 @@
 | 誰能啟動 | 技能 |
 | --- | --- |
 | 只有你打才跑 | `compass`、`grill-with-docs`、`to-spec`、`to-architecture`、`to-test-plan`、`to-tickets`、`implement`、`handoff` |
-| 你打，或 agent 看說明自己接 | `grilling`、`writing-for-agents`、`tdd`、`diagnosing-bugs`、`code-review`、`writing-hooks` |
+| 你打，或 agent 看說明自己接 | `grilling`、`feasibility`、`writing-for-agents`、`tdd`、`diagnosing-bugs`、`code-review`、`writing-hooks` |
 
-課程原有 10 支，另有 4 支本專案適配技能；`feasibility` 仍是未安裝的可選提案。`archify` 不在已安裝清單，見文末。
+課程原有 10 支，另有 4 支本專案適配技能，以及 1 支通用的 `feasibility`。`archify` 不在已安裝清單，見文末。
 
 ## 兩天怎麼串
 
@@ -21,6 +21,7 @@ D1 寫規格，D2 從零做出能跑的東西。迷路就 `/compass`，它會看
 D1
 /grilling            → 釐清需求；已有文件時可用 /grill-with-docs
 /to-spec             → docs/01-brief.md、02-prd.md、03-srs.md
+/feasibility         → 可選：具體技術／成本風險可能改變範圍時，先做證據檢查
 /to-architecture     → docs/04-sad.md、docs/05-sds.md
 /to-test-plan        → docs/06-test-plan.md，含 TC、eval、追溯矩陣
 /writing-for-agents  → AGENTS.md 下半「本專案」、docs/LESSONS.md
@@ -63,6 +64,10 @@ D1 的第 1–2 步留在同一個對話；第 4–5 步也是。後面那份要
 ### `/to-spec` — 收斂需求
 
 把定案的討論依課程範本寫進 `docs/01-brief.md`、`02-prd.md`、`03-srs.md`，沿用追溯編號。你打：`/to-spec`。
+
+### `/feasibility` — 可行性分析（可選）
+
+評估一個想法或方案能否在目標與限制下成立；也能只檢查其中的關鍵風險。區分證據、估計與未知，必要時做低成本探針，再提出有條件的判斷與最小下一步。你打：`/feasibility`，並說明想評估的方案與限制。
 
 ### `/to-architecture` — 兩份設計
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Compass
 
-This repo ships the course's original ten skills plus four local adaptations: `grill-with-docs`, `to-spec`, `to-test-plan`, and `implement`. D1 writes six spec documents; D2 builds the app in five iterations. Tell the user which skill fits their present problem and what file it should leave behind. The sequence below is a course path, not a gate: bugs and new decisions can enter at any point.
+This repo ships the course's original ten skills, four local adaptations (`grill-with-docs`, `to-spec`, `to-test-plan`, `implement`), and the general `feasibility` skill. D1 writes six spec documents; D2 builds the app in five iterations. Tell the user which skill fits their present problem and what file it should leave behind. The sequence below is a course path, not a gate: bugs and new decisions can enter at any point.
 
 **Respond in the session's language.** Check which of `docs/01-brief.md` … `docs/06-test-plan.md`, `docs/LESSONS.md` and `issues/` already exist before answering — the next step is the first thing that is missing. The repo starts empty on purpose: everything outside `course/` and the config files is something the user builds.
 
@@ -17,6 +17,7 @@ This repo ships the course's original ten skills plus four local adaptations: `g
 | 1. Why build it: pain, goals, non-goals | **`/grilling`**; when working from existing docs, **`/grill-with-docs`** | Decisions for `docs/01-brief.md` |
 | 2. For whom, what: persona, user flow, epic, story, BDD | **`/grilling`** or **`/grill-with-docs`** (same session) | Decisions for `docs/02-prd.md` |
 | 3. Turn settled decisions into Brief, PRD, SRS | **`/to-spec`** | `docs/01-brief.md` … `docs/03-srs.md` using course templates |
+| Optional: a concrete technical, time, or cost risk could change scope | **`/feasibility`** | Evidence, uncertainty, and the smallest next check; no automatic spec change |
 | 4. How it fits together: C4, information flow, ADR | **`/to-architecture`** | `docs/04-sad.md` |
 | 5. How each piece works: ER, API, screens, modules | **`/to-architecture`** (same run) | `docs/05-sds.md` |
 | 6. How it will be verified: test cases, eval threshold, traceability matrix | **`/to-test-plan`** | `docs/06-test-plan.md` |
@@ -40,7 +41,7 @@ After step 6, the traceability matrix at the end of `docs/06-test-plan.md` shoul
 
 Finish with the traceability matrix: no AC / FR / NFR without a TC, no TC without a test file, three rows spot-checked by a human.
 
-`/compass`, `/grill-with-docs`, `/to-spec`, `/to-architecture`, `/to-test-plan`, `/to-tickets`, `/implement` and `/handoff` are **user-triggered**: the user types them. Do not warn that they are missing — check `.claude/skills/<name>/SKILL.md` if in doubt. `/feasibility` is shown as an optional upstream idea in the diagram but is not installed here.
+`/compass`, `/grill-with-docs`, `/to-spec`, `/to-architecture`, `/to-test-plan`, `/to-tickets`, `/implement` and `/handoff` are **user-triggered**: the user types them. Do not warn that they are missing — check `.claude/skills/<name>/SKILL.md` if in doubt. `/feasibility` is installed as an optional risk check; recommend it only when a concrete risk could change a decision.
 
 An open question at any step goes back to **`/grilling`**, never to a guessed default.
 
