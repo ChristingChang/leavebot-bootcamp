@@ -1,0 +1,13 @@
+# 卡 G｜拆骨架與表單兩張票
+
+技能：`to-tickets`。先讀 [WORKFLOW](../WORKFLOW.md)，只處理這個階段。
+
+```text
+/to-tickets
+依 @course/WORKFLOW.md、@docs/05-sds.md、@docs/06-test-plan.md，按今天的時間拆兩張主線票：
+issues/000-skeleton.md：照STACK建立套件、FastAPI、靜態首頁、GET /api/health與health測試，不寫請假邏輯。
+issues/001-submit-leave.md：表單→後端驗證→SQLite→我的假單，逐個TC做TDD。
+每張寫成果、TC或骨架檢查、驗收指令、所讀規格段落與真正依賴；業務TC歸001。列出建置前提與估計大小，若兩張的範圍過大先報告。
+只規劃基本範圍；進階挑戰由我們要求後另開票。先給我們審清單，再寫檔。
+建立 docs/LESSONS.md（依同名模板）並在AGENTS.md的本專案段補已確認的必要規則，不覆蓋原有課程邊界。
+```

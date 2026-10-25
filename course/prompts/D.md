@@ -1,0 +1,12 @@
+# 卡 D｜用 Archify 檢查流程
+
+技能：`archify`。先讀 [WORKFLOW](../WORKFLOW.md)，只處理這個階段。
+
+```text
+/archify
+讀 @docs/03-srs.md，把員工提交請假的流程畫成 workflow，輸出 diagrams/submit-leave.html，保留來源候選檔與工具實際驗證結果。
+包含選員工、填表、送出、後端驗證、錯誤回饋且不存檔、存成pending、我的假單顯示結果。只畫SRS裡已定的行為，不自行加核准或LLM。
+使用本repo的Archify工具與交付流程。完成後回報實際檔案路徑與通過／未通過的檢查。
+若Node、工具或瀏覽器條件不足，明確回報原因，改在 docs/03-srs.md 的流程圖區寫 Mermaid；不要假裝已產出HTML。
+我們會對照SRS逐一審圖，未確認前不修改需求。
+```

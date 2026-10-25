@@ -70,3 +70,7 @@ luca-skills 中部分技能文字改寫自 [mattpocock/skills](https://github.co
 
 本 repo 自身的教材內容（`.claude/skills/` 以外的教材文件，如 `curriculum/`、`docs/`）
 為原創，依根目錄 `LICENSE` 的 MIT 授權。
+
+## Archify
+
+新增隨repo提供的Archify 3.2工具，來源 https://github.com/tt-a1i/archify 。保留原始MIT授權與第三方聲明，見 `skills/archify/LICENSE` 與 `skills/archify/THIRD_PARTY_NOTICES.md`。

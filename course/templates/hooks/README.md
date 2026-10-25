@@ -1,17 +1,19 @@
 # 範本 hook：把紅線從「建議」變成「做不到」
 
 寫在 `AGENTS.md` 的規則，AI 大部分時候會遵守，但不是每一次。
-真正不能破的紅線，要用 hook 擋：**它不是請 AI 不要做，是讓 AI 做不到。**
+真正不能破的紅線，要用 hook 擋：**它只能攔截已登記且匹配的事件；不是完整安全隔離。**
 
 | Hook | 擋什麼 | 適用 |
 |---|---|---|
-| [`pytest-on-stop.sh`](./pytest-on-stop.sh) | 改過 `.py` 而測試沒過，agent 不能結束這一輪 | Claude Code |
+| [`pytest-on-stop.sh`](./pytest-on-stop.sh) | 匹配的 Stop 事件中，改過 `.py` 而測試沒過則阻擋一次 | Claude Code |
 
 回歸規格：[`test-pytest-on-stop.sh`](./test-pytest-on-stop.sh)，由維護者的 `.maintain/check.sh` 自動執行。
 
 ---
 
 ## 裝到你的專案（Claude Code）
+
+先完成骨架並確認虛擬環境測試指令能跑。此範本預設未啟用。
 
 1. 複製 hook（在 repo 根目錄執行）：
 
@@ -40,7 +42,7 @@
 
 3. 確認它有作用：故意改壞一行程式碼，請 agent「結束這個任務」。它應該會被擋下，並開始修。
 
-測試指令不是 `pytest -q` 的話，在 settings 的 command 前面加環境變數，例如
+預設使用專案虛擬環境的 `python -m pytest -q`，可辨識 Windows 路徑。要覆寫測試指令時，在 settings 的 command 前面加環境變數，例如
 `PYTEST_CMD="python -m pytest -q" bash .claude/hooks/pytest-on-stop.sh`。
 
 ---

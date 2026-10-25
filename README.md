@@ -1,36 +1,28 @@
-# LeaveBot —— 2 天 SDD agentic coding 實戰營
+# LeaveBot — 第二天的空白學生專案
 
-> **這是一片空地。** D1 你們寫規格，D2 讓 agent 照規格把 app 從 0 長出來。
-> 題目是「一句話請假」：員工打一句話，AI 轉成假單，規則由程式檢查，主管核准。
-> 講義在課程網站（講師會給網址）。
+第一天在獨立資料夾體驗 Vibe Coding、比較結果並練習 PRD；第二天用這個 repo，學習如何用規格、通用 skills、測試與人工驗收穩定交付。
 
-```text
-leavebot-bootcamp/
-├── README.md  AGENTS.md  CLAUDE.md   ← 你在這裡；AGENTS.md 是 agent 的規則
-├── course/                           ← 課程給的：題目、技術棧、模板、範例、eval 句子
-└── .claude/ .agents/ .codex/ .mcp.json   ← agent 的設定，打開工具就生效，不用動
-```
+**今天做一條完整路徑：選員工 → 填請假單 → 驗證 → 存檔 → 我的假單顯示待審核。** 主管核准、額度與一句話 AI 解析是延伸。
 
-你們會長出來的：`docs/`（六份規格＋經驗紀錄）、`issues/`（疊代票）、`backend/`、`frontend/`、`pyproject.toml`、`dev.sh`。
+## 從這裡開始
 
-## 課前（開課前一週做完）
+1. Fork 本 repo 的 `main`，clone 自己的 fork。只複製 main 即可；checkpoint 從講師 upstream 取得。
+2. 準備 Git、Python 3.12、能正常登入的 Claude Code 或 Codex，以及瀏覽器。Archify 使用 Node（套件最低 18；課前用受支援版本試跑），應用程式主線不需要 Node 或 LLM API key。
+3. 在 repo 根目錄開工具，讀 [`course/WORKFLOW.md`](course/WORKFLOW.md) 的開場提示。Claude Code 用 `/技能`，Codex 用 `$技能`。
+4. 依工作流程逐步產出文件、票與程式，不先複製空模板占位。需要同組已完成決策時先讀文件。
 
-1. **拿到 repo**：每組 fork，clone 自己的那一份。Windows 先跑 `git config --global core.symlinks true`，否則 Codex 找不到技能。
-2. **裝工具**：Python 3.12、Node 24、Claude Code 或 Codex。細節照講義的「課前準備」。
-3. **申請 Anthropic API key**，確認帳戶有額度。D2 你們的 app 要用它呼叫模型。
-4. **讀題目**：[`course/LEAVEBOT.md`](./course/LEAVEBOT.md)。
-5. **確認接上了**：在 repo 根目錄打開 `claude` 或 `codex`，打 `/compass`（Codex：`$compass`），看得到技能表就完成。第一次開會問要不要啟用專案的 MCP，選同意。
+Windows 使用 Codex 共用技能前，確認 `.agents/skills` 是指向 `../.claude/skills` 的連結；無法建立連結時請講師協助，不能只以設定檔存在當成工具已接通。
 
-**一律在 repo 根目錄啟動 agent**。在子目錄啟動，護欄不會生效。
-
-## 想知道更多
-
-| 想知道 | 看 |
+| 要做什麼 | 讀哪裡 |
 |---|---|
-| agent 的設定檔各管什麼、10 個技能、2 個 MCP | [`course/HARNESS.md`](./course/HARNESS.md) |
-| 技術棧、紅線、I0 骨架怎麼生 | [`course/STACK.md`](./course/STACK.md) |
-| 六份規格怎麼寫 | [`course/templates/`](./course/templates/) |
+| 今天每一步、對應技能與提示詞 | [WORKFLOW](course/WORKFLOW.md) |
+| 題目與基本／延伸範圍 | [LEAVEBOT](course/LEAVEBOT.md) |
+| 技術棧、安裝、啟動與測試 | [STACK](course/STACK.md) |
+| 規則、skills、hooks、MCP | [HARNESS](course/HARNESS.md) |
+| 文件的最小格式 | [templates](course/templates/README.md) |
+| 落後時接續 | [CHECKPOINTS](course/CHECKPOINTS.md) |
+| 通用技能選擇清單 | [Skills](.claude/skills/README.md) |
 
-課程結束後想要完整的工具鏈（38 個技能），用模板 repo [`agent-skills-starter`](https://github.com/Zenobia000/agent-skills-starter) 開新專案。
+`main` 只有教材與工具設定；`docs/`、`issues/`、`backend/`、`pyproject.toml` 由學生產生。checkpoint 是另外的教學快照。舊分支整合紀錄見 [維護紀錄](course/MAINTENANCE.md)。
 
-技能與 guard hooks 衍生自 [luca-skills](https://github.com/Luca0x5755/luca-skills)（MIT），聲明見 [`.claude/THIRD-PARTY-NOTICES.md`](./.claude/THIRD-PARTY-NOTICES.md)。
+講義與講師教材在 [ai-vibe-coding-beginner](https://github.com/Zenobia000/SDD-agent-coding-beginner)。技能與 guard 的來源及授權見 [THIRD-PARTY-NOTICES](.claude/THIRD-PARTY-NOTICES.md)。

@@ -8,8 +8,8 @@ set -uo pipefail
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
 # tomllib 要 Python 3.11 以上（課程本來就要求 3.11+）
-py=$(command -v python3.12 || command -v python3.11 || command -v python3)
-"$py" - <<'PY'
+source .maintain/python.sh || exit 1
+"$COURSE_PYTHON" - <<'PY'
 import json, sys, tomllib
 claude = json.load(open(".mcp.json"))["mcpServers"]
 codex = tomllib.load(open(".codex/config.toml", "rb")).get("mcp_servers", {})

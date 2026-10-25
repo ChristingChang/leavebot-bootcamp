@@ -6,6 +6,7 @@
 
 | 技能 | 何時用 | 啟動方式 |
 | --- | --- | --- |
+| [archify](archify/SKILL.md) | 依需求建立可檢查的流程與系統圖 | 使用者或 agent |
 | [compass](compass/SKILL.md) | 不確定接下來該做什麼 | 使用者指定 |
 | [grilling](grilling/SKILL.md) | 需要釐清或挑戰一個決策 | 使用者或 agent |
 | [grill-with-docs](grill-with-docs/SKILL.md) | 已有文件，要接著訪談 | 使用者指定 |
@@ -22,4 +23,4 @@
 | [handoff](handoff/SKILL.md) | 換人、換工具或換對話接手 | 使用者指定 |
 | [writing-hooks](writing-hooks/SKILL.md) | 需要工具層守衛或排查 hook | 使用者或 agent |
 
-這是一份**選擇清單**，不是固定流程。`to-tickets` 依目標、規格、工作大小與使用者的取捨決定票數；`to-spec`、`to-architecture` 和 `to-test-plan` 沿用各專案既有的文件位置與編號。LeaveBot 課程的操作說明見 [`course/HARNESS.md`](../../course/HARNESS.md)。
+這是一份**選擇清單**，不是固定流程。`to-tickets` 依目標、規格、工作大小與使用者的取捨決定票數；`to-spec`、`to-architecture` 和 `to-test-plan` 沿用各專案既有的文件位置與編號。本 repo 共 16 支技能。LeaveBot 課程的階段與提示詞見 [`course/WORKFLOW.md`](../../course/WORKFLOW.md)，工具操作說明見 [`course/HARNESS.md`](../../course/HARNESS.md)。

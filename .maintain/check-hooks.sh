@@ -8,9 +8,10 @@ set -uo pipefail
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
 found=0
+source .maintain/python.sh || exit 1
 
 for f in .claude/settings.json .codex/hooks.json; do
-  python3 -c 'import json,sys; json.load(open(sys.argv[1]))' "$f" 2>/dev/null || { echo "$f 不是合法 JSON"; found=1; }
+  "$COURSE_PYTHON" -c 'import json,sys; json.load(open(sys.argv[1],encoding="utf-8"))' "$f" 2>/dev/null || { echo "$f 不是合法 UTF-8 JSON"; found=1; }
 done
 
 for s in guard-git.sh guard-secrets.sh; do

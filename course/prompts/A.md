@@ -1,0 +1,12 @@
+# 卡 A｜需求訪談與 Brief
+
+技能：`grill-with-docs`。先讀 [WORKFLOW](../WORKFLOW.md)，只處理這個階段。
+
+```text
+/grill-with-docs
+先讀 @AGENTS.md、@course/WORKFLOW.md、@course/LEAVEBOT.md。
+這是第二天表單主線。依 @course/templates/01-brief.md 協助我們整理最小 Brief。
+已固定的技術與功能不重問；訪談只聚焦理由是否必填與長度、過去日期、重複送出回饋，最多兩輪。
+每題給建議，等我們回答，不自行定案。課堂建議是理由選填最多200字、接受過去日期、不自動去重但送出期間鎖住按鈕；只有我們確認後才採用。
+共識確認後寫 docs/01-brief.md，三項決策附在同檔。未決且影響核心流程時明列並由講師決定，不開始寫程式。
+```

@@ -1,43 +1,18 @@
-# 模板庫
+# 課堂模板：每階段只做最小版本
 
-> 上課時用，回公司也能直接帶走。每一份都是**填空題**：`＜＞` 是要換掉的地方，`💡` 是提示。
-> 寫好的範例在 [`../examples/it-asset/`](../examples/it-asset/)（另一個題目：IT 設備借用），看「寫完長什麼樣」用，**不要照抄** —— 你的題目和它不一樣。
+依 [WORKFLOW](../WORKFLOW.md) 進行；不要先複製所有空表。`＜＞` 是替換處，教學提示不放進成品。固定路徑讓通用 skills 及下一個對話能找到成果。
 
-## 六份規格文件（D1）
-
-複製到根目錄的 `docs/`，檔名照抄（`docs/01-brief.md` …）。技能和專案大腦都靠這個位置找它們。
-
-| 檔案 | 回答 | 單元 |
+| 模板 → 產出 | 必填最小內容 | 何時 |
 |---|---|---|
-| [`01-brief.md`](./01-brief.md) | 為什麼做：痛點、goal、non-goal | D1-2 |
-| [`02-prd.md`](./02-prd.md) | 為誰做、做什麼：persona、user flow、epic、story、BDD 驗收條件 | D1-3 |
-| [`03-srs.md`](./03-srs.md) | 什麼叫做好了：use case、FR、NFR | D1-4 |
-| [`04-sad.md`](./04-sad.md) | 怎麼組起來：C4、資訊流、誰負責什麼、技術選型 | D1-5 |
-| [`05-sds.md`](./05-sds.md) | 每一塊怎麼做：ER、API、畫面、模組 | D1-6 |
-| [`06-test-plan.md`](./06-test-plan.md) | 怎麼驗：V-model 對應、測試案例、AI 驗收、退出條件 | D1-7 |
-| [`TRACEABILITY.md`](./TRACEABILITY.md) | 編號規則、需求怎麼一路接到測試、這句話該寫在哪份文件 | 隨時查 |
-| [`LESSONS.md`](./LESSONS.md) | 經驗紀錄：AI 誤解了什麼、產出和講義不一樣時怎麼對齊 | D1-8 建立，之後一直更新 |
+| [01 Brief](01-brief.md) → `docs/01-brief.md` | 問題、目標、非目標 | D2 開場 |
+| [02 PRD](02-prd.md) → `docs/02-prd.md` | 使用者、主流程、故事與 AC | D2 卡 B |
+| [03 SRS](03-srs.md) → `docs/03-srs.md` | 驗證規則、錯誤、待決 | D2 卡 C |
+| [04 SAD](04-sad.md) → `docs/04-sad.md` | 系統邊界與一張圖 | D2 卡 E |
+| [05 SDS](05-sds.md) → `docs/05-sds.md` | 資料、API、畫面與模組 | D2 卡 E |
+| [06 Test Plan](06-test-plan.md) → `docs/06-test-plan.md` | 6–12 個 TC、人工流程、追溯表 | D2 卡 F |
 
-讓 AI 照格式寫：
+第一次課堂不要求填滿完整工程文件。先讓一條需求接到測試與操作結果；[IT 設備借用完整範例](../examples/it-asset/README.md)供課後看深度，其技術棧與規模不代表本課主線，不能直接複製。
 
-```text
-用 @course/templates/02-prd.md 的格式，根據 @docs/01-brief.md 和我們剛剛的討論，產出 docs/02-prd.md。
-模板裡的 💡 提示是寫給你的規則，要遵守，但不要出現在產出裡。
-沒討論到的，放進「待決事項」，不要替我決定。
-```
-
-## 專案大腦與紅線（D1-8、D2）
-
-| 檔案 | 什麼時候用 |
-|---|---|
-| [`agent-rules/AGENTS.safe.md`](./agent-rules/AGENTS.safe.md) | 專案大腦：**通用安全模式**（套件、秘密、輸入驗證、AI 輸出） |
-| [`agent-rules/AGENTS.tdd.md`](./agent-rules/AGENTS.tdd.md) | 追加：**TDD 強制模式**（先紅燈、不准改測試） |
-| [`hooks/`](./hooks/) | 把紅線從文字規則變成「做不到」 |
-
-**專案大腦怎麼放**：Codex 讀根目錄的 `AGENTS.md`；Claude Code 讀 `CLAUDE.md`，它只有一行 `@AGENTS.md`。所以規則只改 `AGENTS.md`，而且只改下半段「本專案」—— 上半段「原廠規則」是課程給的。
-
-## 這些模板刻意不做的事
-
-- **不給 LeaveBot 的答案。** 範例用的是別的題目。
-- **不求完整。** 只列這兩天用得到的段落。真實專案需要更多，自己加；用不到的，刪掉。
-- **不寫無法檢查的規則。** 「請寫出高品質的程式碼」這種句子，AI 讀了不知道怎麼做，你也不知道它做到了沒。
+[TRACEABILITY](TRACEABILITY.md)定義編號；[LESSONS](LESSONS.md)只記實際偏差與解法，沒有新發現時不湊紀錄。
+[agent-rules](agent-rules/AGENTS.safe.md)是課後其他專案的參考，不覆蓋本 repo 的既有 `AGENTS.md`。本課只在下半段補小組決策。
+[hooks](hooks/README.md)是選用示範，完成骨架後再考慮。

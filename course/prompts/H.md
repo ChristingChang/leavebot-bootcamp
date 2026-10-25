@@ -1,0 +1,19 @@
+# 卡 H｜一張票一個對話，逐個行為實作
+
+技能：`implement`。先讀 [WORKFLOW](../WORKFLOW.md)，只處理這個階段。
+
+```text
+/implement
+先完成 @issues/000-skeleton.md，遵守 @AGENTS.md 與 @course/STACK.md。使用專案虛擬環境，讓首頁讀到 /api/health，跑health測試，實際啟動並回報網址。這一步不寫請假邏輯，完成後停止，等待我們驗收。
+
+```
+
+骨架驗收後，另開新對話再貼第二段：
+
+```text
+/implement
+讀 @issues/001-submit-leave.md 與它引用的規格。依 /tdd 一次一個行為，第一個業務測試先跑出預期原因的紅燈，停下讓我們確認，再做綠燈。後續按同樣循環完成。
+每個測試標TC與需求編號；資料庫用暫存位置。不能改測試放寬條件。完成後跑完整pytest、操作核心流程、回填追溯表與實際偏差。
+Windows用 .venv\Scripts\python.exe；macOS/Linux用 .venv/bin/python。不假裝已啟用虛擬環境。
+不要自動commit或push，未驗證項明確列出。
+```

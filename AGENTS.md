@@ -1,58 +1,37 @@
-# LeaveBot —— agent 工作規則
+# LeaveBot — 課程專案規則
 
-> Claude Code 透過 `CLAUDE.md`（只有一行 `@AGENTS.md`）讀這一份；Codex 直接讀。每個設定檔各管什麼，見 `course/HARNESS.md`。
-> **上半段是原廠規則**，課程給的，不要改。**下半段是本專案**，你們在 D1 單元 8 寫，之後一路長大。
+Claude Code 經 `CLAUDE.md` 載入本檔；Codex 直接讀本檔。通用 skills 提供方法，本檔與 `course/` 定義本課的限制。
 
----
+## 先讀哪裡
 
-# 原廠規則
+- **開始第二天、詢問下一步或呼叫課程技能前，先讀 `course/WORKFLOW.md`。** 依當前階段讀必要材料，不一次產出整套文件。
+- 題目與範圍：`course/LEAVEBOT.md`；技術與執行方式：`course/STACK.md`；工具設定：`course/HARNESS.md`。
+- `course/PLAN.json` 與 `course/prompts/` 是兩邊教材同步的來源。模板在 `course/templates/`，產出寫到根目錄 `docs/`，工作票寫到 `issues/`。
+- 第一天的臨摹、塔羅與動畫在**獨立的 D1 練習資料夾**執行，不放進本專案。本專案從第二天開始。
 
-## 這個 repo 一開始是空地
+## 範圍與決策
 
-除了 `course/` 和設定檔，什麼程式都沒有。`docs/`、`issues/`、`backend/`、`frontend/`、`pyproject.toml`、`dev.sh` 都由你依規格生成。
+本分支是一個空白學生起點：沒有 app、`docs/` 或 `issues/`。第二天先規格，再讓 Agent 生成骨架與功能。
+全班基本路徑是「選員工 → 填表 → 後端驗證 → SQLite 存檔 → 我的假單顯示待審核」。主線兩張票：`issues/000-skeleton.md`、`issues/001-submit-leave.md`。
 
-| 檔案 | 回答 |
-|---|---|
-| `course/LEAVEBOT.md` | 題目、公司規章（課堂假設，不是勞動法規）、MVP 範圍 |
-| `course/STACK.md` | 固定的技術棧、套件白名單、紅線、I0 怎麼生、唯一定死的 API |
-| `course/templates/` | 六份規格模板、追溯規則、經驗紀錄模板 |
-| `course/examples/it-asset/` | 另一個題目寫好的六份文件，看深度用，**不要照抄** |
-| `course/fixtures/` | eval 句子 |
-| `docs/01-brief.md` … `docs/06-test-plan.md` | 這個專案的規格。`06` 最後有追溯矩陣 |
-| `docs/LESSONS.md` | 這個專案的經驗：偏差、誤解、踩過的坑 |
-| `issues/` | D2 的疊代票 I0–I4 |
+`course/` 固定課程邊界；已確認的 `docs/` 定義邊界內的產品行為。兩者衝突或必要決策未定時，列出問題請人決定，不能改規格來配合程式。偏差記進 `docs/LESSONS.md`。
 
-## 規格和你的產出不一致時
+## 實作與驗收
 
-1. **以規格為準**（`docs/`、`course/STACK.md`），不要自己決定哪邊對，也不要為了讓產出成立去改規格。
-2. 規格沒寫到、或兩份文件互相衝突：**停下來問**。
-3. 發現了偏差就記進 `docs/LESSONS.md` 的「偏差紀錄」：講義／規格說什麼、你實際做了什麼、怎麼對齊。
+- 一次處理指定票。使用 `/implement`（Codex：`$implement`）；可測行為使用 TDD，逐一看到預期原因的紅燈，再做綠燈。
+- 不刪除、跳過或放寬測試來通過。測試規格本身有錯時，先提出證據，由人確認修訂。
+- 每個業務測試標註 `@pytest.mark.req("TC-xx", "AC/FR 編號")`；票結束時更新 `docs/06-test-plan.md` 的追溯表，未執行不能標通過。
+- 使用虛擬環境執行：macOS/Linux `.venv/bin/python -m pytest`；Windows `.venv\Scripts\python.exe -m pytest`。不可假設 shell 已啟用 venv。
+- 說完成前跑專案測試並貼出結果，操作核心畫面（可用瀏覽器工具，沒有則交由人操作），回報未驗證事項。
+- 提交前查看 `git status`、`git diff`，只加入本次明確路徑。不自動推送、合併或切換 checkpoint。
 
-## 每張票結束前
+## 技術邊界
 
-- 跑過 `.venv/bin/pytest` 並貼出結果，才能說「完成」。
-- 更新 `docs/06-test-plan.md` 的追溯矩陣：這張票的 TC 由哪個測試檔驗過。
-- 這張票裡有任何偏差、誤解或踩坑，補進 `docs/LESSONS.md`。
+- 依 `course/STACK.md`：FastAPI 提供 HTML/CSS/原生 JavaScript，SQLite 與 pytest；主線不加前端框架、登入、部署或 LLM 呼叫。
+- 前端呼叫相對路徑 `/api/...`；不開 CORS。驗證在後端；SQL 用參數；使用者文字以 `textContent` 或安全跳脫呈現。
+- 天數由程式計算。測試使用暫存資料庫及固定時鐘，不讀寫開發資料庫。
+- 金鑰不進版控，不讀出或印出秘密；進階模型設定只從環境載入。應用程式不可把 Agent CLI 當後端服務。
 
-一律用 `.venv/bin/python`、`.venv/bin/pytest`（Windows：`.venv\Scripts\python`）。你的 shell 不會自動啟用 venv，很多機器上也沒有 `python` 這個指令。
+## 本專案決策（D2 拆票時由小組補充）
 
-## 紅線
-
-- **照 `course/STACK.md`。** 不換框架、不加白名單外的套件、不開 CORS、不在前端寫死後端位址。要例外，先問。
-- **模型只透過 Anthropic API 呼叫**，不准拿 `claude -p`、`codex exec` 這類 agent CLI 當後端。
-- 測試**不准呼叫真的模型**，一律注入假的實作。
-- 剩餘天數、撞期檢查、核准，**一律由程式碼或人決定**，不採用模型給的任何數字或狀態。
-- 模型的輸出必須通過格式驗證才能存進資料庫。
-- 每個測試標註它實作的 TC 與驗的需求：`@pytest.mark.req("TC-03", "AC-01.1")`。
-- 不准修改或刪除測試來讓測試通過。
-- API key 只放 `.env`，不准寫進任何其他檔案。
-- 新版套件（Next.js 16、Anthropic SDK）的寫法不確定時，用 context7 查文件，不要憑記憶寫。
-
----
-
-# 本專案
-
-> D1 單元 8 填。範本在 `course/templates/agent-rules/`。只寫**這個專案**才有的規則，每一條都要能檢查。
-> `docs/LESSONS.md` 裡同一類問題出現第二次，就升級成這裡的一條規則。
-
-＜例：假單狀態只能 pending → approved／rejected，其他轉換一律拒絕（SDS 的狀態圖）＞
+只記本組已確認且可檢查的規則，例如「半天假只接受同一天」。引用對應 SRS/SDS，避免複寫整份規格。

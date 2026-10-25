@@ -9,6 +9,7 @@
 
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)" || exit 1
+source .maintain/python.sh || exit 1
 
 fail=0
 
@@ -47,6 +48,6 @@ else
 fi
 
 # --- eval 句子的標準答案 ----------------------------------------------------
-run "check-fixtures.py" python3 .maintain/check-fixtures.py
+run "check-fixtures.py" "$COURSE_PYTHON" .maintain/check-fixtures.py
 
 exit $fail

@@ -16,7 +16,13 @@ cd "${CLAUDE_PROJECT_DIR:-.}" || exit 0
 # 沒有改到 Python 檔，就不跑測試。
 git status --porcelain -- '*.py' 2>/dev/null | grep -q . || exit 0
 
-cmd=${PYTEST_CMD:-pytest -q}
+if [ -n "${PYTEST_CMD:-}" ]; then
+  cmd=$PYTEST_CMD
+elif [ -f .venv/Scripts/python.exe ]; then
+  cmd=".venv/Scripts/python.exe -m pytest -q"
+else
+  cmd=".venv/bin/python -m pytest -q"
+fi
 
 if ! out=$($cmd 2>&1); then
   {

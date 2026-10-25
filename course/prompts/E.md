@@ -1,0 +1,12 @@
+# 卡 E｜最小 SAD 與 SDS
+
+技能：`to-architecture`。先讀 [WORKFLOW](../WORKFLOW.md)，只處理這個階段。
+
+```text
+/to-architecture
+讀 @docs/02-prd.md、@docs/03-srs.md、@course/STACK.md 與剛才確認的流程。
+依 @course/templates/04-sad.md、@course/templates/05-sds.md 產出 docs/04-sad.md、docs/05-sds.md。
+系統固定為FastAPI提供HTML/CSS/原生JavaScript、後端API、SQLite。定清員工資料、送出與依員工列出假單的API，包含錯誤碼、資料欄位與公開模組接縫。
+寫清天數由程式算、pending不能由客戶端指定、測試資料庫與固定時鐘的注入方式；先登記API最後掛靜態頁。
+有真正取捨才寫ADR，不湊圖或文件篇幅。核心決策未定先問，不寫程式。回報沒有設計落點的FR/NFR。
+```

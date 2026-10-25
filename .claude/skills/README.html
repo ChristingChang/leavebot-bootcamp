@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LeaveBot Skills · 流程與技能</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>LeaveBot Skills · 流程與技能</title>
+<style>
     :root { --paper:#f3efe6; --sheet:#fbf9f4; --ink:#1c1915; --muted:#5e584e; --line:#d8d0c2; --blue:#1e3a5f; --blue-soft:#e8eef6; --green:#1f4e45; --green-soft:#e5f0ec; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
@@ -84,201 +85,183 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="page-head">
-      <div>
-        <h1>LeaveBot Skills</h1>
-        <p>看目前的問題選技能；技能提供通用方法，專案規則由專案文件決定。</p>
-      </div>
-      <div class="head-meta"><strong>15 支技能</strong>位於 <code>.claude/skills/</code></div>
-    </header>
-
-    <main>
-      <section aria-labelledby="flow-title">
-        <div class="section-head"><h2 id="flow-title">流程與技能</h2><p>左邊看常見路徑，右邊從問題找到已安裝技能</p></div>
-        <div class="legend"><span><b>藍點</b>：由你明確呼叫</span><span><b>綠點</b>：你可以呼叫，agent 也可能依情境使用</span><span>Claude Code 用 <code>/名稱</code>；Codex 用 <code>$名稱</code></span></div>
-        <div class="overview">
-          <div class="pane">
-            <div class="pane-head"><h3>通用開發流程</h3><a href="leavebot-flow.svg" target="_blank" rel="noopener">開啟完整流程圖</a></div>
-            <div class="map-viewport" aria-label="可捲動的通用開發流程圖"><img src="leavebot-flow.svg" alt="需求釐清、規格、架構、測試計畫、拆票、建置、審查與案例驗證的通用流程；遇到問題可返回相關節點。"></div>
-            <div class="pane-foot">拖動捲軸閱讀整張圖；也可開啟 <a href="leavebot-flow.png" target="_blank" rel="noopener">PNG 版本</a>。</div>
-          </div>
-          <div class="pane">
-            <div class="pane-head"><h3>你現在需要做什麼？</h3><span class="mono">問題 → 技能 → 用法</span></div>
-            <div class="problem-list">
-              <button class="problem-card manual" type="button" data-open-skill="compass"><span class="stage">定位</span><strong>不確定下一步</strong><span class="skill-name">/compass</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="grilling"><span class="stage">釐清</span><strong>需求或決定還模糊</strong><span class="skill-name">/grilling</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="grill-with-docs"><span class="stage">釐清</span><strong>已有文件，想接著討論</strong><span class="skill-name">/grill-with-docs</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="to-spec"><span class="stage">規格</span><strong>共識已定，要寫需求規格</strong><span class="skill-name">/to-spec</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="feasibility"><span class="stage">可選</span><strong>想評估方案是否可行</strong><span class="skill-name">/feasibility</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="to-architecture"><span class="stage">設計</span><strong>要定架構、資料與 API</strong><span class="skill-name">/to-architecture</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="to-test-plan"><span class="stage">測試</span><strong>要定案例與通過門檻</strong><span class="skill-name">/to-test-plan</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="to-tickets"><span class="stage">拆票</span><strong>要依成果與依賴切工作</strong><span class="skill-name">/to-tickets</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="implement"><span class="stage">建置</span><strong>要完成一張票</strong><span class="skill-name">/implement</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="tdd"><span class="stage">建置</span><strong>要先寫測試再實作</strong><span class="skill-name">/tdd</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="code-review"><span class="stage">檢查</span><strong>要審查這段變更</strong><span class="skill-name">/code-review</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="diagnosing-bugs"><span class="stage">隨時</span><strong>壞了，原因卻不明</strong><span class="skill-name">/diagnosing-bugs</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="writing-for-agents"><span class="stage">隨時</span><strong>要整理 agent 讀的規則</strong><span class="skill-name">/writing-for-agents</span></button>
-              <button class="problem-card auto" type="button" data-open-skill="writing-hooks"><span class="stage">隨時</span><strong>要讓工具擋下硬限制</strong><span class="skill-name">/writing-hooks</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="handoff"><span class="stage">隨時</span><strong>要換人或換對話接手</strong><span class="skill-name">/handoff</span></button>
-            </div>
-            <div class="pane-foot">最後的「按案例驗證」是檢查點：依測試計畫核對結果，並非另一支指令。</div>
-          </div>
-        </div>
-      </section>
-
-      <div class="explain" aria-label="測試與文件如何銜接">
-        <p><strong>驗證：</strong><code>/to-test-plan</code> 規劃案例與門檻；<code>/implement</code> 和 <code>/tdd</code> 依專案規則執行並回報結果。</p>
-        <p><strong>文件：</strong>沿用專案既有的名稱、編號與位置。流程圖是常見路徑，不規定每個專案的文件或票數。</p>
-      </div>
-
-      <details class="repo-details">
-        <summary>這個 repo 的設定與文件放在哪裡</summary>
-        <div class="repo-content">
-          <div class="repo-tree"><strong>.claude/</strong>
+<div class="wrap">
+<header class="page-head">
+<div>
+<h1>LeaveBot Skills</h1>
+<p>看目前的問題選技能；技能提供通用方法，專案規則由專案文件決定。 <a href="../../course/WORKFLOW.md">本課操作流程</a>；<a href="archify/SKILL.md">Archify畫圖工具</a>。</p>
+</div>
+<div class="head-meta"><strong>16 支技能</strong>位於 <code>.claude/skills/</code></div>
+</header>
+<main>
+<section aria-labelledby="flow-title">
+<div class="section-head"><h2 id="flow-title">流程與技能</h2><p>左邊看常見路徑，右邊從問題找到已安裝技能</p></div>
+<div class="legend"><span><b>藍點</b>：由你明確呼叫</span><span><b>綠點</b>：你可以呼叫，agent 也可能依情境使用</span><span>Claude Code 用 <code>/名稱</code>；Codex 用 <code>$名稱</code></span></div>
+<div class="overview">
+<div class="pane">
+<div class="pane-head"><h3>通用開發流程</h3><a href="leavebot-flow.svg" rel="noopener" target="_blank">開啟完整流程圖</a></div>
+<div aria-label="可捲動的通用開發流程圖" class="map-viewport"><img alt="需求釐清、規格、架構、測試計畫、拆票、建置、審查與案例驗證的通用流程；遇到問題可返回相關節點。" src="leavebot-flow.svg"/></div>
+<div class="pane-foot">拖動捲軸閱讀整張圖；也可開啟 <a href="leavebot-flow.png" rel="noopener" target="_blank">PNG 版本</a>。</div>
+</div>
+<div class="pane">
+<div class="pane-head"><h3>你現在需要做什麼？</h3><span class="mono">問題 → 技能 → 用法</span></div>
+<div class="problem-list">
+<button class="problem-card manual" data-open-skill="compass" type="button"><span class="stage">定位</span><strong>不確定下一步</strong><span class="skill-name">/compass</span></button>
+<button class="problem-card auto" data-open-skill="grilling" type="button"><span class="stage">釐清</span><strong>需求或決定還模糊</strong><span class="skill-name">/grilling</span></button>
+<button class="problem-card manual" data-open-skill="grill-with-docs" type="button"><span class="stage">釐清</span><strong>已有文件，想接著討論</strong><span class="skill-name">/grill-with-docs</span></button>
+<button class="problem-card manual" data-open-skill="to-spec" type="button"><span class="stage">規格</span><strong>共識已定，要寫需求規格</strong><span class="skill-name">/to-spec</span></button>
+<button class="problem-card auto" data-open-skill="feasibility" type="button"><span class="stage">可選</span><strong>想評估方案是否可行</strong><span class="skill-name">/feasibility</span></button>
+<button class="problem-card manual" data-open-skill="to-architecture" type="button"><span class="stage">設計</span><strong>要定架構、資料與 API</strong><span class="skill-name">/to-architecture</span></button>
+<button class="problem-card manual" data-open-skill="to-test-plan" type="button"><span class="stage">測試</span><strong>要定案例與通過門檻</strong><span class="skill-name">/to-test-plan</span></button>
+<button class="problem-card manual" data-open-skill="to-tickets" type="button"><span class="stage">拆票</span><strong>要依成果與依賴切工作</strong><span class="skill-name">/to-tickets</span></button>
+<button class="problem-card manual" data-open-skill="implement" type="button"><span class="stage">建置</span><strong>要完成一張票</strong><span class="skill-name">/implement</span></button>
+<button class="problem-card auto" data-open-skill="tdd" type="button"><span class="stage">建置</span><strong>要先寫測試再實作</strong><span class="skill-name">/tdd</span></button>
+<button class="problem-card auto" data-open-skill="code-review" type="button"><span class="stage">檢查</span><strong>要審查這段變更</strong><span class="skill-name">/code-review</span></button>
+<button class="problem-card auto" data-open-skill="diagnosing-bugs" type="button"><span class="stage">隨時</span><strong>壞了，原因卻不明</strong><span class="skill-name">/diagnosing-bugs</span></button>
+<button class="problem-card auto" data-open-skill="writing-for-agents" type="button"><span class="stage">隨時</span><strong>要整理 agent 讀的規則</strong><span class="skill-name">/writing-for-agents</span></button>
+<button class="problem-card auto" data-open-skill="writing-hooks" type="button"><span class="stage">隨時</span><strong>要讓工具擋下硬限制</strong><span class="skill-name">/writing-hooks</span></button>
+<button class="problem-card manual" data-open-skill="handoff" type="button"><span class="stage">隨時</span><strong>要換人或換對話接手</strong><span class="skill-name">/handoff</span></button>
+</div>
+<div class="pane-foot">最後的「按案例驗證」是檢查點：依測試計畫核對結果，並非另一支指令。</div>
+</div>
+</div>
+</section>
+<div aria-label="測試與文件如何銜接" class="explain">
+<p><strong>驗證：</strong><code>/to-test-plan</code> 規劃案例與門檻；<code>/implement</code> 和 <code>/tdd</code> 依專案規則執行並回報結果。</p>
+<p><strong>文件：</strong>沿用專案既有的名稱、編號與位置。流程圖是常見路徑，不規定每個專案的文件或票數。</p>
+</div>
+<details class="repo-details">
+<summary>這個 repo 的設定與文件放在哪裡</summary>
+<div class="repo-content">
+<div class="repo-tree"><strong>.claude/</strong>
 ├─ <strong>settings.json</strong>   註冊 hook
 ├─ <strong>hooks/</strong>          工具層檢查
-└─ <strong>skills/</strong>         15 支技能</div>
-          <div>
-            <p><strong>規則：</strong><code>AGENTS.md</code> 是專案規則；<code>CLAUDE.md</code> 轉讀它。</p>
-            <p><strong>規格：</strong>本 repo 的要求見 <code>AGENTS.md</code> 和 <code>course/</code>；技能依執行時的專案材料決定輸出。</p>
-            <p><strong>經驗：</strong>專案可記錄偏差、誤解與踩坑，但經驗紀錄不取代規格。</p>
-            <p class="muted"><code>skills/</code> 存的是工作方法，不預設文件數量或票數。</p>
-          </div>
-        </div>
-      </details>
-    </main>
-  </div>
-
-  <dialog class="skill-dialog" id="skill-dialog" aria-labelledby="dialog-title">
-    <div class="dialog-top"><div><p>技能說明</p><h2 id="dialog-title"></h2></div><button type="button" class="close-button" id="close-dialog">返回總覽</button></div>
-    <div class="dialog-layout">
-      <nav class="dialog-nav" aria-label="切換技能" id="dialog-nav"></nav>
-      <div class="dialog-content" id="dialog-content">
-<article class="skill-detail skill any user-only" id="compass" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/compass</code> — 路由器</h4>
-              <p class="where">通用流程：不綁階段。不知道下一步時用。</p>
-              <p>依目前目標、已有成果與可用技能指出下一步，說明需要的輸入和可檢查的結果。它不替其他技能做完整工作。</p>
-              <p class="cmd"><span>你打</span>/compass</p>
-            </article>
-
-<article class="skill-detail skill any" id="writing-hooks" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/writing-hooks</code> — 把紅線變成做不到</h4>
-              <p class="where">通用流程：不綁階段。規則必須做成做不到時用。</p>
-              <p>判斷何時需要機器守衛，依執行環境的 hook 合約設計攔截與診斷。平時保持安靜，並用真實輸入測試允許、擋下及失敗路徑。</p>
-              <p class="cmd"><span>你打</span>/writing-hooks<br>並講哪條規則要擋、在工具執行前還是結束前。</p>
-            </article>
-
-<article class="skill-detail skill d1" id="grilling" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/grilling</code> — 把決定問清楚</h4>
-              <p class="where">通用流程：探索與決策。需求留白時也回到這裡。</p>
-              <p>一輪問一層。每一題附它建議的答案，等你回，再問下一層。能自己查的事實它去查，決定留給你。樹問完就停，你確認共識之前不動手。</p>
-              <p class="cmd"><span>你打</span>/grilling<br>回答每輪問題，確認共識後再請它落檔。</p>
-            </article>
-
-<article class="skill-detail skill d1 user-only" id="grill-with-docs" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/grill-with-docs</code> — 帶著既有文件訪談</h4>
-              <p>讀現有規格與決策，避免重問已定事項；共識形成後按專案慣例更新承載該決定的文件。</p>
-              <p class="cmd"><span>你打</span>/grill-with-docs</p>
-            </article>
-
-<article class="skill-detail skill d1 user-only" id="to-spec" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/to-spec</code> — 收斂需求規格</h4>
-              <p>把已定的承諾、範圍、決策和未決問題寫進規格；沿用專案既有格式、位置與編號。</p>
-              <p class="cmd"><span>你打</span>/to-spec</p>
-            </article>
-
-<article class="skill-detail skill d1" id="feasibility" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/feasibility</code> — 可行性分析</h4>
-              <p class="where">可選岔路：評估想法、方案或其中的關鍵風險。</p>
-              <p>核對目標、限制、證據與未知；必要時做低成本驗證，提出有條件的判斷與最小下一步。</p>
-              <p class="cmd"><span>你打</span>/feasibility<br>並說明想評估的方案與限制。</p>
-            </article>
-
-<article class="skill-detail skill d1 user-only" id="to-architecture" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/to-architecture</code> — 架構與細部設計</h4>
-              <p class="where">通用流程：架構與細部設計。</p>
-              <p>從已定需求推導系統邊界、元件責任、資料流程、介面與失敗路徑；圖和 ADR 依問題需要選用。輸出形式沿用專案慣例。</p>
-              <p class="cmd"><span>你打</span>/to-architecture<br>並指出要設計的範圍。</p>
-            </article>
-
-<article class="skill-detail skill d1 user-only" id="to-test-plan" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/to-test-plan</code> — 測試計畫</h4>
-              <p>依需求、設計與風險安排案例、層級、資料、通過門檻與追溯。案例數量與編號由專案決定；非決定性元件另訂評測方式。</p>
-              <p class="cmd"><span>你打</span>/to-test-plan</p>
-            </article>
-
-<article class="skill-detail skill d1" id="writing-for-agents" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/writing-for-agents</code> — 寫給 agent 讀的文件</h4>
-              <p class="where">通用流程：建立或修訂代理會讀的文件。</p>
-              <p>本文是寫作標準：步驟和完成條件要能判斷做完沒有、能查到的不要複寫一份、用模型本來就懂的詞當錨點。技能的包裝細節在同目錄 <code>SKILL-MECHANICS.md</code>。</p>
-              <p class="cmd"><span>你打</span>/writing-for-agents<br>並指出要建立或修改的文件。</p>
-            </article>
-
-<article class="skill-detail skill d1 user-only" id="to-tickets" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/to-tickets</code> — 依成果拆票</h4>
-              <p class="where">通用流程：工作分解。</p>
-              <p>從目標、已定規格、期限與團隊容量出發，先提出整組可交付成果和真實阻塞關係，再依使用者取捨定票。太大的拆、只能一起驗收的合；票數沒有預設答案。</p>
-              <p>每張票以結果命名，寫明可由別人檢查的完成條件、必要背景及依賴。優先做薄的端到端切片；必要的環境或研究工作可獨立成票。</p>
-              <p class="cmd"><span>你打</span>/to-tickets<br>並說明目標、限制與希望的拆票粒度。</p>
-            </article>
-
-<article class="skill-detail skill d2 user-only" id="implement" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/implement</code> — 完成工作項目</h4>
-              <p>依指定的票或小型規格確認接縫、建置、執行專案要求的檢查，對照完成條件審查並回報結果。</p>
-              <p class="cmd"><span>你打</span>/implement<br>並指出票或規格。</p>
-            </article>
-
-<article class="skill-detail skill d2" id="tdd" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/tdd</code> — 紅綠循環</h4>
-              <p class="where">通用流程：實作。</p>
-              <p>一次只做一個行為。先寫一個會失敗的測試，確認它因為你預期的原因失敗，再寫剛好能過的程式，然後才整理。不要先把整張票的測試一次寫完。</p>
-              <p>在專案既有的公共接縫寫測試，沿用其測試工具和追溯慣例。完成前執行專案要求的檢查並報告結果。</p>
-              <p class="cmd"><span>你打</span>/tdd<br>並指出要實作的行為。</p>
-            </article>
-
-<article class="skill-detail skill d2" id="diagnosing-bugs" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/diagnosing-bugs</code> — 紅燈原因不明</h4>
-              <p class="where">通用流程：除錯。</p>
-              <p>先有一條幾秒內能穩定變紅的指令，再談原因。分類：產品回歸、時好時壞、環境問題。然後縮小、有已知好版本就 <code>git bisect</code>、一次只驗一個假說、用輸出證明、修原因、補一個修之前會紅的測試。探針輸出裡的金鑰先遮掉。</p>
-              <p>找不到能抓到問題的接縫時，把它作為設計問題記錄並提出。</p>
-              <p class="cmd"><span>你打</span>/diagnosing-bugs<br>附上失敗的指令和輸出。</p>
-            </article>
-
-<article class="skill-detail skill d2" id="code-review" hidden>
-              <span class="tag">你打，或它自己接</span>
-              <h4><code>/code-review</code> — 合併前看 diff</h4>
-              <p class="where">通用流程：審查。</p>
-              <p>先確定要審的 PR、提交範圍或工作樹。分別核對專案標準與需求承諾；實際測試輸出比勾選狀態更有說服力。</p>
-              <p>報告分成必須改和判斷題。某一軸沒問題就直說。</p>
-              <p class="cmd"><span>你打</span>/code-review main</p>
-            </article>
-
-<article class="skill-detail skill d2 user-only" id="handoff" hidden>
-              <span class="tag">只有你打才跑</span>
-              <h4><code>/handoff</code> — 換人、換工具、換目錄</h4>
-              <p class="where">通用流程：交接。</p>
-              <p>寫一份給下一個全新對話的交接，放在系統暫存目錄，不進這個 repo。內容是進度、已經做的決定和為什麼、下一步、已知的坑、建議接著叫哪些技能。規格和票用路徑指過去。金鑰抹掉。</p>
-              <p>它結束這一輪。你開新對話，貼它給的那一行。同一個對話要變短，用 <code>/compact</code>。</p>
-              <p class="cmd"><span>你打</span>/handoff 下一輪接手的工作</p>
-            </article>
-      </div>
-    </div>
-  </dialog>
-  <script>
+└─ <strong>skills/</strong>         16 支技能</div>
+<div>
+<p><strong>規則：</strong><code>AGENTS.md</code> 是專案規則；<code>CLAUDE.md</code> 轉讀它。</p>
+<p><strong>規格：</strong>本 repo 的要求見 <code>AGENTS.md</code> 和 <code>course/</code>；技能依執行時的專案材料決定輸出。</p>
+<p><strong>經驗：</strong>專案可記錄偏差、誤解與踩坑，但經驗紀錄不取代規格。</p>
+<p class="muted"><code>skills/</code> 存的是工作方法，不預設文件數量或票數。</p>
+</div>
+</div>
+</details>
+</main>
+</div>
+<dialog aria-labelledby="dialog-title" class="skill-dialog" id="skill-dialog">
+<div class="dialog-top"><div><p>技能說明</p><h2 id="dialog-title"></h2></div><button class="close-button" id="close-dialog" type="button">返回總覽</button></div>
+<div class="dialog-layout">
+<nav aria-label="切換技能" class="dialog-nav" id="dialog-nav"></nav>
+<div class="dialog-content" id="dialog-content">
+<article class="skill-detail skill any user-only" hidden="" id="compass">
+<span class="tag">只有你打才跑</span>
+<h4><code>/compass</code> — 路由器</h4>
+<p class="where">通用流程：不綁階段。不知道下一步時用。</p>
+<p>依目前目標、已有成果與可用技能指出下一步，說明需要的輸入和可檢查的結果。它不替其他技能做完整工作。</p>
+<p class="cmd"><span>你打</span>/compass</p>
+</article>
+<article class="skill-detail skill any" hidden="" id="writing-hooks">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/writing-hooks</code> — 把紅線變成做不到</h4>
+<p class="where">通用流程：不綁階段。規則必須做成做不到時用。</p>
+<p>判斷何時需要機器守衛，依執行環境的 hook 合約設計攔截與診斷。平時保持安靜，並用真實輸入測試允許、擋下及失敗路徑。</p>
+<p class="cmd"><span>你打</span>/writing-hooks<br/>並講哪條規則要擋、在工具執行前還是結束前。</p>
+</article>
+<article class="skill-detail skill d1" hidden="" id="grilling">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/grilling</code> — 把決定問清楚</h4>
+<p class="where">通用流程：探索與決策。需求留白時也回到這裡。</p>
+<p>一輪問一層。每一題附它建議的答案，等你回，再問下一層。能自己查的事實它去查，決定留給你。樹問完就停，你確認共識之前不動手。</p>
+<p class="cmd"><span>你打</span>/grilling<br/>回答每輪問題，確認共識後再請它落檔。</p>
+</article>
+<article class="skill-detail skill d1 user-only" hidden="" id="grill-with-docs">
+<span class="tag">只有你打才跑</span>
+<h4><code>/grill-with-docs</code> — 帶著既有文件訪談</h4>
+<p>讀現有規格與決策，避免重問已定事項；共識形成後按專案慣例更新承載該決定的文件。</p>
+<p class="cmd"><span>你打</span>/grill-with-docs</p>
+</article>
+<article class="skill-detail skill d1 user-only" hidden="" id="to-spec">
+<span class="tag">只有你打才跑</span>
+<h4><code>/to-spec</code> — 收斂需求規格</h4>
+<p>把已定的承諾、範圍、決策和未決問題寫進規格；沿用專案既有格式、位置與編號。</p>
+<p class="cmd"><span>你打</span>/to-spec</p>
+</article>
+<article class="skill-detail skill d1" hidden="" id="feasibility">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/feasibility</code> — 可行性分析</h4>
+<p class="where">可選岔路：評估想法、方案或其中的關鍵風險。</p>
+<p>核對目標、限制、證據與未知；必要時做低成本驗證，提出有條件的判斷與最小下一步。</p>
+<p class="cmd"><span>你打</span>/feasibility<br/>並說明想評估的方案與限制。</p>
+</article>
+<article class="skill-detail skill d1 user-only" hidden="" id="to-architecture">
+<span class="tag">只有你打才跑</span>
+<h4><code>/to-architecture</code> — 架構與細部設計</h4>
+<p class="where">通用流程：架構與細部設計。</p>
+<p>從已定需求推導系統邊界、元件責任、資料流程、介面與失敗路徑；圖和 ADR 依問題需要選用。輸出形式沿用專案慣例。</p>
+<p class="cmd"><span>你打</span>/to-architecture<br/>並指出要設計的範圍。</p>
+</article>
+<article class="skill-detail skill d1 user-only" hidden="" id="to-test-plan">
+<span class="tag">只有你打才跑</span>
+<h4><code>/to-test-plan</code> — 測試計畫</h4>
+<p>依需求、設計與風險安排案例、層級、資料、通過門檻與追溯。案例數量與編號由專案決定；非決定性元件另訂評測方式。</p>
+<p class="cmd"><span>你打</span>/to-test-plan</p>
+</article>
+<article class="skill-detail skill d1" hidden="" id="writing-for-agents">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/writing-for-agents</code> — 寫給 agent 讀的文件</h4>
+<p class="where">通用流程：建立或修訂代理會讀的文件。</p>
+<p>本文是寫作標準：步驟和完成條件要能判斷做完沒有、能查到的不要複寫一份、用模型本來就懂的詞當錨點。技能的包裝細節在同目錄 <code>SKILL-MECHANICS.md</code>。</p>
+<p class="cmd"><span>你打</span>/writing-for-agents<br/>並指出要建立或修改的文件。</p>
+</article>
+<article class="skill-detail skill d1 user-only" hidden="" id="to-tickets">
+<span class="tag">只有你打才跑</span>
+<h4><code>/to-tickets</code> — 依成果拆票</h4>
+<p class="where">通用流程：工作分解。</p>
+<p>從目標、已定規格、期限與團隊容量出發，先提出整組可交付成果和真實阻塞關係，再依使用者取捨定票。太大的拆、只能一起驗收的合；票數沒有預設答案。</p>
+<p>每張票以結果命名，寫明可由別人檢查的完成條件、必要背景及依賴。優先做薄的端到端切片；必要的環境或研究工作可獨立成票。</p>
+<p class="cmd"><span>你打</span>/to-tickets<br/>並說明目標、限制與希望的拆票粒度。</p>
+</article>
+<article class="skill-detail skill d2 user-only" hidden="" id="implement">
+<span class="tag">只有你打才跑</span>
+<h4><code>/implement</code> — 完成工作項目</h4>
+<p>依指定的票或小型規格確認接縫、建置、執行專案要求的檢查，對照完成條件審查並回報結果。</p>
+<p class="cmd"><span>你打</span>/implement<br/>並指出票或規格。</p>
+</article>
+<article class="skill-detail skill d2" hidden="" id="tdd">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/tdd</code> — 紅綠循環</h4>
+<p class="where">通用流程：實作。</p>
+<p>一次只做一個行為。先寫一個會失敗的測試，確認它因為你預期的原因失敗，再寫剛好能過的程式，然後才整理。不要先把整張票的測試一次寫完。</p>
+<p>在專案既有的公共接縫寫測試，沿用其測試工具和追溯慣例。完成前執行專案要求的檢查並報告結果。</p>
+<p class="cmd"><span>你打</span>/tdd<br/>並指出要實作的行為。</p>
+</article>
+<article class="skill-detail skill d2" hidden="" id="diagnosing-bugs">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/diagnosing-bugs</code> — 紅燈原因不明</h4>
+<p class="where">通用流程：除錯。</p>
+<p>先有一條幾秒內能穩定變紅的指令，再談原因。分類：產品回歸、時好時壞、環境問題。然後縮小、有已知好版本就 <code>git bisect</code>、一次只驗一個假說、用輸出證明、修原因、補一個修之前會紅的測試。探針輸出裡的金鑰先遮掉。</p>
+<p>找不到能抓到問題的接縫時，把它作為設計問題記錄並提出。</p>
+<p class="cmd"><span>你打</span>/diagnosing-bugs<br/>附上失敗的指令和輸出。</p>
+</article>
+<article class="skill-detail skill d2" hidden="" id="code-review">
+<span class="tag">你打，或它自己接</span>
+<h4><code>/code-review</code> — 合併前看 diff</h4>
+<p class="where">通用流程：審查。</p>
+<p>先確定要審的 PR、提交範圍或工作樹。分別核對專案標準與需求承諾；實際測試輸出比勾選狀態更有說服力。</p>
+<p>報告分成必須改和判斷題。某一軸沒問題就直說。</p>
+<p class="cmd"><span>你打</span>/code-review main</p>
+</article>
+<article class="skill-detail skill d2 user-only" hidden="" id="handoff">
+<span class="tag">只有你打才跑</span>
+<h4><code>/handoff</code> — 換人、換工具、換目錄</h4>
+<p class="where">通用流程：交接。</p>
+<p>寫一份給下一個全新對話的交接，放在系統暫存目錄，不進這個 repo。內容是進度、已經做的決定和為什麼、下一步、已知的坑、建議接著叫哪些技能。規格和票用路徑指過去。金鑰抹掉。</p>
+<p>它結束這一輪。你開新對話，貼它給的那一行。同一個對話要變短，用 <code>/compact</code>。</p>
+<p class="cmd"><span>你打</span>/handoff 下一輪接手的工作</p>
+</article>
+</div>
+</div>
+</dialog>
+<script>
     (() => {
       const dialog = document.getElementById('skill-dialog');
       const content = document.getElementById('dialog-content');
