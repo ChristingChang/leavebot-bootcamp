@@ -67,4 +67,4 @@ A test that fails before the fix and passes after. Confirm both directions — r
 
 Two sentences: what the cause was, and why it was not caught.
 
-When the answer is "there was no seam where this could have been caught", the finding is architectural — record it in `docs/LESSONS.md` and raise it with the team as a design question (`docs/04-sad.md` / `docs/05-sds.md`) rather than filing it as fixed and moving on.
+When the answer is "there was no seam where this could have been caught", the finding is architectural — record it in the project's decision or lessons record, and raise the missing seam as a design question rather than filing it as fixed and moving on.

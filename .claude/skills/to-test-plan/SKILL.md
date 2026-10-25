@@ -1,17 +1,17 @@
 ---
 name: to-test-plan
-description: 依 PRD、SRS、SAD、SDS 與課程範本產出或修訂 docs/06-test-plan.md，含 TC、AI eval、退出條件與追溯矩陣。只有使用者指定時啟動。
+description: 依需求、設計與風險建立或修訂測試計畫，安排案例、層級、通過門檻和追溯方式。只有使用者指定時啟動。
 disable-model-invocation: true
 ---
 
 # To Test Plan
 
-為 LeaveBot 建立課程唯一的測試計畫 `docs/06-test-plan.md`。原作者的 `/test-blueprint` 管測試層級、接縫、追溯；`/uat-cases` 管驗收案例與凍結 TC。本技能把這兩種判斷放進課程 06 範本，不建立平行的測試藍圖或 UAT 總帳。
+建立能判斷交付成果是否符合承諾的測試計畫。案例數量、編號、工具與文件位置由專案規模及既有慣例決定。
 
-1. 讀 `AGENTS.md`、`course/templates/06-test-plan.md`、`course/templates/TRACEABILITY.md`、`docs/02-prd.md` 至 `docs/05-sds.md`、`course/STACK.md`、`course/LEAVEBOT.md` 和 `course/fixtures/`。不存在的必要規格或互相矛盾的條款，先依 `AGENTS.md` 問清楚。
-2. 逐條盤點 AC、FR、NFR 與 SAD／SDS 接縫。依模板安排驗收、系統／eval、整合、單元層級；每個測試案例寫可觀察情境與預期結果。先提出候選情境，再由人篩選，最終 TC 不超過模板的 30 個上限；至少列出三個刪掉的情境及理由。
-3. 使用既有 `TC-xx` 編號；新增時接續編號，作廢號保留而不重用。每條 AC／FR／NFR 都要有 TC，或在「不測什麼」寫理由。追溯矩陣在建置前填需求、TC、層級；測試檔與狀態由每張票的實作更新。不要因為尚未寫測試而把狀態標為已通過。
-4. 按 06 範本訂 AI eval 的 fixture、逐欄比對規則、逾時、注入案例、數值門檻與門檻理由。區分兩種執行：一般 `pytest` 測試以 `@pytest.mark.req("TC-xx", "...")` 對應 TC，模型依 `AGENTS.md` 注入假實作；I4 另生成 eval 腳本，逐句呼叫 `POST /api/parse` 量 AI 解析準確率，依課程固定比對規則與計畫門檻判定。eval 的 fixture 句子不是另一套 TC 編號。寫出退出條件並檢查追溯缺口。
-5. 修訂現有 06 時做差異更新，保留已發編號與人工篩選理由。若規格或已實作內容偏離，依 `AGENTS.md` 修正來源或記錄偏差，不為了讓矩陣好看而改需求。
+1. 讀已定需求、驗收條件、架構接縫、既有測試與風險。確認哪些行為需要自動化、哪些需要人工驗收、哪些品質目標需要量測；將無法測或不打算測的項目及理由寫清楚。
+2. 為每項重要承諾提出可觀察的情境、輸入、預期結果和適當層級。優先選能捕捉高風險失敗的案例；重複或價值低的候選案例可合併或刪除，並保留取捨理由。不要用固定數量上限替代風險判斷。
+3. 沿用專案既有的案例編號與追溯方式，讓需求、案例、測試或人工驗收證據能互相找到。計畫階段不要把尚未執行的案例標為通過。
+4. 定義執行環境、測試資料、責任、退出條件與失敗後的處理。若產品包含非決定性元件，另定評測資料、比較方式、統計門檻和門檻依據；將其與一般功能測試分清楚。
+5. 將計畫寫到使用者指定或專案慣用的位置；修訂時保留仍有效的案例與引用。回報覆蓋缺口、仍需決定的門檻和可執行的下一步。
 
-參考原作者的 [test-blueprint](https://github.com/Zenobia000/luca-skills/blob/main/skills/core/test-blueprint/SKILL.md) 與 [uat-cases](https://github.com/Zenobia000/luca-skills/blob/main/skills/core/uat-cases/SKILL.md)；此 repo 以 `course/templates/06-test-plan.md` 為輸出合約。
+此技能延伸原作者的 [test-blueprint](https://github.com/Zenobia000/luca-skills/blob/main/skills/core/test-blueprint/SKILL.md) 與 [uat-cases](https://github.com/Zenobia000/luca-skills/blob/main/skills/core/uat-cases/SKILL.md)。

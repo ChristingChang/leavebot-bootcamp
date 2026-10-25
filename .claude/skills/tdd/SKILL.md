@@ -7,7 +7,7 @@ description: 測試驅動開發，紅—綠—重構。當要以測試先行的�
 
 Red → green → repeat, one behaviour at a time.
 
-In this repo the behaviours are already named: each ticket lists the test cases (`TC-xx`) it turns green, and `docs/06-test-plan.md` says which layer each belongs to. Start from those.
+Start from the next observable behaviour in the user's request, ticket or specification. Use the project's existing test conventions and requirement IDs when they exist.
 
 ## The loop
 
@@ -37,30 +37,17 @@ Pick the seam before the first test. Too deep and every refactor breaks the suit
 
 The loop does not change at a module boundary. A test at the seam between two modules — real collaborators on both sides — is an integration test, written red-first like any other; the layer is a property of where the seam sits, not a different ritual.
 
-Which seams deserve tests is a project decision, not a per-test guess. Take the layer from `docs/06-test-plan.md` and put the test under `backend/tests/<layer>/` (acceptance, system, integration, unit). The API section of `docs/05-sds.md` is usually the right seam for acceptance tests.
+Which seams deserve tests is a project decision, not a per-test guess. Use the project's test plan and existing layout when available; otherwise choose the closest public boundary that gives useful failure signals.
 
-## Marking tests
+## Before you say the work is done
 
-Every test names the test case it implements and the requirement it verifies:
-
-```python
-@pytest.mark.req("TC-04", "AC-02.1")
-def test_second_request_on_a_full_day_reminds_the_manager(client): ...
-```
-
-A test without a marker cannot be traced back to a requirement.
-
-## Before you say the ticket is done
-
-1. Run the full `.venv/bin/pytest` and paste the result.
-2. Update the traceability matrix at the end of `docs/06-test-plan.md`: for each of this ticket's TCs, the test file and ✅. Only mark ✅ a TC whose marker you can show with `grep -rn 'mark.req("TC-xx"' backend/tests/`.
-3. Add anything that drifted from the spec, any sentence of the spec you misread, and any environment trap to `docs/LESSONS.md`.
+Run the checks the project requires and report their results. If the project tracks requirements to tests or records implementation lessons, update the relevant records using its existing convention. A passing test is evidence only for the behaviour it actually asserts.
 
 ## Mocking
 
 Default to **not** mocking. A test with four mocks is testing the mocks.
 
-Mock only what you do not own and cannot make fast or deterministic: third-party network calls, the clock, randomness, the filesystem when it is genuinely slow. In this repo the LLM sits behind a seam you build: business code depends on a `complete(system, user) -> str` interface, and tests inject a fake implementation — never the real model (`course/STACK.md`). Your own modules are not on that list — if they are hard to use in a test, that is a design finding, not a mocking problem.
+Mock only what you do not own and cannot make fast or deterministic: third-party network calls, the clock, randomness, or a genuinely slow filesystem. When an external model or service is part of the design, test through a replaceable boundary using a deterministic fake, unless the project is explicitly running a separate integration or evaluation suite. Your own modules are not on that list — if they are hard to use in a test, that is a design finding, not a mocking problem.
 
 In-memory fakes beat mocks. A fake repository backed by a map exercises real logic; a mocked one asserts you called a method.
 

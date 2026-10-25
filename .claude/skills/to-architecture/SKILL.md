@@ -1,45 +1,16 @@
 ---
 name: to-architecture
-description: 從 PRD 與 SRS 產出 docs/04-sad.md（C4、資訊流、誰負責什麼、ADR）與 docs/05-sds.md（ER、API、畫面、模組）。寫測試計畫與拆票之前做。
+description: 把已定需求轉成可實作的系統設計，釐清元件、資料、介面與重要取捨。當使用者要架構或細部設計時使用；只有使用者指定時啟動。
 disable-model-invocation: true
 ---
 
 # To Architecture
 
-Turn `docs/02-prd.md` and `docs/03-srs.md` into the two design documents the tickets and tests will depend on: `docs/04-sad.md` (how it fits together) and `docs/05-sds.md` (how each piece works). Runs after the SRS, before the test plan.
+從已定的需求與限制推導設計，讓實作者知道各部分如何合作、邊界在哪裡，以及哪些決策已定。輸出形式由專案需要決定，可以是一份設計文件、多份文件，或對既有設計的修訂。
 
-Read first: `course/STACK.md` (the stack is fixed — you design **inside** it), `course/LEAVEBOT.md` (scope and the fixed `POST /api/parse` contract), `course/templates/04-sad.md`, `course/templates/05-sds.md`, `course/templates/TRACEABILITY.md`. The templates' `💡` hints are rules for you and must not appear in the output. `course/examples/it-asset/` shows finished documents for a different problem — use it for depth, never copy its content.
+1. 讀需求、現有程式與設計、技術限制、專案慣例。找出必須支持的使用者流程和品質要求。需求互相矛盾或關鍵選擇未定時，指出衝突並讓使用者決定；不要以架構圖替需求做決定。
+2. 說明系統邊界、主要元件及責任、資料與控制流程、外部依賴和失敗路徑。為需實作的接縫定義介面、資料契約與錯誤行為。依問題選用 C4、時序圖、ER 圖或文字；圖必須增加可理解性，不因模板存在就硬畫。
+3. 對有實質替代方案的重要決策記錄選擇、理由、代價與可逆性。若系統使用模型或其他不可信外部輸出，明確標出驗證邊界，以及哪些判斷由程式或人負責；細節依專案規則。
+4. 對照需求檢查：每個相關行為與品質要求是否有設計落點，介面之間是否一致，哪些地方仍需實驗或決策。依專案既有位置更新設計，回報未覆蓋項與後續工作。
 
-## SAD — what must be in it
-
-- **C4 L1 and L2** as Mermaid `flowchart`s. L2 is browser → Next.js → (rewrites for `/api/*`) → FastAPI → SQLite / an LLM client module that calls the Anthropic API (API only; tests swap in a fake).
-- **Information flow** as a Mermaid `sequenceDiagram` for the main path: sentence → parse → **validation of the LLM output** → rules → database → screen. The validation step must be visible.
-- **Who does what**: for every decision, the LLM, the code or a human. Remaining leave balance, date clashes and approval are never the LLM's.
-- **ADR rows** for choices made inside `course/STACK.md` (including which model, and why) that had a real alternative — chosen, rejected, why, reversible or not, which requirement. A choice with no alternative considered gets no row.
-
-## SDS — what must be in it
-
-- **ER** as a Mermaid `erDiagram`, using the words the PRD uses. Store the employee's original sentence.
-- **API** — every endpoint under the `/api/` prefix, each with its requirement IDs and **error cases**. `API-01` is `POST /api/parse`, copied exactly from `course/STACK.md`.
-- **Screens** — each mapped to a step of the PRD user flow and to the API it calls.
-- **Modules** — the LLM-facing module and the rules module are separate, with the signatures other modules call.
-
-## Rules
-
-- **Do not invent.** An open choice goes back to `/grilling` — it does not get a plausible default.
-- **Do not leave the stack.** A new dependency, framework or service is the user's decision, raised as a question, not written into an ADR.
-- **Every FR and NFR must land somewhere** in the SAD or SDS. Before finishing, list any that land nowhere and report them.
-- **Mermaid names** in `erDiagram` use only letters, digits and underscores. Edge labels and node text containing `(`, `)`, `:` or `/` must be wrapped in double quotes (`-->|"build_llm()"|`) — unquoted, the whole diagram fails to render.
-- **Show both drafts before writing.** Let the user edit, then write the files.
-
-## Finish
-
-Report the two paths, any FR / NFR that landed nowhere, and the next step: write `docs/06-test-plan.md`, including its traceability matrix.
-
-## Rationalization table
-
-| Excuse | Reality |
-| --- | --- |
-| "React Query / an ORM would be cleaner" | `course/STACK.md` fixed the stack so that two days go to specs and tests. Ask; don't decide. |
-| "The LLM can return the remaining balance too" | Then the balance is whatever the model says. Numbers and statuses come from code. |
-| "Validation is an implementation detail" | It is the only thing between a prompt injection and the database. It goes in the information flow. |
+改編參考：[luca-skills 的 to-architecture](https://github.com/Zenobia000/luca-skills/blob/main/skills/core/to-architecture/SKILL.md)。

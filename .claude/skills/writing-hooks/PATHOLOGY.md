@@ -29,6 +29,7 @@ Two hooks wrapped their main logic in `[ -f "$DIR/project.json" ]` — and that 
 ## The four-layer skeleton
 
 Cheapest guard first; the expensive read happens only after every gate passes. Stderr on block tells the model what to do instead — never only what is forbidden.
+This is a Claude Code shell-hook example from the measured project, not a portable hook contract. Confirm event fields, exit semantics and dependency-failure policy in the target host before adapting it.
 
 ```bash
 #!/usr/bin/env bash

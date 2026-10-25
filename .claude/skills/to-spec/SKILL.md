@@ -1,18 +1,16 @@
 ---
 name: to-spec
-description: 將已定案的 LeaveBot 討論收斂到課程 Brief、PRD、SRS 範本與追溯編號。只有使用者指定時啟動。
+description: 把已定案的對話、研究或決策收斂成可驗證的規格，沿用專案既有格式與編號。只有使用者指定時啟動。
 disable-model-invocation: true
 ---
 
 # To Spec
 
-把已確認的需求寫進 `docs/01-brief.md`、`docs/02-prd.md`、`docs/03-srs.md`。這支技能負責收斂與追溯，不重新訪談；尚未定案的必要選擇先回 `/grilling` 或 `/grill-with-docs`。
+把已確定的內容寫成下游能引用的規格。這支技能做收斂，不代替需求訪談；未決選擇應明列為開放問題，不能用看似合理的預設值填掉。
 
-1. 讀 `AGENTS.md`、`course/LEAVEBOT.md`、`course/STACK.md`、三份對應的 `course/templates/`，以及 `course/templates/TRACEABILITY.md`。讀現有 01–03 與相關 04–06；既有文件是修訂基礎，不重建另一份規格。
-2. 從對話中逐項整理目標、非目標、角色、流程、AC、FR、NFR。每項區分「已定案」「可由資料查得」「待決」。遇到規格相互衝突或必要決定未定，依 `AGENTS.md` 問清楚，不猜測。
-3. 依模板寫或修 01–03，保留已有編號與引用。新編號按 `TRACEABILITY.md` 發出；作廢編號保留並標示，不重用。檢查 Brief → PRD → SRS 的引用能追到來源。
-4. 列出下游可能受影響的 SAD、SDS、測試計畫與票；若這次修訂已使其內容不一致，同步修正或明確指出待決阻礙。規格偏差記到 `docs/LESSONS.md`。
-
-輸出是 repo 的 `docs/` 文件，不建立原作者的 issue tracker、`docs/agents/` 或第二套 promise ID。後續可用 `/to-architecture`，測試規劃用 `/to-test-plan`，多張票用 `/to-tickets`。
+1. 讀目前對話、使用者提供的材料、適用的專案規則、已有規格與模板。先找出這個專案的規格放在哪裡、如何命名與編號；沒有既定格式時，選最小且便於引用的結構，不預設文件數量或檔名。
+2. 將內容分為已定決策、可查證事實、可測的承諾、範圍外事項與未決問題。用使用者及專案既有詞彙表述行為；每項承諾都要能由下游設計或測試引用。若既有編號可用，沿用並保留已發出的編號。
+3. 依使用者指定的交付位置建立或修訂規格。修改既有文件時保留有效內容與引用關係；新決定有真正替代方案時記錄取捨，不為了填表虛構選項。
+4. 檢查規格之間的衝突、遺漏及受影響的下游文件。能根據已定決策修正的內容一併對齊；會改變產品承諾的問題交給使用者決定。回報產出位置、仍未決的問題與受影響項目。
 
 改編參考：[luca-skills 的 to-spec](https://github.com/Zenobia000/luca-skills/blob/main/skills/core/to-spec/SKILL.md)。

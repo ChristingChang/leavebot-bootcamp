@@ -88,7 +88,7 @@
     <header class="page-head">
       <div>
         <h1>LeaveBot Skills</h1>
-        <p>看目前的問題，對照開發流程選技能；點選即可查看用法。</p>
+        <p>看目前的問題選技能；技能提供通用方法，專案規則由專案文件決定。</p>
       </div>
       <div class="head-meta"><strong>15 支技能</strong>位於 <code>.claude/skills/</code></div>
     </header>
@@ -113,7 +113,7 @@
               <button class="problem-card auto" type="button" data-open-skill="feasibility"><span class="stage">可選</span><strong>想評估方案是否可行</strong><span class="skill-name">/feasibility</span></button>
               <button class="problem-card manual" type="button" data-open-skill="to-architecture"><span class="stage">設計</span><strong>要定架構、資料與 API</strong><span class="skill-name">/to-architecture</span></button>
               <button class="problem-card manual" type="button" data-open-skill="to-test-plan"><span class="stage">測試</span><strong>要定案例與通過門檻</strong><span class="skill-name">/to-test-plan</span></button>
-              <button class="problem-card manual" type="button" data-open-skill="to-tickets"><span class="stage">拆票</span><strong>要切成可交付的工作</strong><span class="skill-name">/to-tickets</span></button>
+              <button class="problem-card manual" type="button" data-open-skill="to-tickets"><span class="stage">拆票</span><strong>要依成果與依賴切工作</strong><span class="skill-name">/to-tickets</span></button>
               <button class="problem-card manual" type="button" data-open-skill="implement"><span class="stage">建置</span><strong>要完成一張票</strong><span class="skill-name">/implement</span></button>
               <button class="problem-card auto" type="button" data-open-skill="tdd"><span class="stage">建置</span><strong>要先寫測試再實作</strong><span class="skill-name">/tdd</span></button>
               <button class="problem-card auto" type="button" data-open-skill="code-review"><span class="stage">檢查</span><strong>要審查這段變更</strong><span class="skill-name">/code-review</span></button>
@@ -128,8 +128,8 @@
       </section>
 
       <div class="explain" aria-label="測試與文件如何銜接">
-        <p><strong>測試案例：</strong><code>/to-test-plan</code> 定編號；<code>/implement</code> 與 <code>/tdd</code> 寫、跑測試；審查後對照案例回填結果。</p>
-        <p><strong>文件：</strong>規格、架構與測試計畫在對應節點寫出，拆票前就有測試案例。</p>
+        <p><strong>驗證：</strong><code>/to-test-plan</code> 規劃案例與門檻；<code>/implement</code> 和 <code>/tdd</code> 依專案規則執行並回報結果。</p>
+        <p><strong>文件：</strong>沿用專案既有的名稱、編號與位置。流程圖是常見路徑，不規定每個專案的文件或票數。</p>
       </div>
 
       <details class="repo-details">
@@ -141,9 +141,9 @@
 └─ <strong>skills/</strong>         15 支技能</div>
           <div>
             <p><strong>規則：</strong><code>AGENTS.md</code> 是專案規則；<code>CLAUDE.md</code> 轉讀它。</p>
-            <p><strong>規格：</strong><code>course/templates/</code> 提供格式。執行需求、架構與測試計畫技能時，才逐份建立 <code>docs/01–06</code>。</p>
-            <p><strong>經驗：</strong><code>docs/LESSONS.md</code> 記錄本專案遇到的偏差、誤解與踩坑，不取代規格。</p>
-            <p class="muted">目前這個工作樹尚未建立 <code>docs/</code>；<code>skills/</code> 存的是工作方法。</p>
+            <p><strong>規格：</strong>本 repo 的要求見 <code>AGENTS.md</code> 和 <code>course/</code>；技能依執行時的專案材料決定輸出。</p>
+            <p><strong>經驗：</strong>專案可記錄偏差、誤解與踩坑，但經驗紀錄不取代規格。</p>
+            <p class="muted"><code>skills/</code> 存的是工作方法，不預設文件數量或票數。</p>
           </div>
         </div>
       </details>
@@ -159,7 +159,7 @@
               <span class="tag">只有你打才跑</span>
               <h4><code>/compass</code> — 路由器</h4>
               <p class="where">通用流程：不綁階段。不知道下一步時用。</p>
-              <p>看磁碟上已經有哪些文件，告訴你現在在哪、下一支是誰、該留下哪個檔。它不寫規格、不寫程式。</p>
+              <p>依目前目標、已有成果與可用技能指出下一步，說明需要的輸入和可檢查的結果。它不替其他技能做完整工作。</p>
               <p class="cmd"><span>你打</span>/compass</p>
             </article>
 
@@ -167,8 +167,7 @@
               <span class="tag">你打，或它自己接</span>
               <h4><code>/writing-hooks</code> — 把紅線變成做不到</h4>
               <p class="where">通用流程：不綁階段。規則必須做成做不到時用。</p>
-              <p>品味和順序留在文件。破一次就要花一天收拾，或會洩密、會毀資料，才寫成 hook，用 exit 2 擋。理由寫 stderr，告訴它改做什麼。平時安靜，診斷寫日誌。每支 hook 要有對得上允許／擋下的測試。</p>
-              <p>這個 repo 已經有 <code>guard-git.sh</code> 和 <code>guard-secrets.sh</code>，登記在 <code>.claude/settings.json</code>。課用的「結束前測試要綠」範本在 <code>course/templates/hooks/</code>。</p>
+              <p>判斷何時需要機器守衛，依執行環境的 hook 合約設計攔截與診斷。平時保持安靜，並用真實輸入測試允許、擋下及失敗路徑。</p>
               <p class="cmd"><span>你打</span>/writing-hooks<br>並講哪條規則要擋、在工具執行前還是結束前。</p>
             </article>
 
@@ -177,21 +176,20 @@
               <h4><code>/grilling</code> — 把決定問清楚</h4>
               <p class="where">通用流程：探索與決策。需求留白時也回到這裡。</p>
               <p>一輪問一層。每一題附它建議的答案，等你回，再問下一層。能自己查的事實它去查，決定留給你。樹問完就停，你確認共識之前不動手。</p>
-              <p>本專案用它整理 <code>docs/01-brief.md</code> 和 <code>docs/02-prd.md</code>（範本在 <code>course/templates/</code>）。後面任何規格留白，也回到這裡。</p>
-              <p class="cmd"><span>你打</span>/grilling<br>照問題回。定案後才請它依範本落檔。</p>
+              <p class="cmd"><span>你打</span>/grilling<br>回答每輪問題，確認共識後再請它落檔。</p>
             </article>
 
 <article class="skill-detail skill d1 user-only" id="grill-with-docs" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/grill-with-docs</code> — 帶著既有文件訪談</h4>
-              <p>讀已定規格，避免跨對話重問。確認共識後把決定寫回相應的 01–05 文件；偏差才進 LESSONS，不另建術語或 ADR 總帳。</p>
+              <p>讀現有規格與決策，避免重問已定事項；共識形成後按專案慣例更新承載該決定的文件。</p>
               <p class="cmd"><span>你打</span>/grill-with-docs</p>
             </article>
 
 <article class="skill-detail skill d1 user-only" id="to-spec" hidden>
               <span class="tag">只有你打才跑</span>
               <h4><code>/to-spec</code> — 收斂需求規格</h4>
-              <p>把已定案的討論依本專案範本寫進 <code>docs/01-brief.md</code>、<code>docs/02-prd.md</code>、<code>docs/03-srs.md</code>，沿用既有追溯編號。</p>
+              <p>把已定的承諾、範圍、決策和未決問題寫進規格；沿用專案既有格式、位置與編號。</p>
               <p class="cmd"><span>你打</span>/to-spec</p>
             </article>
 
@@ -205,85 +203,50 @@
 
 <article class="skill-detail skill d1 user-only" id="to-architecture" hidden>
               <span class="tag">只有你打才跑</span>
-              <h4><code>/to-architecture</code> — 兩份設計</h4>
+              <h4><code>/to-architecture</code> — 架構與細部設計</h4>
               <p class="where">通用流程：架構與細部設計。</p>
-              <p>讀 PRD、SRS、<code>course/STACK.md</code>、<code>course/LEAVEBOT.md</code> 和兩份範本。技術棧是固定的，只在裡面設計。</p>
-              <ul class="tight">
-                <li><code>docs/04-sad.md</code>：C4 第 1、2 層、主路徑時序（中間要看得到「驗證模型輸出」）、每個決定是模型、程式還是人、有真正替代方案的 ADR。</li>
-                <li><code>docs/05-sds.md</code>：ER、每個 <code>/api/</code> 端點和錯誤、畫面對到使用者流程、模型模組和規則模組分開。</li>
-              </ul>
-              <p>剩餘天數、撞期、核准不歸模型。兩份草稿先給你改，再寫檔。寫完應列出沒有落點的 FR / NFR。下一步是 <code>docs/06-test-plan.md</code>。</p>
-              <p class="cmd"><span>你打</span>/to-architecture<br>SRS 已經在的時候。</p>
+              <p>從已定需求推導系統邊界、元件責任、資料流程、介面與失敗路徑；圖和 ADR 依問題需要選用。輸出形式沿用專案慣例。</p>
+              <p class="cmd"><span>你打</span>/to-architecture<br>並指出要設計的範圍。</p>
             </article>
 
 <article class="skill-detail skill d1 user-only" id="to-test-plan" hidden>
               <span class="tag">只有你打才跑</span>
-              <h4><code>/to-test-plan</code> — 六號測試計畫</h4>
-              <p>依 PRD、SRS、SAD、SDS 和 <code>course/templates/06-test-plan.md</code> 建立 TC、AI eval 門檻、退出條件與追溯矩陣。測試計畫集中記錄案例、門檻與追溯關係。</p>
+              <h4><code>/to-test-plan</code> — 測試計畫</h4>
+              <p>依需求、設計與風險安排案例、層級、資料、通過門檻與追溯。案例數量與編號由專案決定；非決定性元件另訂評測方式。</p>
               <p class="cmd"><span>你打</span>/to-test-plan</p>
             </article>
 
 <article class="skill-detail skill d1" id="writing-for-agents" hidden>
               <span class="tag">你打，或它自己接</span>
               <h4><code>/writing-for-agents</code> — 寫給 agent 讀的文件</h4>
-              <p class="where">通用流程：協作規範。規格寫完、開工前。</p>
+              <p class="where">通用流程：建立或修訂代理會讀的文件。</p>
               <p>本文是寫作標準：步驟和完成條件要能判斷做完沒有、能查到的不要複寫一份、用模型本來就懂的詞當錨點。技能的包裝細節在同目錄 <code>SKILL-MECHANICS.md</code>。</p>
-              <p>本專案用它整理 <code>AGENTS.md</code> 下半「本專案」，以及 <code>docs/LESSONS.md</code>。上半原廠規則不要改。</p>
-              <p class="cmd"><span>你打</span>/writing-for-agents<br>並指明要改的是 AGENTS.md 下半。</p>
+              <p class="cmd"><span>你打</span>/writing-for-agents<br>並指出要建立或修改的文件。</p>
             </article>
 
 <article class="skill-detail skill d1 user-only" id="to-tickets" hidden>
               <span class="tag">只有你打才跑</span>
-              <h4><code>/to-tickets</code> — 切成五張票</h4>
+              <h4><code>/to-tickets</code> — 依成果拆票</h4>
               <p class="where">通用流程：工作分解。</p>
-              <p>六份規格都在之後才打。先把五張的範圍列給你看，你點頭才寫檔。I0 之後每張都是一條前後通的路徑。測試計畫裡每個 TC 正好進一張票。下一步：一張一張 <code>/implement</code>，中間 <code>/clear</code>。</p>
-              <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr><th>票</th><th>做完看得到什麼</th></tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>issues/000-i0-skeleton.md</code></td>
-                    <td><code>bash dev.sh</code> 前後端都起來，<code>GET /api/health</code>，Ctrl+C 兩個 port 都放</td>
-                  </tr>
-                  <tr>
-                    <td><code>issues/001-i1-first-slice.md</code></td>
-                    <td>一句話 → 解析 → 預覽 → 送出 → 我的申請。模型在可替換的接縫後面，測試塞假的</td>
-                  </tr>
-                  <tr>
-                    <td><code>issues/002-i2-rules.md</code></td>
-                    <td>特休餘額、同日人數提醒，由程式算</td>
-                  </tr>
-                  <tr>
-                    <td><code>issues/003-i3-approval.md</code></td>
-                    <td>主管畫面和狀態轉換</td>
-                  </tr>
-                  <tr>
-                    <td><code>issues/004-i4-ai-acceptance.md</code></td>
-                    <td>用 <code>course/fixtures/</code> 跑 eval，過測試計畫的門檻；注入案例要過</td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-              <p class="cmd"><span>你打</span>/to-tickets</p>
+              <p>從目標、已定規格、期限與團隊容量出發，先提出整組可交付成果和真實阻塞關係，再依使用者取捨定票。太大的拆、只能一起驗收的合；票數沒有預設答案。</p>
+              <p>每張票以結果命名，寫明可由別人檢查的完成條件、必要背景及依賴。優先做薄的端到端切片；必要的環境或研究工作可獨立成票。</p>
+              <p class="cmd"><span>你打</span>/to-tickets<br>並說明目標、限制與希望的拆票粒度。</p>
             </article>
 
 <article class="skill-detail skill d2 user-only" id="implement" hidden>
               <span class="tag">只有你打才跑</span>
-              <h4><code>/implement</code> — 完成一張票</h4>
-              <p>讀票與規格，用 <code>/tdd</code> 實作可測行為，跑完整 pytest、更新 06 追溯矩陣與 LESSONS，再以 <code>/code-review</code> 檢查。一次只做一票，不自動 commit。</p>
-              <p class="cmd"><span>你打</span>/implement issues/001-i1-first-slice.md</p>
+              <h4><code>/implement</code> — 完成工作項目</h4>
+              <p>依指定的票或小型規格確認接縫、建置、執行專案要求的檢查，對照完成條件審查並回報結果。</p>
+              <p class="cmd"><span>你打</span>/implement<br>並指出票或規格。</p>
             </article>
 
 <article class="skill-detail skill d2" id="tdd" hidden>
               <span class="tag">你打，或它自己接</span>
-              <h4><code>/tdd</code> — 一張票的紅綠循環</h4>
+              <h4><code>/tdd</code> — 紅綠循環</h4>
               <p class="where">通用流程：實作。</p>
               <p>一次只做一個行為。先寫一個會失敗的測試，確認它因為你預期的原因失敗，再寫剛好能過的程式，然後才整理。不要先把整張票的測試一次寫完。</p>
-              <p>測試打在別的模組會呼叫的接縫上（多半是 <code>docs/05-sds.md</code> 的 API），放在 <code>backend/tests/&lt;layer&gt;/</code>。每個測試標 <code>@pytest.mark.req("TC-xx", "...")</code>。模型只注入假實作，不打真的 API。</p>
-              <p>票結束前：跑完整 pytest 並貼結果、更新 <code>docs/06-test-plan.md</code> 追溯矩陣、有偏差就寫 <code>docs/LESSONS.md</code>。</p>
-              <p class="cmd"><span>你打</span>/clear<br>然後 /tdd，並指那張票，例如 issues/001-i1-first-slice.md</p>
+              <p>在專案既有的公共接縫寫測試，沿用其測試工具和追溯慣例。完成前執行專案要求的檢查並報告結果。</p>
+              <p class="cmd"><span>你打</span>/tdd<br>並指出要實作的行為。</p>
             </article>
 
 <article class="skill-detail skill d2" id="diagnosing-bugs" hidden>
@@ -291,7 +254,7 @@
               <h4><code>/diagnosing-bugs</code> — 紅燈原因不明</h4>
               <p class="where">通用流程：除錯。</p>
               <p>先有一條幾秒內能穩定變紅的指令，再談原因。分類：產品回歸、時好時壞、環境問題。然後縮小、有已知好版本就 <code>git bisect</code>、一次只驗一個假說、用輸出證明、修原因、補一個修之前會紅的測試。探針輸出裡的金鑰先遮掉。</p>
-              <p>找不到能抓到這個 bug 的接縫時，寫進 <code>docs/LESSONS.md</code>，拿回 SAD / SDS 討論。</p>
+              <p>找不到能抓到問題的接縫時，把它作為設計問題記錄並提出。</p>
               <p class="cmd"><span>你打</span>/diagnosing-bugs<br>附上失敗的指令和輸出。</p>
             </article>
 
@@ -299,7 +262,7 @@
               <span class="tag">你打，或它自己接</span>
               <h4><code>/code-review</code> — 合併前看 diff</h4>
               <p class="where">通用流程：審查。</p>
-              <p>你要給一個定點（SHA、分支、tag）。沒給它會問。兩條線分開看：有沒有守 <code>AGENTS.md</code> 和 <code>course/STACK.md</code>，有沒有做到那張票的 Done when。票上的 TC 要用 <code>grep</code> 對 <code>@pytest.mark.req</code>，矩陣上的 ✅ 只是宣稱。</p>
+              <p>先確定要審的 PR、提交範圍或工作樹。分別核對專案標準與需求承諾；實際測試輸出比勾選狀態更有說服力。</p>
               <p>報告分成必須改和判斷題。某一軸沒問題就直說。</p>
               <p class="cmd"><span>你打</span>/code-review main</p>
             </article>
@@ -310,7 +273,7 @@
               <p class="where">通用流程：交接。</p>
               <p>寫一份給下一個全新對話的交接，放在系統暫存目錄，不進這個 repo。內容是進度、已經做的決定和為什麼、下一步、已知的坑、建議接著叫哪些技能。規格和票用路徑指過去。金鑰抹掉。</p>
               <p>它結束這一輪。你開新對話，貼它給的那一行。同一個對話要變短，用 <code>/compact</code>。</p>
-              <p class="cmd"><span>你打</span>/handoff 下一輪做 I2 的規則票</p>
+              <p class="cmd"><span>你打</span>/handoff 下一輪接手的工作</p>
             </article>
       </div>
     </div>

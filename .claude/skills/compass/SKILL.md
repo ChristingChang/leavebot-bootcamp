@@ -1,64 +1,17 @@
 ---
 name: compass
-description: 問這個情況該用哪個技能、走哪條流程。依本專案現有技能、文件與票指出合適入口。
+description: 依使用者當前目標、已有成果與可用技能，指出最合適的下一個工作流程。只有使用者指定時啟動。
 disable-model-invocation: true
 ---
 
 # Compass
 
-This repo ships the course's original ten skills, four local adaptations (`grill-with-docs`, `to-spec`, `to-test-plan`, `implement`), and the general `feasibility` skill. D1 writes six spec documents; D2 builds the app in five iterations. Tell the user which skill fits their present problem and what file it should leave behind. The sequence below is a course path, not a gate: bugs and new decisions can enter at any point.
+幫使用者選下一個動作，不替其他技能做完整工作，也不假設所有專案都依同一順序、文件數量或票數前進。
 
-**Respond in the session's language.** Check which of `docs/01-brief.md` … `docs/06-test-plan.md`, `docs/LESSONS.md` and `issues/` already exist before answering — the next step is the first thing that is missing. The repo starts empty on purpose: everything outside `course/` and the config files is something the user builds.
+1. 確認使用者想解決的問題、目前已完成的成果，以及此環境實際可用的技能。專案規則、已有規格與工作票是現況證據；不要把缺少某個模板檔案直接當成工作未完成。
+2. 找出眼前的阻礙：未決的產品選擇、需驗證的可行性、待收斂的規格、待設計的接縫、待規劃的測試、待切分或實作的工作、失敗原因不明的 bug，或待審查／交接的變更。
+3. 建議一個最直接的技能或普通動作，說明它會解決哪個阻礙、需要哪些輸入、應留下什麼可檢查的結果。需要先決條件時說明；沒有合適技能時直接建議普通工作，不虛構技能名稱。
 
-## D1 — the spec chain (left side of the V)
+常見入口：釐清新決策用 `grilling`，帶著既有文件討論用 `grill-with-docs`，評估關鍵未知用 `feasibility`，收斂承諾用 `to-spec`，設計接縫用 `to-architecture`，安排驗證用 `to-test-plan`，拆工作用 `to-tickets`，建置用 `implement` 或 `tdd`，疑難故障用 `diagnosing-bugs`，審查用 `code-review`，交接用 `handoff`。規則與技能文件用 `writing-for-agents`，需要工具層守衛時用 `writing-hooks`。
 
-| Step | Skill | Leaves behind (format) |
-| --- | --- | --- |
-| 1. Why build it: pain, goals, non-goals | **`/grilling`**; when working from existing docs, **`/grill-with-docs`** | Decisions for `docs/01-brief.md` |
-| 2. For whom, what: persona, user flow, epic, story, BDD | **`/grilling`** or **`/grill-with-docs`** (same session) | Decisions for `docs/02-prd.md` |
-| 3. Turn settled decisions into Brief, PRD, SRS | **`/to-spec`** | `docs/01-brief.md` … `docs/03-srs.md` using course templates |
-| Optional: a concrete technical, time, or cost risk could change scope | **`/feasibility`** | Evidence, uncertainty, and the smallest next check; no automatic spec change |
-| 4. How it fits together: C4, information flow, ADR | **`/to-architecture`** | `docs/04-sad.md` |
-| 5. How each piece works: ER, API, screens, modules | **`/to-architecture`** (same run) | `docs/05-sds.md` |
-| 6. How it will be verified: test cases, eval threshold, traceability matrix | **`/to-test-plan`** | `docs/06-test-plan.md` |
-| 7. Project rules and lessons | **`/writing-for-agents`** | the 本專案 half of `AGENTS.md`; `docs/LESSONS.md` (`course/templates/LESSONS.md`) |
-| 8. Split the build into iterations I0–I4 | **`/to-tickets`** | `issues/NNN-<slug>.md` |
-
-After step 6, the traceability matrix at the end of `docs/06-test-plan.md` should list every AC / FR / NFR with a TC. A requirement missing from it is a gap.
-
-## D2 — from zero to a working app (right side of the V)
-
-| Iteration | Skill | Done when |
-| --- | --- | --- |
-| I0 skeleton: `backend/`, `frontend/`, `pyproject.toml`, `dev.sh` per `course/STACK.md` | **`/implement`** on the I0 ticket | `bash dev.sh` serves the frontend, which reads `/api/health`; Ctrl+C frees both ports |
-| I1–I3 one ticket at a time | **`/implement`**, using **`/tdd`** for testable behaviour | the ticket's test cases go red, then green, each test marked `@pytest.mark.req(...)` |
-| A test goes red and the cause is not obvious | **`/diagnosing-bugs`** | a reproducing test, one hypothesis at a time, then the fix |
-| End of each iteration | — | ask the agent to click through the PRD user flow with the **playwright** MCP |
-| Before merging an iteration | **`/code-review`** | a review a human accepts or rejects line by line |
-| I4 verify the AI itself | — | an eval script the agent generates from the test plan's comparison rules passes `--min <threshold>`; injection test cases pass |
-| Another teammate or tool takes over | **`/handoff`** | a file the next session starts from |
-| A rule that must never be broken | **`/writing-hooks`** | a hook in `.claude/hooks/`, registered in both tools |
-
-Finish with the traceability matrix: no AC / FR / NFR without a TC, no TC without a test file, three rows spot-checked by a human.
-
-`/compass`, `/grill-with-docs`, `/to-spec`, `/to-architecture`, `/to-test-plan`, `/to-tickets`, `/implement` and `/handoff` are **user-triggered**: the user types them. Do not warn that they are missing — check `.claude/skills/<name>/SKILL.md` if in doubt. `/feasibility` is installed as an optional risk check; recommend it only when a concrete risk could change a decision.
-
-An open question at any step goes back to **`/grilling`**, never to a guessed default.
-
-## Context hygiene
-
-- D1 steps 1–2 stay in **one session**; steps 4–5 too. The later document needs the earlier reasoning verbatim, not a summary.
-- Between tickets on D2, **`/clear`**. Each ticket is self-contained; everything it needs is in `docs/`, `docs/LESSONS.md` and the ticket.
-- A session getting long mid-step: finish the step, then `/compact` with an instruction (`/compact next we build ticket 002`).
-
-## Built-in commands, not skills
-
-`/clear`, `/compact` and `/init` belong to Claude Code itself — and do not run `/init` here, it would overwrite the project's agent rules. In Codex, skills are called with `$name` (`$grilling`), and its own review command is `/review`.
-
-## When the output disagrees with the handout
-
-That is expected — models hallucinate. Align in this order: the spec (`docs/`, `course/STACK.md`), then the measures (tests, eval, the traceability matrix), then the instructor. Record the drift in `docs/LESSONS.md`.
-
-## Where the boundaries live
-
-`AGENTS.md` holds the rules (factory half on top, project half below); `course/STACK.md` fixes the stack and the one fixed API (`POST /api/parse`); `.claude/hooks/` blocks dangerous git commands whatever the agent decides; `.mcp.json` adds context7 (current docs) and playwright (a browser); `course/HARNESS.md` explains which file does what.
+以上是依問題選路，不是必經流程。推薦前確認技能確實存在；若技能只允許使用者啟動，告訴使用者如何在目前工具中呼叫，不代替他啟動。

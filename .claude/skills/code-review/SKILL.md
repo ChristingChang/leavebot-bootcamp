@@ -1,22 +1,22 @@
 ---
 name: code-review
-description: 沿兩條軸審查自某個定點以來的 diff — Standards（有沒有遵守這個 repo 的規範？）與 Spec（有沒有做到票要求的事？）。當使用者要審查一個分支、一個 PR 或進行中的工作時使用，也對應 "code review"、"review this branch"、「審一下」等說法。
+description: 沿 Standards（是否遵守專案規範）與 Spec（是否做到要求）兩條軸審查分支、PR、提交範圍或進行中的工作。當使用者要求 code review、「審一下」時使用。
 ---
 
 # Code Review
 
-Two-axis review of the diff between `HEAD` and a fixed point.
+Two-axis review of the change the user identifies: a branch, PR, commit range or current worktree.
 
-- **Standards** — does the code conform to this repo's conventions?
+- **Standards** — does the code conform to the current project's conventions?
 - **Spec** — does it faithfully implement the originating ticket or spec?
 
-Run both as **parallel sub-agents** so neither pollutes the other's context, then report side by side. Sub-agents must not invoke `/code-review` themselves — one level of review, no recursion.
+Keep independent notes for the two axes so a standards preference does not masquerade as a missed requirement. Use separate reviewers when the task and available tools justify it; report the findings together.
 
 ## 1. Pin the fixed point
 
-Whatever the user gave: a SHA, a branch, a tag, `main`, `HEAD~5`. If they gave nothing, ask. Reviewing against a merge-base you assumed is reviewing a different diff than they meant.
+Use the exact range or PR the user named. For work in progress, include staged and unstaged changes as requested. If the comparison point is unclear and changes the review, ask before making findings against an assumed baseline.
 
-`git diff <point>...HEAD` — the diff, not the file tree.
+Review the changed lines and the surrounding code they depend on, rather than judging only the file tree.
 
 ## 2. Standards axis
 
@@ -41,11 +41,11 @@ A documented repo standard overrides any of these. Consistency beats a rule from
 
 ## 3. Spec axis
 
-Read the originating ticket (`issues/NNN-*.md`) and the documents it points at (`docs/02-prd.md` … `docs/06-test-plan.md`). Read the traceability matrix at the end of `docs/06-test-plan.md`. Check the diff against them:
+Read the originating request, ticket or specification and any acceptance criteria it references. Check the change against them:
 
 - Every *Done when* condition, literally — met, or not
-- Every test case the ticket lists has a test marked `@pytest.mark.req` with that TC — grep for it; a ✅ in the matrix is a claim, not evidence
-- The diff stays inside `course/STACK.md` (no new dependency, framework, or CORS), calls the model only through the Anthropic API — never an agent CLI like `claude -p` — and never from a test
+- Required tests or other verification have actually run and exercise the promised behaviour; a checked box or passing badge alone is a claim, not evidence
+- Project constraints on architecture, dependencies, external services and sensitive data are observed
 - **Scope creep** — shipped things the spec did not ask for
 - **Silent gaps** — spec items with no code
 - **Reinterpretation** — built something adjacent to what was asked

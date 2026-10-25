@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1744" viewBox="0 0 1200 1744" role="img" aria-labelledby="title desc">
   <title id="title">通用技能流程：從想法到驗證</title>
-  <desc id="desc">通用流程由釐清、需求規格、架構、測試計畫、拆票、建置、TDD、審查和按案例驗證組成。文件在各節點建立與更新；測試案例編號由測試計畫定義，執行與結果回填是建置和驗證工作，不另設專屬技能。下方列可隨時切入的除錯、代理文件、hook 和交接技能。LeaveBot 的 I4 AI eval 是專案範例，不在通用主幹。</desc>
+  <desc id="desc">展示從釐清到驗證的一條常見路徑，以及可隨時切入的除錯、代理文件、hook 和交接技能。各節點依專案需要選用；文件數量、票數、編號與評測門檻由專案決定。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#617287"/></marker>
     <style>
@@ -74,7 +74,7 @@
   <!-- Optional risk check is a detour, not a required stage. -->
   <path d="M632 427H673V400H687" class="lightEdge"/>
   <rect x="690" y="364" width="452" height="74" rx="10" class="auto optional"/>
-  <text x="916" y="396" class="name">/feasibility</text><text x="916" y="422" class="small">可選：遇到真實技術／成本風險才評估</text>
+  <text x="916" y="396" class="name">/feasibility</text><text x="916" y="422" class="small">可選：評估想法、方案或關鍵風險</text>
   <path d="M916 438V472H674V739H632" class="lightEdge"/>
 
   <!-- Generic artifact lane. This shows when documents are produced. -->
@@ -91,12 +91,12 @@
   <text x="716" y="818" class="panelCopy">程式、測試與執行結果</text>
   <text x="716" y="850" class="panelCopy">案例狀態與追溯關係回填</text>
   <line x1="715" y1="872" x2="1115" y2="872" stroke="#d6dfeb"/>
-  <text x="716" y="911" class="sub">先定規格和案例，再拆票建置；</text>
-  <text x="716" y="941" class="sub">文件不是到最後才生成。</text>
+  <text x="716" y="911" class="sub">已有決定先引用，缺口再回頭釐清；</text>
+  <text x="716" y="941" class="sub">文件隨工作更新，不等到最後。</text>
   <text x="716" y="971" class="sub">檔名、編號與 runner 由專案約定。</text>
   <line x1="715" y1="994" x2="1115" y2="994" stroke="#d6dfeb"/>
-  <text x="716" y="1024" class="sub">LeaveBot 範例：LESSONS.md 記錄</text>
-  <text x="716" y="1054" class="sub">偏差、誤解與踩過的坑。</text>
+  <text x="716" y="1024" class="sub">發現偏差與誤解時，更新專案的</text>
+  <text x="716" y="1054" class="sub">決策或經驗紀錄。</text>
   <path d="M632 531H679" class="lightEdge"/>
   <path d="M632 635H679" class="lightEdge"/>
   <path d="M632 739H679" class="lightEdge"/>
@@ -118,5 +118,5 @@
   <text x="68" y="1529" class="sub">已安裝技能共 15 支，全部列在圖上；點線的 feasibility 是可選風險檢查。</text>
   <rect x="44" y="1588" width="1098" height="104" rx="12" fill="#eaf0f8"/>
   <text x="68" y="1629" class="panelTitle">通用主幹只放共通能力</text>
-  <text x="68" y="1663" class="sub">LeaveBot 的 I4 AI eval 是專案評測條件，寫在它的測試計畫與工作票，不是每個專案必經節點。</text>
+  <text x="68" y="1663" class="sub">非決定性元件的評測門檻依專案需要訂定；技能不規定固定階段或票數。</text>
 </svg>
