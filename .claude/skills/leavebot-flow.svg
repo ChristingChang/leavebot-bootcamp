@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1744" viewBox="0 0 1200 1744" role="img" aria-labelledby="title desc">
+  <title id="title">通用技能流程：從想法到驗證</title>
+  <desc id="desc">通用流程由釐清、需求規格、架構、測試計畫、拆票、建置、TDD、審查和按案例驗證組成。文件在各節點建立與更新；測試案例編號由測試計畫定義，執行與結果回填是建置和驗證工作，不另設專屬技能。下方列可隨時切入的除錯、代理文件、hook 和交接技能。LeaveBot 的 I4 AI eval 是專案範例，不在通用主幹。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#617287"/></marker>
+    <style>
+      text { font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif; fill: #202d40; }
+      .title { font-size: 35px; font-weight: 700; }
+      .sub { font-size: 17px; fill: #57677c; }
+      .phase { fill: #253f68; }
+      .phaseText { fill: white; font-size: 22px; font-weight: 700; text-anchor: middle; }
+      .name { font-family: Consolas, monospace; font-size: 24px; text-anchor: middle; }
+      .small { font-size: 17px; fill: #57677c; text-anchor: middle; }
+      .manual { fill: #fff; stroke: #a6b7d1; stroke-width: 2; }
+      .auto { fill: #e6ecf6; stroke: #7d98bf; stroke-width: 2; }
+      .proposed { stroke-dasharray: 8 5; }
+      .optional { stroke-dasharray: 3 6; }
+      .edge { fill: none; stroke: #617287; stroke-width: 2.3; marker-end: url(#arrow); }
+      .lightEdge { fill: none; stroke: #8b9aad; stroke-width: 2; stroke-dasharray: 6 5; marker-end: url(#arrow); }
+      .panel { fill: #fff; stroke: #b8c6d9; stroke-width: 2; }
+      .panelTitle { font-size: 25px; font-weight: 700; }
+      .panelCopy { font-size: 19px; }
+      .tag { font-size: 15px; font-weight: 700; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1200" height="1744" fill="#fbfcfe"/>
+  <text x="44" y="61" class="title">通用路徑：從想法到驗證</text>
+  <text x="44" y="93" class="sub">箭頭代表常見接續；遇到新問題，可以從任何位置切入或返回。</text>
+
+  <rect x="47" y="120" width="20" height="20" rx="3" class="manual"/><text x="77" y="136" class="sub">已安裝・你指定</text>
+  <rect x="248" y="120" width="20" height="20" rx="3" class="auto"/><text x="278" y="136" class="sub">已安裝・agent 也可接</text>
+  <rect x="513" y="120" width="20" height="20" rx="3" class="manual optional"/><text x="543" y="136" class="sub">可選・未安裝</text>
+
+  <!-- Main route. The phase column echoes the reference without implying a gate. -->
+  <rect x="44" y="187" width="112" height="64" rx="8" class="phase"/><text x="100" y="226" class="phaseText">定位</text>
+  <rect x="192" y="187" width="440" height="64" rx="9" class="manual"/><text x="412" y="217" class="name">/compass</text><text x="412" y="240" class="small">不確定下一步時，先看現有檔案</text>
+  <path d="M412 251V289" class="edge"/>
+
+  <rect x="44" y="291" width="112" height="64" rx="8" class="phase"/><text x="100" y="330" class="phaseText">釐清</text>
+  <rect x="192" y="291" width="440" height="64" rx="9" class="auto"/><text x="412" y="321" class="name">/grilling</text><text x="412" y="344" class="small">把需求、範圍與未決問題問清楚</text>
+  <path d="M632 323H681" class="lightEdge"/>
+  <rect x="690" y="271" width="452" height="76" rx="9" class="manual"/><text x="916" y="302" class="name">/grill-with-docs</text><text x="916" y="329" class="small">帶著文件訪談，留下已定決策</text>
+  <path d="M412 355V393" class="edge"/>
+
+  <rect x="44" y="395" width="112" height="64" rx="8" class="phase"/><text x="100" y="434" class="phaseText">規格</text>
+  <rect x="192" y="395" width="440" height="64" rx="9" class="manual"/><text x="412" y="425" class="name">/to-spec</text><text x="412" y="448" class="small">把共識寫成需求規格</text>
+  <path d="M412 459V497" class="edge"/>
+
+  <rect x="192" y="499" width="440" height="64" rx="9" class="manual"/><text x="412" y="529" class="name">/to-architecture</text><text x="412" y="552" class="small">定架構、資料與 API 合約</text>
+  <path d="M412 563V601" class="edge"/>
+
+  <rect x="44" y="603" width="112" height="64" rx="8" class="phase"/><text x="100" y="642" class="phaseText">測試</text>
+  <rect x="192" y="603" width="440" height="64" rx="9" class="manual"/><text x="412" y="633" class="name">/to-test-plan</text><text x="412" y="656" class="small">定分層、案例編號與通過門檻</text>
+  <path d="M412 667V705" class="edge"/>
+
+  <rect x="44" y="707" width="112" height="64" rx="8" class="phase"/><text x="100" y="746" class="phaseText">拆票</text>
+  <rect x="192" y="707" width="440" height="64" rx="9" class="manual"/><text x="412" y="737" class="name">/to-tickets</text><text x="412" y="760" class="small">依規格與案例切可交付的票</text>
+  <path d="M412 771V809" class="edge"/>
+
+  <rect x="44" y="811" width="112" height="64" rx="8" class="phase"/><text x="100" y="850" class="phaseText">建置</text>
+  <rect x="192" y="811" width="440" height="64" rx="9" class="manual"/><text x="412" y="841" class="name">/implement</text><text x="412" y="864" class="small">一次一票，寫程式並執行測試</text>
+  <path d="M412 875V913" class="edge"/>
+
+  <rect x="192" y="915" width="440" height="64" rx="9" class="auto"/><text x="412" y="945" class="name">/tdd</text><text x="412" y="968" class="small">先紅、後綠、再重構</text>
+  <path d="M412 979V1017" class="edge"/>
+
+  <rect x="44" y="1019" width="112" height="64" rx="8" class="phase"/><text x="100" y="1058" class="phaseText">檢查</text>
+  <rect x="192" y="1019" width="440" height="64" rx="9" class="auto"/><text x="412" y="1049" class="name">/code-review</text><text x="412" y="1072" class="small">核對規範與票的完成條件</text>
+  <path d="M412 1083V1121" class="edge"/>
+
+  <rect x="44" y="1123" width="112" height="64" rx="8" class="phase"/><text x="100" y="1162" class="phaseText">驗證</text>
+  <rect x="192" y="1123" width="440" height="64" rx="9" class="manual"/><text x="412" y="1153" class="name">按案例驗證</text><text x="412" y="1176" class="small">檢查結果，回填案例與追溯</text>
+
+  <!-- Optional risk check is a detour, not a required stage. -->
+  <path d="M632 427H673V400H687" class="lightEdge"/>
+  <rect x="690" y="364" width="452" height="74" rx="10" class="manual optional"/>
+  <text x="916" y="396" class="name">/feasibility</text><text x="916" y="422" class="small">可選：遇到真實技術／成本風險才評估</text>
+  <path d="M916 438V472H674V739H632" class="lightEdge"/>
+
+  <!-- Generic artifact lane. This shows when documents are produced. -->
+  <rect x="690" y="505" width="452" height="605" rx="13" class="panel"/>
+  <text x="716" y="547" class="panelTitle">文件與交付：隨節點形成</text>
+  <text x="716" y="582" class="panelCopy">需求規格 → /to-spec</text>
+  <text x="716" y="614" class="panelCopy">既有決策 → /grill-with-docs</text>
+  <line x1="715" y1="633" x2="1115" y2="633" stroke="#d6dfeb"/>
+  <text x="716" y="670" class="panelCopy">架構合約 → /to-architecture</text>
+  <text x="716" y="702" class="panelCopy">測試計畫＋案例 → /to-test-plan</text>
+  <line x1="715" y1="722" x2="1115" y2="722" stroke="#d6dfeb"/>
+  <text x="716" y="760" class="panelCopy">工作票引用相關案例編號</text>
+  <line x1="715" y1="781" x2="1115" y2="781" stroke="#d6dfeb"/>
+  <text x="716" y="818" class="panelCopy">程式、測試與執行結果</text>
+  <text x="716" y="850" class="panelCopy">案例狀態與追溯關係回填</text>
+  <line x1="715" y1="872" x2="1115" y2="872" stroke="#d6dfeb"/>
+  <text x="716" y="911" class="sub">先定規格和案例，再拆票建置；</text>
+  <text x="716" y="941" class="sub">文件不是到最後才生成。</text>
+  <text x="716" y="971" class="sub">檔名、編號與 runner 由專案約定。</text>
+  <line x1="715" y1="994" x2="1115" y2="994" stroke="#d6dfeb"/>
+  <text x="716" y="1024" class="sub">LeaveBot 範例：LESSONS.md 記錄</text>
+  <text x="716" y="1054" class="sub">偏差、誤解與踩過的坑。</text>
+  <path d="M632 531H679" class="lightEdge"/>
+  <path d="M632 635H679" class="lightEdge"/>
+  <path d="M632 739H679" class="lightEdge"/>
+  <path d="M632 843H679" class="lightEdge"/>
+
+  <!-- Return path and entry points. -->
+  <path d="M192 1155H170V322H184" class="lightEdge"/>
+  <text x="164" y="700" transform="rotate(-90 164 700)" class="sub">驗收發現需求缺口 → 回頭修規格</text>
+  <rect x="44" y="1244" width="1098" height="310" rx="12" class="panel"/>
+  <text x="68" y="1284" class="panelTitle">任何時候遇到新問題，都可從這裡切入</text>
+  <rect x="68" y="1308" width="510" height="88" rx="9" class="auto"/>
+  <text x="323" y="1342" class="name">/diagnosing-bugs</text><text x="323" y="1373" class="small">壞了且原因不明 → 重現、修正</text>
+  <rect x="602" y="1308" width="514" height="88" rx="9" class="auto"/>
+  <text x="859" y="1342" class="name">/writing-for-agents</text><text x="859" y="1373" class="small">建立或修改 agent 讀的規則與技能</text>
+  <rect x="68" y="1408" width="510" height="88" rx="9" class="auto"/>
+  <text x="323" y="1442" class="name">/writing-hooks</text><text x="323" y="1473" class="small">硬限制要由工具擋下時，設計 hook</text>
+  <rect x="602" y="1408" width="514" height="88" rx="9" class="manual"/>
+  <text x="859" y="1442" class="name">/handoff</text><text x="859" y="1473" class="small">換人或換 session 時交接</text>
+  <text x="68" y="1529" class="sub">已安裝技能共 14 支，全部列在圖上；點線的 feasibility 是上游參考，尚未加入 skills/。</text>
+  <rect x="44" y="1588" width="1098" height="104" rx="12" fill="#eaf0f8"/>
+  <text x="68" y="1629" class="panelTitle">通用主幹只放共通能力</text>
+  <text x="68" y="1663" class="sub">LeaveBot 的 I4 AI eval 是專案評測條件，寫在它的測試計畫與工作票，不是每個專案必經節點。</text>
+</svg>
