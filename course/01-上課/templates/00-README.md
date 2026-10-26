@@ -13,7 +13,7 @@
 
 模板以公開工程實務整理，並非 Google 內部模板的複製。版面依讀者要做的事選擇：背景與理由用短段落；有順序或少量例外用列點；要比較同一組欄位、掃描編號或追查證據時用表格。表格儘量維持 2–4 欄，長敘述放在表格外。模板的 `＜＞` 是提示，不要求逐格填表。
 
-只填與本次風險相關的內容；不適用寫原因，未知寫負責人和決策期限，不用虛構數據填空。每個 Gate 由人審查；狀態為草稿時不可當成已確認輸入。先讓一條需求接到測試與操作結果；[IT 設備借用完整範例](../../02-補充/examples/it-asset/README.md)供課後看深度，其技術棧與規模不代表本課主線。
+只填與本次風險相關的內容；不適用寫原因，未知寫負責人和決策期限，沒有來源的數據記為待量測。每個 Gate 由人審查；狀態為草稿時不可當成已確認輸入。先讓一條需求接到測試與操作結果；[IT 設備借用完整範例](../../02-補充/examples/it-asset/README.md)供課後看深度，其技術棧與規模不代表本課主線。
 
 設計依據：[Google 公開的設計文件與文件維護原則](https://abseil.io/resources/swe-book/html/ch10.html)、[Google code review 的設計／測試檢查](https://google.github.io/eng-practices/review/reviewer/looking-for.html)、[Microsoft 依工作負載取捨品質屬性](https://learn.microsoft.com/en-us/azure/well-architected/what-is-well-architected-framework)。這些是方法來源；本課的六份文件與 Gate 是課程自己的設計。
 
