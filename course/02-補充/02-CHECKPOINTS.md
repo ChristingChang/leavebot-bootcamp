@@ -1,6 +1,6 @@
 # Checkpoint：先確認可用，再切換
 
-`main` 保持空白學生起點。五個 `cp*` 分支是講師的參考快照，採用同一份課程規格；來源與驗證證據見各快照的 `course/CHECKPOINT-RECEIPT.md`。
+`main` 保持空白學生起點。五個 `cp*` 分支是講師的參考快照，採用同一份課程規格；來源與驗證證據見各快照的 `course/02-補充/05-CHECKPOINT-RECEIPT.md`。該檔只存在於 checkpoint 分支。
 
 | 時點 | 分支 | 內容／接續 |
 |---|---|---|
