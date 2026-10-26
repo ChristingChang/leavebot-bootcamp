@@ -33,7 +33,7 @@ for s in .maintain/check-*.sh; do
 done
 
 # --- 回歸規格：檢查腳本、guard hook、範本 hook ------------------------------
-for t in .maintain/test-*.sh course/templates/hooks/test-*.sh; do
+for t in .maintain/test-*.sh course/02-補充/templates/hooks/test-*.sh; do
   [ -f "$t" ] || continue
   run "$t" bash "$t"
 done

@@ -4,9 +4,9 @@ Claude Code 經 `CLAUDE.md` 載入本檔；Codex 直接讀本檔。通用 skills
 
 ## 先讀哪裡
 
-- **開始第二天、詢問下一步或呼叫課程技能前，先讀 `course/WORKFLOW.md`。** 依當前階段讀必要材料，不一次產出整套文件。
-- 題目與範圍：`course/LEAVEBOT.md`；技術與執行方式：`course/STACK.md`；工具設定：`course/HARNESS.md`。
-- `course/PLAN.json` 與 `course/prompts/` 是兩邊教材同步的來源。模板在 `course/templates/`，產出寫到根目錄 `docs/`，工作票寫到 `issues/`。
+- **開始第二天、詢問下一步或呼叫課程技能前，先讀 `course/01-上課/02-WORKFLOW.md`。** 依當前階段讀必要材料，不一次產出整套文件。
+- 題目與範圍：`course/01-上課/03-LEAVEBOT.md`；技術與執行方式：`course/01-上課/04-STACK.md`；工具設定：`course/02-補充/01-HARNESS.md`。
+- `course/02-補充/04-PLAN.json` 與 `course/01-上課/prompts/` 是兩邊教材同步的來源。模板在 `course/01-上課/templates/`，產出寫到根目錄 `docs/`，工作票寫到 `issues/`。
 - 第一天的臨摹、塔羅與動畫在**獨立的 D1 練習資料夾**執行，不放進本專案。本專案從第二天開始。
 
 ## 範圍與決策
@@ -27,7 +27,7 @@ Claude Code 經 `CLAUDE.md` 載入本檔；Codex 直接讀本檔。通用 skills
 
 ## 技術邊界
 
-- 依 `course/STACK.md`：FastAPI 提供 HTML/CSS/原生 JavaScript，SQLite 與 pytest；主線不加前端框架、登入、部署或 LLM 呼叫。
+- 依 `course/01-上課/04-STACK.md`：FastAPI 提供 HTML/CSS/原生 JavaScript，SQLite 與 pytest；主線不加前端框架、登入、部署或 LLM 呼叫。
 - 前端呼叫相對路徑 `/api/...`；不開 CORS。驗證在後端；SQL 用參數；使用者文字以 `textContent` 或安全跳脫呈現。
 - 天數由程式計算。測試使用暫存資料庫及固定時鐘，不讀寫開發資料庫。
 - 金鑰不進版控，不讀出或印出秘密；進階模型設定只從環境載入。應用程式不可把 Agent CLI 當後端服務。

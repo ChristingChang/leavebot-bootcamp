@@ -9,7 +9,7 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-FIXTURE = Path(__file__).resolve().parents[1] / "course" / "fixtures" / "leave-sentences.jsonl"
+FIXTURE = Path(__file__).resolve().parents[1] / "course" / "02-補充" / "fixtures" / "leave-sentences.jsonl"
 PERIODS = {"full", "am", "pm"}
 LEAVE_TYPES = {"annual", "personal", "sick", "menstrual", "marriage", "bereavement", None}
 REQUIRED = {"id", "today", "sentence", "expected", "clarify", "tags"}

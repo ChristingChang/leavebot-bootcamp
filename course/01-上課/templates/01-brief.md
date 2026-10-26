@@ -15,6 +15,6 @@
 | NG-01 | ＜＞ | ＜＞ |
 
 ## 限制與假設
-依 `course/LEAVEBOT.md` 的基本範圍及 `course/STACK.md`。仍待確認：＜＞。
+依 `course/01-上課/03-LEAVEBOT.md` 的基本範圍及 `course/01-上課/04-STACK.md`。仍待確認：＜＞。
 
 通過條件：問題明確、至少一個可驗證目標、主線以外的功能列為非目標。

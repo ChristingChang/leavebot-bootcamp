@@ -5,7 +5,7 @@ import re
 import sys
 
 root=Path(__file__).resolve().parents[1]
-plan=json.loads((root/'course/PLAN.json').read_text(encoding='utf-8'))
+plan=json.loads((root/'course/02-補充/04-PLAN.json').read_text(encoding='utf-8'))
 errors=[]
 for c in plan['cards']:
     path=root/c['file']

@@ -1,6 +1,6 @@
 # 04 SAD — ＜專案名稱＞
 
-> 上游 PRD/SRS；技術依 `course/STACK.md`。只描述本次需要的邊界。
+> 上游 PRD/SRS；技術依 `course/01-上課/04-STACK.md`。只描述本次需要的邊界。
 
 ## 系統圖
 ```mermaid

@@ -30,7 +30,7 @@ git fetch upstream
 git branch -r
 ```
 
-Checkpoint 是否可用以 [CHECKPOINTS](CHECKPOINTS.md) 與遠端實際分支為準。缺少時先詢問講師，不重 fork、不切不存在的分支。
+Checkpoint 是否可用以 [CHECKPOINTS](../02-補充/02-CHECKPOINTS.md) 與遠端實際分支為準。缺少時先詢問講師，不重 fork、不切不存在的分支。
 
 Windows 的 `.agents/skills` 需要符號連結權限。使用 Codex 前確認該路徑連到 `../.claude/skills`，不是只有路徑文字的普通檔案；若 clone 前未啟用連結，請講師協助重建連結。不要刪除已有學生成果重 clone。
 
@@ -41,14 +41,14 @@ Windows 的 `.agents/skills` 需要符號連結權限。使用 Codex 前確認�
 macOS/Linux：
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -c course/constraints.txt fastapi uvicorn httpx pytest
+.venv/bin/python -m pip install -c course/01-上課/05-constraints.txt fastapi uvicorn httpx pytest
 .venv/bin/python -c "import fastapi, uvicorn, httpx, pytest; print('ok')"
 ```
 
 Windows PowerShell：
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\python.exe -m pip install -c course/constraints.txt fastapi uvicorn httpx pytest
+.venv\Scripts\python.exe -m pip install -c course/01-上課/05-constraints.txt fastapi uvicorn httpx pytest
 .venv\Scripts\python.exe -c "import fastapi, uvicorn, httpx, pytest; print('ok')"
 ```
 
@@ -56,7 +56,7 @@ py -3.12 -m venv .venv
 
 ## 5．開場連線檢查
 
-從 repo 根目錄打開工具，讀 `AGENTS.md` 與 [WORKFLOW](WORKFLOW.md)。用 `/compass`（Codex：`$compass`）要求建議下一步、所讀資料及產出；確認它依本課路線回答，而非只數技能。
+從 repo 根目錄打開工具，讀 `AGENTS.md` 與 [WORKFLOW](02-WORKFLOW.md)。用 `/compass`（Codex：`$compass`）要求建議下一步、所讀資料及產出；確認它依本課路線回答，而非只數技能。
 
 有 Node 的人先跑：
 ```bash

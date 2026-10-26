@@ -23,4 +23,4 @@
 | [handoff](handoff/SKILL.md) | 換人、換工具或換對話接手 | 使用者指定 |
 | [writing-hooks](writing-hooks/SKILL.md) | 需要工具層守衛或排查 hook | 使用者或 agent |
 
-這是一份**選擇清單**，不是固定流程。`to-tickets` 依目標、規格、工作大小與使用者的取捨決定票數；`to-spec`、`to-architecture` 和 `to-test-plan` 沿用各專案既有的文件位置與編號。本 repo 共 16 支技能。LeaveBot 課程的階段與提示詞見 [`course/WORKFLOW.md`](../../course/WORKFLOW.md)，工具操作說明見 [`course/HARNESS.md`](../../course/HARNESS.md)。
+這是一份**選擇清單**，不是固定流程。`to-tickets` 依目標、規格、工作大小與使用者的取捨決定票數；`to-spec`、`to-architecture` 和 `to-test-plan` 沿用各專案既有的文件位置與編號。本 repo 共 16 支技能。LeaveBot 課程的階段與提示詞見 [`course/01-上課/02-WORKFLOW.md`](../../course/01-上課/02-WORKFLOW.md)，工具操作說明見 [`course/02-補充/01-HARNESS.md`](../../course/02-補充/01-HARNESS.md)。

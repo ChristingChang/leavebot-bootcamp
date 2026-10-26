@@ -8,21 +8,13 @@
 
 1. Fork 本 repo 的 `main`，clone 自己的 fork。只複製 main 即可；checkpoint 從講師 upstream 取得。
 2. 準備 Git、Python 3.12、能正常登入的 Claude Code 或 Codex，以及瀏覽器。Archify 使用 Node（套件最低 18；課前用受支援版本試跑），應用程式主線不需要 Node 或 LLM API key。
-3. 在 repo 根目錄開工具，讀 [`course/WORKFLOW.md`](course/WORKFLOW.md) 的開場提示。Claude Code 用 `/技能`，Codex 用 `$技能`。
+3. 從 [課程資料入口](course/README.md) 依序找到當前階段；在 repo 根目錄開工具，讀 [上課流程](course/01-上課/02-WORKFLOW.md) 的開場提示。Claude Code 用 `/技能`，Codex 用 `$技能`。
 4. 依工作流程逐步產出文件、票與程式，不先複製空模板占位。需要同組已完成決策時先讀文件。
 
 Windows 使用 Codex 共用技能前，確認 `.agents/skills` 是指向 `../.claude/skills` 的連結；無法建立連結時請講師協助，不能只以設定檔存在當成工具已接通。
 
-| 要做什麼 | 讀哪裡 |
-|---|---|
-| 今天每一步、對應技能與提示詞 | [WORKFLOW](course/WORKFLOW.md) |
-| 題目與基本／延伸範圍 | [LEAVEBOT](course/LEAVEBOT.md) |
-| 技術棧、安裝、啟動與測試 | [STACK](course/STACK.md) |
-| 規則、skills、hooks、MCP | [HARNESS](course/HARNESS.md) |
-| 文件的最小格式 | [templates](course/templates/README.md) |
-| 落後時接續 | [CHECKPOINTS](course/CHECKPOINTS.md) |
-| 通用技能選擇清單 | [Skills](.claude/skills/README.md) |
+`course/` 分成 [01-上課](course/01-上課/01-SETUP.md) 與 [02-補充](course/02-補充/01-HARNESS.md)。上課依編號讀目前需要的檔案與提示卡；工具說明、保底快照、範例及維護紀錄在補充區。[通用技能清單](.claude/skills/README.md)可按需要查。
 
-`main` 只有教材與工具設定；`docs/`、`issues/`、`backend/`、`pyproject.toml` 由學生產生。checkpoint 是另外的教學快照。舊分支整合紀錄見 [維護紀錄](course/MAINTENANCE.md)。
+`main` 只有教材與工具設定；`docs/`、`issues/`、`backend/`、`pyproject.toml` 由學生產生。checkpoint 是另外的教學快照。
 
 講義與講師教材在 [ai-vibe-coding-beginner](https://github.com/Zenobia000/SDD-agent-coding-beginner)。技能與 guard 的來源及授權見 [THIRD-PARTY-NOTICES](.claude/THIRD-PARTY-NOTICES.md)。

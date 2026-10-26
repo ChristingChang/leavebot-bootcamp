@@ -19,7 +19,7 @@
 
    ```bash
    mkdir -p .claude/hooks
-   cp course/templates/hooks/pytest-on-stop.sh .claude/hooks/
+   cp course/02-補充/templates/hooks/pytest-on-stop.sh .claude/hooks/
    ```
 
 2. 在專案的 `.claude/settings.json` 加上：
