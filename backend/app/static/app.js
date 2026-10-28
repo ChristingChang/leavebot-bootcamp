@@ -93,12 +93,11 @@ function renderLeave(leave) {
   ].join("｜");
   item.append(summary);
 
-  if (leave.reason) {
-    const reason = document.createElement("p");
-    reason.className = "reason";
-    reason.textContent = `理由：${leave.reason}`;
-    item.append(reason);
-  }
+  // 理由空白時顯示「--」，不省略這一行（SDS v0.2 UI-01）。
+  const reason = document.createElement("p");
+  reason.className = "reason";
+  reason.textContent = `理由：${leave.reason || "--"}`;
+  item.append(reason);
   return item;
 }
 
