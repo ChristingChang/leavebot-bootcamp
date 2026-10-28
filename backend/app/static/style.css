@@ -22,3 +22,65 @@ main {
 .status.error {
   color: #cf222e;
 }
+
+section {
+  margin-top: 1.5rem;
+}
+
+.field {
+  margin-bottom: 0.75rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+select,
+input,
+textarea {
+  font: inherit;
+  padding: 0.3rem;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-error,
+.message.error {
+  color: #cf222e;
+  margin: 0.25rem 0 0;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.hint {
+  color: #59636e;
+}
+
+#leaves-list {
+  list-style: none;
+  padding: 0;
+}
+
+.leave {
+  background: #fff;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.leave p {
+  margin: 0.25rem 0;
+}
+
+.reason {
+  color: #59636e;
+  white-space: pre-wrap;
+}

@@ -10,6 +10,71 @@
   <main>
     <h1>LeaveBot 請假系統</h1>
     <p>服務狀態：<span id="health-status" class="status">檢查中…</span></p>
+
+    <section>
+      <label for="employee-select">員工</label>
+      <select id="employee-select">
+        <option value="">請選擇員工</option>
+      </select>
+      <p id="employee-error" class="message error" hidden></p>
+    </section>
+
+    <section>
+      <h2>申請請假</h2>
+      <form id="leave-form" novalidate>
+        <p id="form-message" class="message"></p>
+
+        <div class="field">
+          <label for="leave-type">假別</label>
+          <select id="leave-type" name="leave_type">
+            <option value="">請選擇假別</option>
+            <option value="annual">特休</option>
+            <option value="personal">事假</option>
+            <option value="sick">病假</option>
+          </select>
+          <p class="field-error" data-field="leave_type"></p>
+        </div>
+
+        <div class="field">
+          <label for="start-date">開始日期</label>
+          <input type="date" id="start-date" name="start_date">
+          <p class="field-error" data-field="start_date"></p>
+        </div>
+
+        <div class="field">
+          <label for="end-date">結束日期</label>
+          <input type="date" id="end-date" name="end_date">
+          <p class="field-error" data-field="end_date"></p>
+        </div>
+
+        <div class="field">
+          <label for="period">時段</label>
+          <select id="period" name="period">
+            <option value="">請選擇時段</option>
+            <option value="full_day">整天</option>
+            <option value="am">上午</option>
+            <option value="pm">下午</option>
+          </select>
+          <p class="field-error" data-field="period"></p>
+        </div>
+
+        <div class="field">
+          <label for="reason">理由（選填）</label>
+          <textarea id="reason" name="reason" rows="3"></textarea>
+          <p class="field-error" data-field="reason"></p>
+        </div>
+
+        <p class="field-error" data-field="employee_id"></p>
+        <button type="submit" id="submit-button" disabled>送出</button>
+        <p id="submit-hint" class="hint">請先選擇員工</p>
+      </form>
+    </section>
+
+    <section>
+      <h2>我的假單</h2>
+      <p id="leaves-message" class="hint">請先選擇員工</p>
+      <ul id="leaves-list"></ul>
+    </section>
   </main>
   <script src="app.js"></script>
 </body>
