@@ -35,3 +35,13 @@ Claude Code 經 `CLAUDE.md` 載入本檔；Codex 直接讀本檔。通用 skills
 ## 本專案決策（D2 拆票時由小組補充）
 
 只記本組已確認且可檢查的規則，例如「半天假只接受同一天」。引用對應 SRS/SDS，避免複寫整份規格。
+
+以下為 2026-10-28 小組確認：
+
+- 理由上限只在 `leave_rules.REASON_MAX_LENGTH` 定義，錯誤訊息由它組出；前端不加 `maxlength`，資料庫不加長度約束（SDS 模組接縫、Brief R-3）。
+- 請求帶 `status`、`days` 或任何未定義欄位都整筆拒絕；狀態一律 `pending`，天數一律由 `count_leave_days` 計算（SRS FR-03、FR-08）。
+- 業務規則只寫在 `leave_rules`，前端不重複驗證，只負責停用按鈕與顯示結果（SAD ADR-01、SDS UI-01）。
+- 錯誤本文固定為 `{"errors": [{"field", "code", "message"}]}`；測試只斷言包含預期的 (`field`, `code`)，不斷言順序或訊息全文（SDS API 契約）。
+- 匯入模組時不連線資料庫，`LEAVEBOT_DB` 在呼叫當下才讀；`api` 以 `db.xxx` 模組屬性呼叫，方便測試替換（SDS 測試注入方式）。
+- 主線不讀「今天」，不建立時鐘模組；要新增依賴今天的規則，先改 SRS（SDS、Brief D-2、SRS Q-8）。
+- 先登記 `/api` 路由，最後才掛載靜態頁（STACK、SDS 路由登記順序）。

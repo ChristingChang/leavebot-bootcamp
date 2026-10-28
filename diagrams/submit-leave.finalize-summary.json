@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.workflow.json",
+    "sha256": "b723bdc5c0e3e27aa86b176ba90d16679d9cc27c8b7e82b2aa50498fce81a86e",
+    "bytes": 4029
+  },
+  "artifact": {
+    "path": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.html",
+    "sha256": "b2a851a72f8d17ad92b1a783c3aee585256ecc43f088096f2f0af109a6325c61",
+    "bytes": 826183
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.finalize.json",
+    "summaryReceipt": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.finalize-summary.json",
+    "browserCheckReceipt": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-28T06:05:39.440Z",
+    "source": "network",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 5768,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

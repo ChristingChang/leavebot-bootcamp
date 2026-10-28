@@ -39,6 +39,7 @@ Windows 的 `.agents/skills` 需要符號連結權限。使用 Codex 前確認�
 可在 LeaveBot 根目錄先建未追蹤的 `.venv`，下載主線套件：
 
 macOS/Linux：
+
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -c course/01-上課/05-constraints.txt fastapi uvicorn httpx pytest
@@ -46,6 +47,7 @@ python3 -m venv .venv
 ```
 
 Windows PowerShell：
+
 ```powershell
 py -3.12 -m venv .venv
 .venv\Scripts\python.exe -m pip install -c course/01-上課/05-constraints.txt fastapi uvicorn httpx pytest
@@ -59,6 +61,7 @@ py -3.12 -m venv .venv
 從 repo 根目錄打開工具，讀 `AGENTS.md` 與 [WORKFLOW](02-WORKFLOW.md)。用 `/compass`（Codex：`$compass`）要求建議下一步、所讀資料及產出；確認它依本課路線回答，而非只數技能。
 
 有 Node 的人先跑：
+
 ```bash
 node .claude/skills/archify/bin/archify.mjs doctor
 ```

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "fc9d3a6a-d5c9-4bef-91d0-b33b328e2d56",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.workflow.json",
+  "output": "/Users/changjingya/Documents/SDD_261027/LeaveBot/leavebot-bootcamp/diagrams/submit-leave.html",
+  "specification": {
+    "sha256": "b723bdc5c0e3e27aa86b176ba90d16679d9cc27c8b7e82b2aa50498fce81a86e",
+    "bytes": 4029
+  },
+  "artifact": {
+    "sha256": "b2a851a72f8d17ad92b1a783c3aee585256ecc43f088096f2f0af109a6325c61",
+    "bytes": 826183
+  }
+}

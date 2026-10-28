@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "LeaveBot 員工提交請假流程（依 SRS v0.2）",
+    "locale": "zh-TW",
+    "quality_profile": "showcase",
+    "output": "diagrams/submit-leave.html"
+  },
+  "lanes": [
+    { "id": "ui", "label": "員工畫面（瀏覽器）" },
+    { "id": "api", "label": "後端 API" },
+    { "id": "store", "label": "SQLite" },
+    { "id": "reject", "label": "拒絕分支", "variant": "exception" }
+  ],
+  "mainPath": ["pick", "form", "submit", "validate", "compute", "save", "listq", "mylist"],
+  "nodes": [
+    { "id": "pick", "lane": "ui", "col": 0, "type": "external", "label": "選員工", "sublabel": "下拉名單 FR-01" },
+    { "id": "form", "lane": "ui", "col": 1, "type": "frontend", "label": "填表", "sublabel": "假別・日期・時段・理由" },
+    { "id": "submit", "lane": "ui", "col": 2, "type": "frontend", "label": "按送出", "sublabel": "按鈕停用・送出中", "tag": "FR-10" },
+    { "id": "validate", "lane": "api", "col": 3, "type": "security", "label": "後端驗證", "sublabel": "FR-01、FR-03～FR-08", "tag": "全部通過才寫入" },
+    { "id": "compute", "lane": "api", "col": 4, "type": "backend", "label": "算天數、定狀態", "sublabel": "扣週末・pending", "tag": "FR-06、FR-08" },
+    { "id": "save", "lane": "store", "col": 4, "type": "database", "label": "新增一筆假單", "sublabel": "狀態 pending" },
+    { "id": "listq", "lane": "api", "col": 5, "type": "backend", "label": "查詢該員工假單", "sublabel": "不含其他員工", "tag": "FR-09" },
+    { "id": "mylist", "lane": "ui", "col": 5, "type": "frontend", "label": "我的假單", "sublabel": "顯示成功・待審核", "tag": "重新整理仍在" },
+    { "id": "refuse", "lane": "reject", "col": 3, "type": "security", "label": "回應錯誤", "sublabel": "不新增資料 NFR-01" },
+    { "id": "errshow", "lane": "reject", "col": 2, "type": "frontend", "label": "顯示錯誤", "sublabel": "按鈕恢復・指出欄位", "tag": "NFR-04" }
+  ],
+  "edges": [
+    { "id": "pick-form", "from": "pick", "to": "form" },
+    { "id": "form-submit", "from": "form", "to": "submit" },
+    { "id": "submit-validate", "from": "submit", "to": "validate", "label": "送出申請", "variant": "emphasis" },
+    { "id": "validate-ok", "from": "validate", "to": "compute", "label": "全部通過", "variant": "emphasis" },
+    { "id": "compute-save", "from": "compute", "to": "save", "label": "寫入", "variant": "emphasis" },
+    { "id": "save-list", "from": "save", "to": "listq", "label": "成功後重讀" },
+    { "id": "list-show", "from": "listq", "to": "mylist", "label": "回傳列表", "variant": "emphasis" },
+    { "id": "validate-fail", "from": "validate", "to": "refuse", "label": "任一規則不通過", "variant": "security", "role": "error" },
+    { "id": "refuse-show", "from": "refuse", "to": "errshow", "label": "錯誤訊息", "variant": "security", "role": "error" },
+    { "id": "fix-retry", "from": "errshow", "to": "form", "label": "修正後重送", "variant": "dashed", "role": "return" }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "拒絕即不存檔（FR-01、FR-03～FR-08）",
+      "items": [
+        "員工不在名單、缺欄位或值不合法",
+        "結束早於開始；半天跨日；區間沒有工作日",
+        "理由去頭尾空白後超過 200 字",
+        "請求附帶狀態或天數欄位（Q-3）"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "成功時由伺服器決定",
+      "items": [
+        "天數只算週一至週五；整天 1、半天 0.5",
+        "狀態固定 pending（待審核）",
+        "接受過去日期（D-2）；不去重（D-3）"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "不在此圖（SRS 未定或範圍外）",
+      "items": [
+        "主管核准、LLM 解析：範圍外",
+        "選員工時載入列表亦走 FR-09 查詢",
+        "Q-4～Q-10 細節未決，未畫入"
+      ]
+    }
+  ]
+}
